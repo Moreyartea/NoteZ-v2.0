@@ -232,3 +232,4 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
     </div>
   );
 };
+

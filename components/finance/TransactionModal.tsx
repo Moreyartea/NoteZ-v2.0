@@ -345,3 +345,4 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
     </NbModal>
   );
 };
+

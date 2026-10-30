@@ -312,3 +312,4 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
     </div>
   );
 };
+
