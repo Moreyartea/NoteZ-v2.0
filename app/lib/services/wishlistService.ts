@@ -5,6 +5,7 @@ import type {
   WishlistPriority,
   Transaction,
 } from '@/app/lib/types';
+import { syncDataToHomeWidget } from './widgetSyncService';
 
 function generateId(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -70,6 +71,7 @@ export async function createWishlistItem(data: {
   };
 
   await db.wishlists.add(newWishlist);
+  syncDataToHomeWidget().catch(() => {});
   return id;
 }
 
@@ -139,6 +141,7 @@ export async function depositToWishlist(
       });
     }
   );
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function withdrawFromWishlist(
@@ -204,6 +207,7 @@ export async function withdrawFromWishlist(
       });
     }
   );
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function toggleWishlistWidget(id: string): Promise<void> {
@@ -214,6 +218,7 @@ export async function toggleWishlistWidget(id: string): Promise<void> {
     showOnHomeWidget: !wishlist.showOnHomeWidget,
     updatedAt: new Date().toISOString(),
   });
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function deleteWishlistItem(id: string): Promise<void> {

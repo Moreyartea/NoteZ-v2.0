@@ -8,6 +8,7 @@ import type {
   DebtType,
   WalletType,
 } from '@/app/lib/types';
+import { syncDataToHomeWidget } from './widgetSyncService';
 
 function generateId(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -51,6 +52,7 @@ export async function createWallet(data: {
   };
 
   await db.wallets.add(wallet);
+  syncDataToHomeWidget().catch(() => {});
   return id;
 }
 
@@ -86,6 +88,7 @@ export async function updateWalletBalance(
       updatedAt: now,
     });
   });
+  syncDataToHomeWidget().catch(() => {});
 }
 
 // ===================== TRANSACTION OPERATIONS =====================
@@ -171,6 +174,7 @@ export async function addTransaction(data: {
     await db.transactions.add(newTx);
   });
 
+  syncDataToHomeWidget().catch(() => {});
   return txId;
 }
 
@@ -214,6 +218,7 @@ export async function deleteTransaction(id: string): Promise<void> {
 
     await db.transactions.delete(id);
   });
+  syncDataToHomeWidget().catch(() => {});
 }
 
 // ===================== BUDGET & BILL OPERATIONS =====================

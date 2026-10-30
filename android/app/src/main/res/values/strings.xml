@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NoteZ</string>
+    <string name="title_activity_main">NoteZ</string>
+    <string name="package_name">com.moreyartea.notez</string>
+    <string name="custom_url_scheme">com.moreyartea.notez</string>
+    <string name="widget_tasks_name">NoteZ: Fokus Tugas</string>
+    <string name="widget_tasks_description">Tampilkan daftar tugas prioritas hari ini langsung di layar utama HP</string>
+</resources>

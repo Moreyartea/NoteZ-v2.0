@@ -1,5 +1,6 @@
 import { db } from '@/app/lib/db';
 import type { Note, NoteChecklistItem } from '@/app/lib/types';
+import { syncDataToHomeWidget } from './widgetSyncService';
 
 function generateId(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -50,6 +51,7 @@ export async function createNote(data: {
   };
 
   await db.notes.add(newNote);
+  syncDataToHomeWidget().catch(() => {});
   return id;
 }
 
@@ -62,6 +64,7 @@ export async function updateNote(
     ...data,
     updatedAt: now,
   });
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function toggleNotePin(id: string): Promise<void> {
@@ -82,6 +85,7 @@ export async function toggleNoteWidget(id: string): Promise<void> {
     showOnHomeWidget: !note.showOnHomeWidget,
     updatedAt: new Date().toISOString(),
   });
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function toggleChecklistItem(

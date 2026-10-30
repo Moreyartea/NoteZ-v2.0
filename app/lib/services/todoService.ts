@@ -1,5 +1,6 @@
 import { db } from '@/app/lib/db';
 import type { Todo, Subtask, TodoPriority, TodoRecurrence } from '@/app/lib/types';
+import { syncDataToHomeWidget } from './widgetSyncService';
 
 function generateId(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -78,6 +79,7 @@ export async function createTodo(data: {
   };
 
   await db.todos.add(newTodo);
+  syncDataToHomeWidget().catch(() => {});
   return id;
 }
 
@@ -117,6 +119,8 @@ export async function toggleTodoStatus(id: string): Promise<void> {
       updatedAt: now,
     });
   }
+
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function toggleSubtask(todoId: string, subtaskId: string): Promise<void> {
@@ -139,6 +143,7 @@ export async function toggleSubtask(todoId: string, subtaskId: string): Promise<
     isCompleted: allSubtasksDone ? true : todo.isCompleted,
     updatedAt: new Date().toISOString(),
   });
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function addSubtask(todoId: string, title: string): Promise<void> {
@@ -165,9 +170,11 @@ export async function togglePinWidget(todoId: string): Promise<void> {
     pinToHomeWidget: !todo.pinToHomeWidget,
     updatedAt: new Date().toISOString(),
   });
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function deleteTodo(id: string): Promise<void> {
   await db.todos.delete(id);
+  syncDataToHomeWidget().catch(() => {});
 }
 
