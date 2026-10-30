@@ -165,3 +165,4 @@ export const HabitTrackerSection: React.FC<HabitTrackerSectionProps> = ({
     </div>
   );
 };
+

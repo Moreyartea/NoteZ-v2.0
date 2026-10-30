@@ -170,3 +170,4 @@ export async function togglePinWidget(todoId: string): Promise<void> {
 export async function deleteTodo(id: string): Promise<void> {
   await db.todos.delete(id);
 }
+

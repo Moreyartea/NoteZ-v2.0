@@ -142,3 +142,4 @@ export const HabitModal: React.FC<HabitModalProps> = ({ isOpen, onClose }) => {
     </NbModal>
   );
 };
+
