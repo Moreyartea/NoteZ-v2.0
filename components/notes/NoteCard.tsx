@@ -184,3 +184,4 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
     </NbCard>
   );
 };
+

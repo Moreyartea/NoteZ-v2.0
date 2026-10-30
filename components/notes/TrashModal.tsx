@@ -126,3 +126,4 @@ export const TrashModal: React.FC<TrashModalProps> = ({
     </NbModal>
   );
 };
+

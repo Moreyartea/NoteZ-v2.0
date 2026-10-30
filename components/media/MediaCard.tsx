@@ -237,3 +237,4 @@ export const MediaCard: React.FC<MediaCardProps> = ({ media, onEdit }) => {
     </NbCard>
   );
 };
+

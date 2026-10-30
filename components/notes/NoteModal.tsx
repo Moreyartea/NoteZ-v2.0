@@ -318,3 +318,4 @@ export const NoteModal: React.FC<NoteModalProps> = ({
     </NbModal>
   );
 };
+

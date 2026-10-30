@@ -116,3 +116,4 @@ export async function updateMediaItem(
 export async function deleteMediaItem(id: string): Promise<void> {
   await db.media_watchlist.delete(id);
 }
+

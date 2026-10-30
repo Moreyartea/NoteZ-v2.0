@@ -129,3 +129,4 @@ export async function clearTrash(): Promise<void> {
   const ids = trashedNotes.map((n) => n.id);
   await db.notes.bulkDelete(ids);
 }
+
