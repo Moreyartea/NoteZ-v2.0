@@ -52,3 +52,4 @@ export const NbCard = React.forwardRef<HTMLDivElement, NbCardProps>(
 );
 
 NbCard.displayName = 'NbCard';
+

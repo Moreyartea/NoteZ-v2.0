@@ -79,3 +79,4 @@ export const NbInput = React.forwardRef<HTMLInputElement, NbInputProps>(
 );
 
 NbInput.displayName = 'NbInput';
+

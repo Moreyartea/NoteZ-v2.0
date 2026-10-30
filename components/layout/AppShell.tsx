@@ -64,3 +64,4 @@ export const AppShell: React.FC<AppShellProps> = ({
     </div>
   );
 };
+

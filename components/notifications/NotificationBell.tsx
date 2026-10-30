@@ -40,3 +40,4 @@ export const NotificationBell: React.FC = () => {
     </>
   );
 };
+
