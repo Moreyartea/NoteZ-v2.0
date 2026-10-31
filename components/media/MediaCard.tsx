@@ -11,6 +11,9 @@ import {
   IconTrash,
   IconEdit,
   IconExternalLink,
+  IconSparkles,
+  IconDeviceTv,
+  IconVideo,
 } from '@tabler/icons-react';
 import type { MediaItem, MediaType, MediaStatus } from '@/app/lib/types';
 import { NbCard } from '@/components/ui/NbCard';
@@ -44,16 +47,32 @@ export const MediaCard: React.FC<MediaCardProps> = ({ media, onEdit }) => {
     }
   };
 
-  const getTypeLabel = (type: MediaType) => {
+  const getTypeBadge = (type: MediaType) => {
     switch (type) {
       case 'anime':
-        return 'Anime';
+        return {
+          label: 'Anime',
+          icon: IconSparkles,
+          className: 'bg-purple-100 text-purple-900 border-[#A855F7]',
+        };
       case 'movie':
-        return 'Film';
+        return {
+          label: 'Film',
+          icon: IconMovie,
+          className: 'bg-blue-100 text-blue-900 border-[#3B6FFF]',
+        };
       case 'series':
-        return 'Series';
+        return {
+          label: 'Series',
+          icon: IconDeviceTv,
+          className: 'bg-pink-100 text-pink-900 border-[#FF4DA6]',
+        };
       case 'video':
-        return 'Video';
+        return {
+          label: 'Video',
+          icon: IconVideo,
+          className: 'bg-orange-100 text-orange-900 border-[#FF6B2B]',
+        };
     }
   };
 
@@ -88,13 +107,22 @@ export const MediaCard: React.FC<MediaCardProps> = ({ media, onEdit }) => {
     }
   };
 
+  const typeInfo = getTypeBadge(media.type);
+  const TypeIcon = typeInfo.icon;
+
   return (
     <NbCard className="p-4 space-y-3 relative overflow-hidden">
       {/* Top Badges */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-[10px] font-black uppercase text-[#0A0A0A] bg-gray-100 px-2 py-0.5 rounded border border-gray-300">
-            {getTypeLabel(media.type)}
+          <span
+            className={cn(
+              'text-[10px] font-black uppercase px-2 py-0.5 rounded border inline-flex items-center gap-1 shadow-[1px_1px_0px_#0A0A0A]',
+              typeInfo.className
+            )}
+          >
+            <TypeIcon className="w-3 h-3 stroke-[2.5]" />
+            <span>{typeInfo.label}</span>
           </span>
           <NbBadge variant={getStatusBadgeVariant(media.status)}>
             {getStatusLabel(media.status)}

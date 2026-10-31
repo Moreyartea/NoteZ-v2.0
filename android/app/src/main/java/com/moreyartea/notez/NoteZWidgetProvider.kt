@@ -31,12 +31,7 @@ class NoteZWidgetProvider : AppWidgetProvider() {
         if (intent.action == ACTION_UPDATE_WIDGET ||
             intent.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE
         ) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
-            val thisWidget = ComponentName(context, NoteZWidgetProvider::class.java)
-            val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
-            for (appWidgetId in appWidgetIds) {
-                updateAppWidget(context, appWidgetManager, appWidgetId)
-            }
+            refreshAllWidgets(context)
         }
     }
 
@@ -44,6 +39,30 @@ class NoteZWidgetProvider : AppWidgetProvider() {
         const val ACTION_UPDATE_WIDGET = "com.moreyartea.notez.ACTION_UPDATE_WIDGET"
         private const val PREFS_NAME = "CapacitorStorage"
         private const val KEY_TODOS = "widget_todos_data"
+
+        /**
+         * Triggers an immediate refresh of all active NoteZ widgets.
+         */
+        @JvmStatic
+        fun refreshAllWidgets(context: Context) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val thisWidget = ComponentName(context, NoteZWidgetProvider::class.java)
+            val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+            for (appWidgetId in appWidgetIds) {
+                updateAppWidget(context, appWidgetManager, appWidgetId)
+            }
+        }
+
+        /**
+         * Sends a broadcast intent to request live widget update.
+         */
+        @JvmStatic
+        fun sendRefreshBroadcast(context: Context) {
+            val intent = Intent(context, NoteZWidgetProvider::class.java).apply {
+                action = ACTION_UPDATE_WIDGET
+            }
+            context.sendBroadcast(intent)
+        }
 
         fun updateAppWidget(
             context: Context,

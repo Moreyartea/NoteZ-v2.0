@@ -9,6 +9,11 @@ import {
   IconRepeat,
   IconChevronDown,
   IconChevronUp,
+  IconSchool,
+  IconBriefcase,
+  IconUser,
+  IconRocket,
+  IconLayersLinked,
 } from '@tabler/icons-react';
 import type { Todo, TodoPriority } from '@/app/lib/types';
 import { NbCard } from '@/components/ui/NbCard';
@@ -84,6 +89,49 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
     }
   };
 
+  const getCategoryIconBadge = (cat: string) => {
+    switch (cat) {
+      case 'Kuliah':
+        return {
+          icon: IconSchool,
+          label: 'Kuliah',
+          className: 'bg-blue-100 text-[#3B6FFF] border-[#3B6FFF]',
+        };
+      case 'Kerja':
+        return {
+          icon: IconBriefcase,
+          label: 'Kerja',
+          className: 'bg-yellow-100 text-[#0A0A0A] border-[#FFE135]',
+        };
+      case 'Pribadi':
+        return {
+          icon: IconUser,
+          label: 'Pribadi',
+          className: 'bg-emerald-100 text-[#00A854] border-[#00E676]',
+        };
+      case 'Project':
+        return {
+          icon: IconRocket,
+          label: 'Project',
+          className: 'bg-purple-100 text-[#8B5CF6] border-[#A855F7]',
+        };
+      default:
+        return {
+          icon: IconCheck,
+          label: cat,
+          className: 'bg-gray-100 text-gray-700 border-gray-300',
+        };
+    }
+  };
+
+  const todoCategoryFilters = [
+    { id: 'all', label: 'Semua', icon: IconLayersLinked, color: '#0A0A0A', bg: 'bg-white' },
+    { id: 'Kuliah', label: 'Kuliah', icon: IconSchool, color: '#3B6FFF', bg: 'bg-blue-50' },
+    { id: 'Kerja', label: 'Kerja', icon: IconBriefcase, color: '#0A0A0A', bg: 'bg-yellow-100' },
+    { id: 'Pribadi', label: 'Pribadi', icon: IconUser, color: '#00A854', bg: 'bg-emerald-50' },
+    { id: 'Project', label: 'Project', icon: IconRocket, color: '#8B5CF6', bg: 'bg-purple-50' },
+  ];
+
   return (
     <div className="space-y-3">
       {/* Filter Tabs */}
@@ -110,23 +158,32 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
         ))}
       </div>
 
-      {/* Category Pills Filter */}
+      {/* Category Pills Filter (Colored Neo-Brutalism Icon Chips) */}
       <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
-        {['all', 'Kuliah', 'Kerja', 'Pribadi', 'Project'].map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            onClick={() => setCategoryFilter(cat)}
-            className={cn(
-              'px-2.5 py-1 text-[11px] font-bold rounded-lg border-2 border-[#0A0A0A] transition-all cursor-pointer whitespace-nowrap',
-              categoryFilter === cat
-                ? 'bg-[#0A0A0A] text-white shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            )}
-          >
-            {cat === 'all' ? 'Semua Kategori' : cat}
-          </button>
-        ))}
+        {todoCategoryFilters.map((cat) => {
+          const Icon = cat.icon;
+          const isSelected = categoryFilter === cat.id;
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => setCategoryFilter(cat.id)}
+              title={`Kategori ${cat.label}`}
+              className={cn(
+                'inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-black rounded-lg border-2 border-[#0A0A0A] transition-all cursor-pointer whitespace-nowrap select-none',
+                isSelected
+                  ? 'bg-[#0A0A0A] text-white shadow-[2px_2px_0px_#0A0A0A]'
+                  : `${cat.bg} text-gray-800 shadow-[1.5px_1.5px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px]`
+              )}
+            >
+              <Icon
+                className="w-3.5 h-3.5 stroke-[2.5]"
+                style={{ color: isSelected ? '#FFFFFF' : cat.color }}
+              />
+              <span className="text-[11px]">{cat.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Todo Items List */}
@@ -216,9 +273,22 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                         {todo.priority.toUpperCase()}
                       </NbBadge>
 
-                      <span className="text-[10px] font-bold text-gray-700 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-300">
-                        {todo.category}
-                      </span>
+                      {(() => {
+                        const catInfo = getCategoryIconBadge(todo.category);
+                        const CatIcon = catInfo.icon;
+                        return (
+                          <span
+                            title={`Kategori: ${catInfo.label}`}
+                            className={cn(
+                              'text-[10px] font-black uppercase px-1.5 py-0.5 rounded border inline-flex items-center gap-1 shadow-[1px_1px_0px_#0A0A0A]',
+                              catInfo.className
+                            )}
+                          >
+                            <CatIcon className="w-3 h-3 stroke-[2.5]" />
+                            <span>{catInfo.label}</span>
+                          </span>
+                        );
+                      })()}
 
                       {todo.recurrence && todo.recurrence !== 'none' && (
                         <span className="text-[10px] font-bold text-purple-700 bg-purple-100 px-1.5 py-0.5 rounded border border-purple-300 flex items-center gap-0.5">

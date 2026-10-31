@@ -13,6 +13,10 @@ import {
   IconFlame,
   IconCheck,
   IconCalendarCheck,
+  IconSchool,
+  IconBriefcase,
+  IconUser,
+  IconRocket,
 } from '@tabler/icons-react';
 import { db } from '@/app/lib/db';
 import { AppShell } from '@/components/layout/AppShell';
@@ -241,18 +245,42 @@ export default function DashboardPage() {
                     </span>
                   </div>
 
-                  <NbBadge
-                    variant={
-                      todo.priority === 'high'
-                        ? 'danger'
-                        : todo.priority === 'medium'
-                        ? 'warning'
-                        : 'secondary'
-                    }
-                    className="text-[9px] px-1.5 py-0.5 uppercase"
-                  >
-                    {todo.priority}
-                  </NbBadge>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    {(() => {
+                      const CatIcon =
+                        todo.category === 'Kuliah'
+                          ? IconSchool
+                          : todo.category === 'Kerja'
+                          ? IconBriefcase
+                          : todo.category === 'Pribadi'
+                          ? IconUser
+                          : todo.category === 'Project'
+                          ? IconRocket
+                          : null;
+                      if (!CatIcon) return null;
+                      return (
+                        <span
+                          title={`Kategori: ${todo.category}`}
+                          className="w-5 h-5 rounded border border-[#0A0A0A] bg-gray-100 flex items-center justify-center text-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A]"
+                        >
+                          <CatIcon className="w-3 h-3 stroke-[2.5]" />
+                        </span>
+                      );
+                    })()}
+
+                    <NbBadge
+                      variant={
+                        todo.priority === 'high'
+                          ? 'danger'
+                          : todo.priority === 'medium'
+                          ? 'warning'
+                          : 'secondary'
+                      }
+                      className="text-[9px] px-1.5 py-0.5 uppercase"
+                    >
+                      {todo.priority}
+                    </NbBadge>
+                  </div>
                 </div>
               ))
             )}

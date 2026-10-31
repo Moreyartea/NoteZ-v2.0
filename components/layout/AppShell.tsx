@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Link from 'next/link';
 import { seedInitialData } from '@/app/lib/seed';
+import { requestNotificationPermission } from '@/app/lib/services/notificationService';
 import { LiveDeviceClock } from './LiveDeviceClock';
 import { BottomNav } from './BottomNav';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
+import { AppLogo } from '@/components/ui/AppLogo';
 
 export interface AppShellProps {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ export interface AppShellProps {
 /**
  * AppShell - Minimalist Mobile Shell Layout
  * Top Bar:
- * - Left: NoteZ solid brand badge + subtle page title
+ * - Left: NoteZ official SVG logo badge + subtle page title
  * - Right: Isolated real-time digital clock + Notification bell
  * Bottom Bar:
  * - 5-tab Neo-Brutalism Bottom Navigation
@@ -27,8 +28,9 @@ export const AppShell: React.FC<AppShellProps> = ({
   showClock = true,
 }) => {
   useEffect(() => {
-    // Run initial seed once on mount
+    // Run initial seed and request notification permissions on first mount
     seedInitialData();
+    requestNotificationPermission();
   }, []);
 
   return (
@@ -37,12 +39,7 @@ export const AppShell: React.FC<AppShellProps> = ({
         {/* Minimalist Top App Header */}
         <header className="sticky top-0 z-30 bg-[#FFFDF7] border-b-[3px] border-[#0A0A0A] px-3.5 py-2 flex items-center justify-between shadow-[0px_2px_0px_#0A0A0A]">
           <div className="flex items-center gap-1.5 flex-shrink-0">
-            <Link
-              href="/"
-              className="text-base font-black tracking-tight text-[#0A0A0A] bg-[#FFE135] px-2 py-0.5 rounded-lg border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] select-none"
-            >
-              NoteZ
-            </Link>
+            <AppLogo size="sm" showText={true} />
             {headerTitle && (
               <span className="text-xs font-black text-gray-700 truncate max-w-[120px]">
                 / {headerTitle}

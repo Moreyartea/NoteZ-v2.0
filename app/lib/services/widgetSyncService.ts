@@ -119,7 +119,7 @@ export async function syncDataToHomeWidget(): Promise<void> {
         }
       : null;
 
-    // Save to Capacitor Preferences
+    // Save to Capacitor Preferences (with live update timestamp)
     await Promise.all([
       Preferences.set({
         key: 'widget_todos_data',
@@ -136,6 +136,10 @@ export async function syncDataToHomeWidget(): Promise<void> {
       Preferences.set({
         key: 'widget_wishlist_data',
         value: JSON.stringify(wishlistPayload),
+      }),
+      Preferences.set({
+        key: 'widget_last_update',
+        value: Date.now().toString(),
       }),
     ]);
   } catch (err) {

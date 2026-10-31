@@ -8,6 +8,9 @@ import {
   IconStar,
   IconPlayerPlay,
   IconSearch,
+  IconSparkles,
+  IconDeviceTv,
+  IconVideo,
 } from '@tabler/icons-react';
 import { db } from '@/app/lib/db';
 import type { MediaItem, MediaType, MediaStatus } from '@/app/lib/types';
@@ -174,29 +177,38 @@ export default function MediaPage() {
           ))}
         </div>
 
-        {/* Media Type Chips Filter */}
+        {/* Media Type Chips Filter (Colored Neo-Brutalism Icon Chips) */}
         <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
           {[
-            { id: 'all', label: 'Semua Tipe' },
-            { id: 'anime', label: 'Anime' },
-            { id: 'movie', label: 'Film' },
-            { id: 'series', label: 'Series' },
-            { id: 'video', label: 'Video' },
-          ].map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setActiveType(t.id)}
-              className={cn(
-                'px-2.5 py-1 text-xs font-black rounded-lg border-2 border-[#0A0A0A] transition-all cursor-pointer whitespace-nowrap select-none',
-                activeType === t.id
-                  ? 'bg-[#0A0A0A] text-white shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              )}
-            >
-              {t.label}
-            </button>
-          ))}
+            { id: 'all', label: 'Semua', icon: IconMovie, color: '#0A0A0A', bg: 'bg-white' },
+            { id: 'anime', label: 'Anime', icon: IconSparkles, color: '#A855F7', bg: 'bg-purple-50' },
+            { id: 'movie', label: 'Film', icon: IconMovie, color: '#3B6FFF', bg: 'bg-blue-50' },
+            { id: 'series', label: 'Series', icon: IconDeviceTv, color: '#FF4DA6', bg: 'bg-pink-50' },
+            { id: 'video', label: 'Video', icon: IconVideo, color: '#FF6B2B', bg: 'bg-orange-50' },
+          ].map((t) => {
+            const Icon = t.icon;
+            const isSelected = activeType === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setActiveType(t.id)}
+                title={`Kategori ${t.label}`}
+                className={cn(
+                  'inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-black rounded-lg border-2 border-[#0A0A0A] transition-all cursor-pointer whitespace-nowrap select-none',
+                  isSelected
+                    ? 'bg-[#0A0A0A] text-white shadow-[2px_2px_0px_#0A0A0A]'
+                    : `${t.bg} text-gray-800 shadow-[1.5px_1.5px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px]`
+                )}
+              >
+                <Icon
+                  className="w-3.5 h-3.5 stroke-[2.5]"
+                  style={{ color: isSelected ? '#FFFFFF' : t.color }}
+                />
+                <span className="text-[11px]">{t.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Media Items List */}
