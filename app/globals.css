@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #FFFDF7;
   --foreground: #0A0A0A;
   --nb-bg: #FFFDF7;
+  --nb-card-bg: #FFFFFF;
   --nb-primary: #FFE135;
   --nb-secondary: #3B6FFF;
   --nb-finance: #00E676;
@@ -13,6 +16,22 @@
   --nb-error: #FF3B30;
   --nb-border: #0A0A0A;
   --nb-text: #0A0A0A;
+}
+
+.dark {
+  --background: #121212;
+  --foreground: #F4F4F0;
+  --nb-bg: #181818;
+  --nb-card-bg: #1E1E1E;
+  --nb-primary: #FFE135;
+  --nb-secondary: #3B6FFF;
+  --nb-finance: #00E676;
+  --nb-wishlist: #FF4DA6;
+  --nb-media: #A855F7;
+  --nb-warning: #FF6B2B;
+  --nb-error: #FF3B30;
+  --nb-border: #2E2E2E;
+  --nb-text: #F4F4F0;
 }
 
 @theme inline {
@@ -60,9 +79,14 @@
 }
 
 .nb-card {
-  background-color: #FFFFFF;
-  border: 3px solid #0A0A0A;
+  background-color: var(--nb-card-bg);
+  border: 3px solid var(--nb-border);
   box-shadow: 4px 4px 0px #0A0A0A;
+  color: var(--nb-text);
+}
+
+.dark .nb-card {
+  box-shadow: 4px 4px 0px #000000;
 }
 
 .nb-button {
@@ -80,9 +104,9 @@
 }
 
 .nb-input {
-  border: 3px solid #0A0A0A;
-  background-color: #FFFFFF;
-  color: #0A0A0A;
+  border: 3px solid var(--nb-border);
+  background-color: var(--nb-card-bg);
+  color: var(--nb-text);
   padding: 0.5rem 0.75rem;
 }
 
@@ -96,4 +120,9 @@ body {
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+.dark body {
+  background-color: #121212;
+  color: #F4F4F0;
 }

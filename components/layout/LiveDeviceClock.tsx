@@ -25,9 +25,9 @@ export const LiveDeviceClock: React.FC = () => {
   }, []);
 
   return (
-    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white border-2 border-[#0A0A0A] rounded-lg shadow-[2px_2px_0px_#0A0A0A]">
+    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white dark:bg-[#252525] border-2 border-[#0A0A0A] dark:border-[#2E2E2E] rounded-lg shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] transition-colors">
       <span className="w-1.5 h-1.5 rounded-full bg-[#00E676] animate-pulse flex-shrink-0" />
-      <span className="font-mono text-xs font-black tracking-wider text-[#0A0A0A]">
+      <span className="font-mono text-xs font-black tracking-wider text-[#0A0A0A] dark:text-[#F4F4F0]">
         {timeStr}
       </span>
     </div>

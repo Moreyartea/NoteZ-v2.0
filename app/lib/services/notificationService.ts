@@ -217,3 +217,39 @@ export async function cancelNotification(notificationId: number): Promise<void> 
   }
 }
 
+/**
+ * Triggers an immediate test notification (Native OS + In-App Drawer)
+ */
+export async function triggerTestNotification(): Promise<boolean> {
+  if (typeof window === 'undefined') return false;
+
+  const notifId = Math.floor(Math.random() * 800000) + 10000;
+  const title = 'Uji Notifikasi Berhasil!';
+  const message = 'Notifikasi lokal NoteZ v2.0 aktif dan siap mengingatkan jadwal harianmu.';
+
+  try {
+    await requestNotificationPermission();
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          id: notifId,
+          title,
+          body: message,
+          schedule: { at: new Date(Date.now() + 1000) },
+          sound: 'beep.wav',
+        },
+      ],
+    });
+  } catch (err) {
+    console.warn('Native local notification test failed, recording in-app only:', err);
+  }
+
+  await recordInAppNotification({
+    title,
+    message,
+    category: 'system',
+  });
+
+  return true;
+}
+

@@ -37,10 +37,10 @@ export const NbCard = React.forwardRef<HTMLDivElement, NbCardProps>(
           ...style,
         }}
         className={cn(
-          'border-[3px] border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] rounded-2xl bg-white text-[#0A0A0A]',
+          'border-[3px] border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_#000000] rounded-2xl bg-white dark:bg-[#1E1E1E] text-[#0A0A0A] dark:text-[#F4F4F0] transition-colors',
           paddingStyles[padding],
           hoverEffect &&
-            'transition-transform duration-100 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#0A0A0A]',
+            'transition-transform duration-100 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#0A0A0A] dark:hover:shadow-[6px_6px_0px_#000000]',
           className
         )}
         {...props}
