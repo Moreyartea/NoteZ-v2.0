@@ -27,7 +27,7 @@ export function calculateSavingsEstimate(
     return {
       remainingAmount: 0,
       daysLeft: 0,
-      summary: 'Target impian sudah tercapai! 🎉',
+      summary: 'Target impian sudah tercapai!',
     };
   }
 

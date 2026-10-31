@@ -6,6 +6,8 @@ import {
   IconCheck,
   IconCash,
   IconCalendar,
+  IconArrowDownLeft,
+  IconArrowUpRight,
 } from '@tabler/icons-react';
 import type { Debt, DebtType, Wallet } from '@/app/lib/types';
 import { NbCard } from '@/components/ui/NbCard';
@@ -127,25 +129,27 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
           type="button"
           onClick={() => setActiveTab('receivable')}
           className={cn(
-            'py-2 text-xs font-black rounded-lg transition-all text-center cursor-pointer',
+            'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
             activeTab === 'receivable'
               ? 'bg-[#00E676] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
               : 'text-gray-600 hover:text-[#0A0A0A]'
           )}
         >
-          📥 Piutang (Teman Pinjam)
+          <IconArrowDownLeft className="w-4 h-4 stroke-[2.5]" />
+          <span>Piutang (Teman Pinjam)</span>
         </button>
         <button
           type="button"
           onClick={() => setActiveTab('payable')}
           className={cn(
-            'py-2 text-xs font-black rounded-lg transition-all text-center cursor-pointer',
+            'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
             activeTab === 'payable'
               ? 'bg-[#FF6B2B] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
               : 'text-gray-600 hover:text-[#0A0A0A]'
           )}
         >
-          📤 Utang (Saya Pinjam)
+          <IconArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+          <span>Utang (Saya Pinjam)</span>
         </button>
       </div>
 

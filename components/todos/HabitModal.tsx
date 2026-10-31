@@ -1,6 +1,16 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import {
+  IconFlame,
+  IconDroplet,
+  IconBook,
+  IconRun,
+  IconBarbell,
+  IconHeart,
+  IconMoon,
+  IconCode,
+} from '@tabler/icons-react';
 import { NbModal } from '@/components/ui/NbModal';
 import { NbButton } from '@/components/ui/NbButton';
 import { NbInput } from '@/components/ui/NbInput';
@@ -12,14 +22,14 @@ export interface HabitModalProps {
 }
 
 const presetIcons = [
-  { id: 'flame', label: '🔥 Api / Semangat' },
-  { id: 'water', label: '💧 Air / Hidrasi' },
-  { id: 'book', label: '📚 Buku / Belajar' },
-  { id: 'run', label: '🏃 Lari / Olahraga' },
-  { id: 'dumbbell', label: '🏋️ Gym / Fitness' },
-  { id: 'meditation', label: '🧘 Meditasi / Relaksasi' },
-  { id: 'moon', label: '🌙 Tidur Tepat Waktu' },
-  { id: 'code', label: '💻 Coding / Project' },
+  { id: 'flame', label: 'Semangat', icon: IconFlame },
+  { id: 'water', label: 'Hidrasi', icon: IconDroplet },
+  { id: 'book', label: 'Belajar', icon: IconBook },
+  { id: 'run', label: 'Olahraga', icon: IconRun },
+  { id: 'dumbbell', label: 'Fitness', icon: IconBarbell },
+  { id: 'meditation', label: 'Relaksasi', icon: IconHeart },
+  { id: 'moon', label: 'Tidur Teratur', icon: IconMoon },
+  { id: 'code', label: 'Project / Coding', icon: IconCode },
 ];
 
 const presetColors = [
@@ -89,20 +99,24 @@ export const HabitModal: React.FC<HabitModalProps> = ({ isOpen, onClose }) => {
             Pilih Ikon
           </label>
           <div className="grid grid-cols-2 gap-1.5 max-h-36 overflow-y-auto p-1 bg-[#FFFDF7] rounded-xl border-2 border-[#0A0A0A]">
-            {presetIcons.map((i) => (
-              <button
-                key={i.id}
-                type="button"
-                onClick={() => setIcon(i.id)}
-                className={`px-2.5 py-1.5 text-xs font-bold rounded-lg border-2 border-[#0A0A0A] text-left transition-all cursor-pointer ${
-                  icon === i.id
-                    ? 'bg-[#FFE135] shadow-[2px_2px_0px_#0A0A0A]'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'
-                }`}
-              >
-                {i.label}
-              </button>
-            ))}
+            {presetIcons.map((i) => {
+              const IconComp = i.icon;
+              return (
+                <button
+                  key={i.id}
+                  type="button"
+                  onClick={() => setIcon(i.id)}
+                  className={`px-2.5 py-1.5 text-xs font-bold rounded-lg border-2 border-[#0A0A0A] text-left transition-all cursor-pointer flex items-center gap-1.5 ${
+                    icon === i.id
+                      ? 'bg-[#FFE135] shadow-[2px_2px_0px_#0A0A0A]'
+                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <IconComp className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span>{i.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 

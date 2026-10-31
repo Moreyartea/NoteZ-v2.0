@@ -115,9 +115,9 @@ export const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose }) => {
           </label>
           <div className="grid grid-cols-3 gap-2">
             {[
-              { id: 'high', label: '🔴 Tinggi', color: 'bg-[#FF3B30] text-white' },
-              { id: 'medium', label: '🟡 Sedang', color: 'bg-[#FFE135] text-[#0A0A0A]' },
-              { id: 'low', label: '🔵 Rendah', color: 'bg-[#3B6FFF] text-white' },
+              { id: 'high', label: 'Tinggi', color: 'bg-[#FF3B30] text-white' },
+              { id: 'medium', label: 'Sedang', color: 'bg-[#FFE135] text-[#0A0A0A]' },
+              { id: 'low', label: 'Rendah', color: 'bg-[#3B6FFF] text-white' },
             ].map((p) => (
               <button
                 key={p.id}

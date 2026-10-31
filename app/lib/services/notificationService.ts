@@ -75,7 +75,7 @@ export async function scheduleDailyReviewNotification(
   if (typeof window === 'undefined') return;
 
   const notifId = 999901; // Reserved ID for daily review
-  const title = '🕒 Waktunya Catat Keuangan & Habit!';
+  const title = 'Waktunya Catat Keuangan & Habit!';
   const body = 'Buka NoteZ sekarang untuk mencatat pengeluaran hari ini dan menuntaskan checklist habit harianmu.';
 
   try {
@@ -126,7 +126,7 @@ export async function scheduleTodoReminder(todo: Todo): Promise<number | null> {
     return null;
   }
 
-  const title = `📌 Pengingat Tugas: ${todo.title}`;
+  const title = `Pengingat Tugas: ${todo.title}`;
   const body = `Tugas kategori ${todo.category} harus diselesaikan sebelum deadline!`;
 
   try {
@@ -167,7 +167,7 @@ export async function scheduleMediaReminder(media: MediaItem): Promise<number | 
   if (!media.airingDay || media.status !== 'watching') return null;
 
   const notifId = stringToNumericId(`media-${media.id}`);
-  const title = `🎬 Episode Baru Rilis: ${media.title}`;
+  const title = `Episode Baru Rilis: ${media.title}`;
   const body = `Hari ini adalah jadwal rilis episode terbaru ${media.title}! Tonton dan tambah progress tontonanmu.`;
 
   try {

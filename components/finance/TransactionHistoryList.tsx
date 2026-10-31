@@ -102,10 +102,10 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
               {t === 'all'
                 ? 'Semua'
                 : t === 'expense'
-                ? '🔴 Pengeluaran'
+                ? 'Pengeluaran'
                 : t === 'income'
-                ? '🟢 Pemasukan'
-                : '🔵 Transfer'}
+                ? 'Pemasukan'
+                : 'Transfer'}
             </button>
           ))}
         </div>
@@ -179,7 +179,7 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
                       </span>
                       <span className="text-[10px] text-gray-600 font-semibold truncate">
                         {tx.type === 'transfer' && destName
-                          ? `${sourceName} ➔ ${destName}`
+                          ? `${sourceName} → ${destName}`
                           : sourceName}
                       </span>
                       <span className="text-[10px] text-gray-400 font-mono">

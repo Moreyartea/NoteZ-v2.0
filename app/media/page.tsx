@@ -154,9 +154,9 @@ export default function MediaPage() {
         <div className="grid grid-cols-4 gap-1 p-1 bg-white rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
           {[
             { id: 'all', label: 'Semua' },
-            { id: 'watching', label: '▶️ Nonton' },
-            { id: 'plan_to_watch', label: '📋 Rencana' },
-            { id: 'completed', label: '🏆 Tamat' },
+            { id: 'watching', label: 'Nonton' },
+            { id: 'plan_to_watch', label: 'Rencana' },
+            { id: 'completed', label: 'Tamat' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -178,10 +178,10 @@ export default function MediaPage() {
         <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
           {[
             { id: 'all', label: 'Semua Tipe' },
-            { id: 'anime', label: '🎌 Anime' },
-            { id: 'movie', label: '🎬 Film' },
-            { id: 'series', label: '📺 Series' },
-            { id: 'video', label: '📹 Video' },
+            { id: 'anime', label: 'Anime' },
+            { id: 'movie', label: 'Film' },
+            { id: 'series', label: 'Series' },
+            { id: 'video', label: 'Video' },
           ].map((t) => (
             <button
               key={t.id}

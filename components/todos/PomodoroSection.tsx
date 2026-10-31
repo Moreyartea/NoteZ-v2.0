@@ -140,7 +140,7 @@ export const PomodoroSection: React.FC = () => {
             )}
           >
             <p className="text-xs font-extrabold text-[#0A0A0A]">
-              🍅 Klasik (25 / 5 Menit)
+              Klasik (25 / 5 Menit)
             </p>
             <p className="text-[10px] text-gray-600 mt-0.5">
               Standar fokus Pomodoro optimal.
@@ -158,7 +158,7 @@ export const PomodoroSection: React.FC = () => {
             )}
           >
             <p className="text-xs font-extrabold text-[#0A0A0A]">
-              ⚡ Deep Work (50 / 10 Menit)
+              Deep Work (50 / 10 Menit)
             </p>
             <p className="text-[10px] text-gray-600 mt-0.5">
               Fokus mendalam tugas kompleks.

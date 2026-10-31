@@ -271,7 +271,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
                       }}
                       leftIcon={<IconBolt className="w-3.5 h-3.5 stroke-[3]" />}
                     >
-                      Bayar ⚡
+                      Bayar
                     </NbButton>
                   ) : (
                     <span className="text-[11px] font-bold text-green-700 bg-green-100 px-2.5 py-1 rounded-md border border-green-400">

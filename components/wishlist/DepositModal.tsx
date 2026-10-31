@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { IconPlus, IconMinus } from '@tabler/icons-react';
 import type { WishlistItem, Wallet } from '@/app/lib/types';
 import { NbModal } from '@/components/ui/NbModal';
 import { NbButton } from '@/components/ui/NbButton';
@@ -106,25 +107,27 @@ export const DepositModal: React.FC<DepositModalProps> = ({
             type="button"
             onClick={() => setActionType('deposit')}
             className={cn(
-              'py-2 text-xs font-black rounded-lg transition-all text-center cursor-pointer',
+              'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               actionType === 'deposit'
                 ? 'bg-[#FF4DA6] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
                 : 'text-gray-600 hover:text-[#0A0A0A]'
             )}
           >
-            ➕ Setor Tabungan
+            <IconPlus className="w-3.5 h-3.5 stroke-[3]" />
+            <span>Setor Tabungan</span>
           </button>
           <button
             type="button"
             onClick={() => setActionType('withdraw')}
             className={cn(
-              'py-2 text-xs font-black rounded-lg transition-all text-center cursor-pointer',
+              'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               actionType === 'withdraw'
                 ? 'bg-[#FF6B2B] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
                 : 'text-gray-600 hover:text-[#0A0A0A]'
             )}
           >
-            ➖ Tarik Dana
+            <IconMinus className="w-3.5 h-3.5 stroke-[3]" />
+            <span>Tarik Dana</span>
           </button>
         </div>
 
@@ -161,7 +164,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({
               onClick={handleFillRemaining}
               className="w-full mt-1.5 py-1 text-xs font-black bg-yellow-100 rounded-md border border-[#0A0A0A] hover:bg-yellow-200 transition-all cursor-pointer"
             >
-              ⚡ Lunaskan Sisa Target ({formatRupiah(wishlist.targetPrice - wishlist.savedAmount)})
+              Lunaskan Sisa Target ({formatRupiah(wishlist.targetPrice - wishlist.savedAmount)})
             </button>
           )}
         </div>

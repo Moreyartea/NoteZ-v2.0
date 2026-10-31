@@ -1,7 +1,12 @@
 'use client';
 
 import React from 'react';
-import { IconTrash, IconRotateClockwise, IconX } from '@tabler/icons-react';
+import {
+  IconTrash,
+  IconRotateClockwise,
+  IconX,
+  IconFolder,
+} from '@tabler/icons-react';
 import type { Note } from '@/app/lib/types';
 import { NbModal } from '@/components/ui/NbModal';
 import { NbButton } from '@/components/ui/NbButton';
@@ -88,8 +93,9 @@ export const TrashModal: React.FC<TrashModalProps> = ({
                   <p className="text-xs text-gray-500 truncate mt-0.5">
                     {note.content || '(Tanpa teks)'}
                   </p>
-                  <span className="text-[10px] font-bold text-gray-500 uppercase mt-1 inline-block">
-                    📁 {note.folder}
+                  <span className="text-[10px] font-bold text-gray-500 uppercase mt-1 inline-flex items-center gap-1">
+                    <IconFolder className="w-3 h-3" />
+                    <span>{note.folder}</span>
                   </span>
                 </div>
 

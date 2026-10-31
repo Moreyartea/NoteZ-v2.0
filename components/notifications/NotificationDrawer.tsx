@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   IconBell,
@@ -12,6 +13,7 @@ import {
   IconMovie,
   IconFlame,
   IconInfoCircle,
+  IconSettings,
 } from '@tabler/icons-react';
 import { db } from '@/app/lib/db';
 import type { AppNotification, NotificationCategory } from '@/app/lib/types';
@@ -151,14 +153,24 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
               </p>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Tutup"
-            className="w-8 h-8 rounded-lg bg-[#FF3B30] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:bg-[#E02E24] active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
-          >
-            <IconX className="w-5 h-5 stroke-[3]" />
-          </button>
+          <div className="flex items-center gap-1.5">
+            <Link
+              href="/settings"
+              onClick={onClose}
+              title="Pengaturan"
+              className="w-8 h-8 rounded-lg bg-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:bg-yellow-50 active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
+            >
+              <IconSettings className="w-4 h-4 text-[#0A0A0A] stroke-[2.5]" />
+            </Link>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Tutup"
+              className="w-8 h-8 rounded-lg bg-[#FF3B30] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:bg-[#E02E24] active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
+            >
+              <IconX className="w-5 h-5 stroke-[3]" />
+            </button>
+          </div>
         </div>
 
         {/* Action Toolbar */}

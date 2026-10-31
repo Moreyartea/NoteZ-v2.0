@@ -6,6 +6,7 @@ import {
   IconTrash,
   IconPin,
   IconDeviceMobile,
+  IconSquare,
 } from '@tabler/icons-react';
 import type { Note, NoteChecklistItem } from '@/app/lib/types';
 import { NbModal } from '@/components/ui/NbModal';
@@ -209,8 +210,9 @@ export const NoteModal: React.FC<NoteModalProps> = ({
                   key={item.id}
                   className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-gray-300"
                 >
-                  <span className="text-xs font-bold text-gray-800 truncate">
-                    ☐ {item.text}
+                  <span className="text-xs font-bold text-gray-800 truncate inline-flex items-center gap-1">
+                    <IconSquare className="w-3.5 h-3.5 text-gray-400 stroke-2" />
+                    <span>{item.text}</span>
                   </span>
                   <button
                     type="button"

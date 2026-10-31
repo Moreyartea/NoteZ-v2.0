@@ -111,7 +111,7 @@ export default function NotesPage() {
         <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
           {[
             { id: 'all', label: 'Semua' },
-            { id: 'pinned', label: '📌 Disematkan' },
+            { id: 'pinned', label: 'Disematkan' },
             { id: 'ide', label: 'Ide' },
             { id: 'kuliah', label: 'Kuliah' },
             { id: 'kerja', label: 'Kerja' },

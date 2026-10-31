@@ -87,8 +87,8 @@ export default function WishlistPage() {
         <div className="grid grid-cols-3 gap-1 p-1 bg-white rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
           {[
             { id: 'all', label: `Semua (${wishlists.length})` },
-            { id: 'active', label: '⏳ Menabung' },
-            { id: 'achieved', label: '🎉 Tercapai' },
+            { id: 'active', label: 'Menabung' },
+            { id: 'achieved', label: 'Tercapai' },
           ].map((tab) => (
             <button
               key={tab.id}

@@ -96,7 +96,7 @@ export const HabitTrackerSection: React.FC<HabitTrackerSectionProps> = ({
                         {habit.title}
                       </h3>
                       <p className="text-[11px] font-semibold text-gray-600 mt-0.5">
-                        {isDoneToday ? '✅ Selesai hari ini!' : 'Belum selesai hari ini'}
+                        {isDoneToday ? 'Selesai hari ini' : 'Belum selesai hari ini'}
                       </p>
                     </div>
                   </div>
@@ -149,8 +149,12 @@ export const HabitTrackerSection: React.FC<HabitTrackerSectionProps> = ({
                           <span className="text-[9px] font-bold uppercase leading-none">
                             {day.dayLabel}
                           </span>
-                          <span className="text-xs font-black mt-0.5 leading-none">
-                            {isCompleted ? '✓' : day.dateNum}
+                          <span className="text-xs font-black mt-0.5 leading-none flex items-center justify-center">
+                            {isCompleted ? (
+                              <IconCheck className="w-3.5 h-3.5 stroke-[3.5]" />
+                            ) : (
+                              day.dateNum
+                            )}
                           </span>
                         </div>
                       );

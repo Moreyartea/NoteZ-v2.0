@@ -175,10 +175,10 @@ export const MediaModal: React.FC<MediaModalProps> = ({
             value={type}
             onChange={(e) => setType(e.target.value as MediaType)}
             options={[
-              { value: 'anime', label: '🎌 Anime' },
-              { value: 'movie', label: '🎬 Film / Movie' },
-              { value: 'series', label: '📺 Series / Drakor' },
-              { value: 'video', label: '📹 Video / Dokumenter' },
+              { value: 'anime', label: 'Anime' },
+              { value: 'movie', label: 'Film / Movie' },
+              { value: 'series', label: 'Series / Drakor' },
+              { value: 'video', label: 'Video / Dokumenter' },
             ]}
           />
 
@@ -187,11 +187,11 @@ export const MediaModal: React.FC<MediaModalProps> = ({
             value={status}
             onChange={(e) => setStatus(e.target.value as MediaStatus)}
             options={[
-              { value: 'watching', label: '▶️ Sedang Nonton' },
-              { value: 'plan_to_watch', label: '📋 Rencana Tonton' },
-              { value: 'completed', label: '🏆 Selesai' },
-              { value: 'on_hold', label: '⏸️ Ditunda' },
-              { value: 'dropped', label: '🗑️ Ditinggalkan' },
+              { value: 'watching', label: 'Sedang Nonton' },
+              { value: 'plan_to_watch', label: 'Rencana Tonton' },
+              { value: 'completed', label: 'Selesai' },
+              { value: 'on_hold', label: 'Ditunda' },
+              { value: 'dropped', label: 'Ditinggalkan' },
             ]}
           />
         </div>
@@ -235,14 +235,14 @@ export const MediaModal: React.FC<MediaModalProps> = ({
             {currentTier && (
               <NbBadge tier={currentTier}>
                 {currentTier === 'S'
-                  ? '👑 S-TIER (MASTERPIECE)'
+                  ? 'S-TIER (MASTERPIECE)'
                   : currentTier === 'A'
-                  ? '🔥 A-TIER (WORTH IT)'
+                  ? 'A-TIER (WORTH IT)'
                   : currentTier === 'B'
-                  ? '🍿 B-TIER (LUMAYAN)'
+                  ? 'B-TIER (LUMAYAN)'
                   : currentTier === 'C'
-                  ? '😐 C-TIER (BIASA)'
-                  : '🗑️ D-TIER (SKIP)'}
+                  ? 'C-TIER (BIASA)'
+                  : 'D-TIER (SKIP)'}
               </NbBadge>
             )}
           </div>
@@ -299,7 +299,7 @@ export const MediaModal: React.FC<MediaModalProps> = ({
               onChange={(e) => setHasSpoiler(e.target.checked)}
               className="w-4 h-4 accent-[#FF6B2B] cursor-pointer"
             />
-            <span>⚠️ Ulasan Ini Mengandung Spoiler (Akan Disensor/Blur)</span>
+            <span>Ulasan Ini Mengandung Spoiler (Akan Disensor/Blur)</span>
           </label>
         </div>
 

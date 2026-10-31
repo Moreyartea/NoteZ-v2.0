@@ -76,7 +76,7 @@ export const WishlistCard: React.FC<WishlistCardProps> = ({
         <div className="flex items-center gap-1.5">
           {wishlist.isAchieved && (
             <NbBadge variant="finance" icon={<IconSparkles className="w-3.5 h-3.5" />}>
-              TERCAPAI 🎉
+              TERCAPAI
             </NbBadge>
           )}
 
@@ -181,7 +181,7 @@ export const WishlistCard: React.FC<WishlistCardProps> = ({
           onClick={() => onOpenDeposit(wishlist)}
           leftIcon={<IconCoin className="w-4 h-4" />}
         >
-          {wishlist.isAchieved ? 'Atur Tabungan' : 'Nabung 💸'}
+          {wishlist.isAchieved ? 'Atur Tabungan' : 'Nabung'}
         </NbButton>
       </div>
     </NbCard>

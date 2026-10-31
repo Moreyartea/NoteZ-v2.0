@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="⚡ NOTEZ TODAY"
+            android:text="NOTEZ TODAY"
             android:textColor="#0A0A0A"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Semua tugas beres! Siap taklukkan hari 🚀"
+            android:text="Semua tugas beres! Siap taklukkan hari."
             android:textColor="#555555"
             android:textSize="12sp"
             android:textStyle="bold"

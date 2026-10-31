@@ -1,6 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import {
+  IconArrowDownRight,
+  IconArrowUpRight,
+  IconArrowsExchange,
+} from '@tabler/icons-react';
 import type { Wallet, TransactionType } from '@/app/lib/types';
 import { NbModal } from '@/components/ui/NbModal';
 import { NbButton } from '@/components/ui/NbButton';
@@ -168,37 +173,40 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
             type="button"
             onClick={() => handleTypeChange('expense')}
             className={cn(
-              'py-2 text-xs font-black rounded-lg transition-all text-center cursor-pointer',
+              'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               type === 'expense'
                 ? 'bg-[#FF3B30] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]'
                 : 'text-gray-600 hover:text-[#0A0A0A]'
             )}
           >
-            🔴 Pengeluaran
+            <IconArrowDownRight className="w-3.5 h-3.5 stroke-[3]" />
+            <span>Pengeluaran</span>
           </button>
           <button
             type="button"
             onClick={() => handleTypeChange('income')}
             className={cn(
-              'py-2 text-xs font-black rounded-lg transition-all text-center cursor-pointer',
+              'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               type === 'income'
                 ? 'bg-[#00E676] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]'
                 : 'text-gray-600 hover:text-[#0A0A0A]'
             )}
           >
-            🟢 Pemasukan
+            <IconArrowUpRight className="w-3.5 h-3.5 stroke-[3]" />
+            <span>Pemasukan</span>
           </button>
           <button
             type="button"
             onClick={() => handleTypeChange('transfer')}
             className={cn(
-              'py-2 text-xs font-black rounded-lg transition-all text-center cursor-pointer',
+              'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               type === 'transfer'
                 ? 'bg-[#3B6FFF] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]'
                 : 'text-gray-600 hover:text-[#0A0A0A]'
             )}
           >
-            🔵 Transfer
+            <IconArrowsExchange className="w-3.5 h-3.5 stroke-[3]" />
+            <span>Transfer</span>
           </button>
         </div>
 

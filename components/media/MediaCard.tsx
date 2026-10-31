@@ -47,13 +47,13 @@ export const MediaCard: React.FC<MediaCardProps> = ({ media, onEdit }) => {
   const getTypeLabel = (type: MediaType) => {
     switch (type) {
       case 'anime':
-        return '🎌 Anime';
+        return 'Anime';
       case 'movie':
-        return '🎬 Film';
+        return 'Film';
       case 'series':
-        return '📺 Series';
+        return 'Series';
       case 'video':
-        return '📹 Video';
+        return 'Video';
     }
   };
 
@@ -179,7 +179,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({ media, onEdit }) => {
               {media.hasSpoiler && (
                 <div className="flex items-center justify-between mb-1 pb-1 border-b border-gray-200">
                   <span className="text-[10px] font-bold text-[#FF6B2B]">
-                    ⚠️ Spoiler Terbuka
+                    Spoiler Terbuka
                   </span>
                   <button
                     type="button"

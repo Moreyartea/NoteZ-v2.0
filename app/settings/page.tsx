@@ -281,7 +281,7 @@ export default function SettingsPage() {
         >
           <div className="space-y-4">
             <div className="p-3 rounded-xl bg-red-50 border-2 border-[#FF3B30] text-xs font-bold text-red-800 space-y-1">
-              <p>⚠️ PERINGATAN: Tindakan ini permanen!</p>
+              <p className="font-black text-red-900 uppercase">Peringatan: Tindakan ini permanen!</p>
               <p>
                 Semua data dompet, transaksi, tugas, habit, catatan, dan tontonan akan dihapus secara total.
               </p>
