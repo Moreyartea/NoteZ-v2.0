@@ -9,7 +9,6 @@ import {
   IconPlus,
 } from '@tabler/icons-react';
 import type { Wallet, WalletType } from '@/app/lib/types';
-import { NbCard } from '@/components/ui/NbCard';
 import { NbButton } from '@/components/ui/NbButton';
 import { NbModal } from '@/components/ui/NbModal';
 import { NbInput } from '@/components/ui/NbInput';
@@ -138,13 +137,13 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
         {wallets.map((wallet) => (
           <div
             key={wallet.id}
-            className="min-w-[210px] flex-shrink-0 snap-start"
+            className="min-w-[235px] flex-shrink-0 snap-start"
           >
-            <NbCard
-              style={{ backgroundColor: wallet.color || '#FFFFFF' }}
-              className="p-3.5 flex flex-col justify-between h-[135px] text-white relative overflow-hidden"
+            <div
+              style={{ backgroundColor: wallet.color || '#3B6FFF' }}
+              className="min-w-[235px] p-3.5 flex flex-col justify-between gap-2.5 rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_var(--theme-shadow)] text-white relative"
             >
-              {/* Top row */}
+              {/* Baris 1 (Atas): Ikon dompet di kiri + Badge tipe dompet di kanan */}
               <div className="flex items-start justify-between">
                 <div className="p-1.5 rounded-lg bg-black/20 border border-black/30 backdrop-blur-sm">
                   {getWalletIcon(wallet.type)}
@@ -154,27 +153,32 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
                 </span>
               </div>
 
-              {/* Bottom row */}
-              <div>
-                <p className="text-xs font-bold text-white/90 truncate">
+              {/* Baris 2 (Tengah): Nama dompet + Nominal Saldo Rupiah penuh satu baris */}
+              <div className="my-0.5">
+                <p className="text-xs font-extrabold truncate text-white/90">
                   {wallet.name}
                 </p>
-                <p className="font-mono text-base font-extrabold tracking-tight mt-0.5 text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">
+                <p className="font-mono text-lg font-black tracking-tight truncate mt-0.5 text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">
                   {formatRupiah(wallet.balance)}
                 </p>
               </div>
 
-              {/* Quick Adjustment Button */}
-              <button
-                type="button"
-                onClick={() => openAdjustModal(wallet)}
-                className="absolute bottom-2.5 right-2.5 px-2 py-1 bg-white dark:bg-[var(--theme-surface)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] font-extrabold text-[10px] rounded-md border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-1 cursor-pointer"
-                title="Sesuaikan Saldo"
-              >
-                <IconScale className="w-3 h-3 stroke-[2.5]" />
-                <span>Sesuaikan</span>
-              </button>
-            </NbCard>
+              {/* Baris 3 (Footer Khusus di Bawah): Pembatas, Status Aktif, dan Tombol Sesuaikan */}
+              <div className="pt-2 border-t border-black/20 flex items-center justify-between gap-2">
+                <span className="text-[10px] font-mono font-bold opacity-85">
+                  ● Aktif
+                </span>
+                <button
+                  type="button"
+                  onClick={() => openAdjustModal(wallet)}
+                  className="px-2.5 py-1 rounded-lg border-2 border-[#0A0A0A] bg-white dark:bg-[var(--theme-surface)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] text-[10px] font-extrabold shadow-[1.5px_1.5px_0px_#0A0A0A] shrink-0 active:translate-x-[1px] active:translate-y-[1px] flex items-center gap-1 cursor-pointer transition-transform"
+                  title="Sesuaikan Saldo"
+                >
+                  <IconScale className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span>Sesuaikan</span>
+                </button>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -312,4 +316,3 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
     </div>
   );
 };
-

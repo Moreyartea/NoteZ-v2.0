@@ -6,10 +6,17 @@
 :root,
 html[data-theme="classic-brutal"] {
   --theme-bg: #FFFDF7;
+  --theme-outer-bg: #F5F2EB;
   --theme-surface: #FFFFFF;
+  --theme-surface-elevated: #F8F6F0;
   --theme-border: #0A0A0A;
+  --theme-border-hero: #0A0A0A;
+  --theme-border-subtle: #D4D0C8;
+  --theme-shell-border: #0A0A0A;
+  --theme-shadow: #0A0A0A;
   --theme-accent-primary: #FFE135;
   --theme-accent-secondary: #3B6FFF;
+  --theme-accent-text: #0A0A0A;
   --theme-text-primary: #0A0A0A;
   --theme-text-muted: #555555;
 
@@ -30,40 +37,68 @@ html[data-theme="classic-brutal"] {
 
 html[data-theme="cyber-lime"] {
   --theme-bg: #0C0D10;
+  --theme-outer-bg: #060709;
   --theme-surface: #16181D;
-  --theme-border: #2A2D36;
+  --theme-surface-elevated: #1F2229;
+  --theme-border: #84A916;
+  --theme-border-hero: #CCFF00;
+  --theme-border-subtle: #2A2D36;
+  --theme-shell-border: #1C1E24;
+  --theme-shadow: rgba(204, 255, 0, 0.22);
   --theme-accent-primary: #CCFF00;
   --theme-accent-secondary: #2563EB;
+  --theme-accent-text: #0A0A0A;
   --theme-text-primary: #F4F5F6;
   --theme-text-muted: #8E929E;
 }
 
 html[data-theme="cyber-blue"] {
   --theme-bg: #0B0E14;
+  --theme-outer-bg: #06080C;
   --theme-surface: #141A24;
-  --theme-border: #243044;
+  --theme-surface-elevated: #1C2432;
+  --theme-border: #0284C7;
+  --theme-border-hero: #00F0FF;
+  --theme-border-subtle: #243044;
+  --theme-shell-border: #1A2230;
+  --theme-shadow: rgba(0, 240, 255, 0.22);
   --theme-accent-primary: #00F0FF;
   --theme-accent-secondary: #2563EB;
+  --theme-accent-text: #0A0A0A;
   --theme-text-primary: #F0F6FC;
   --theme-text-muted: #8B98A5;
 }
 
 html[data-theme="violet-dark"] {
   --theme-bg: #0F0E17;
+  --theme-outer-bg: #08070D;
   --theme-surface: #1B1A26;
-  --theme-border: #2E2B40;
+  --theme-surface-elevated: #252336;
+  --theme-border: #7C3AED;
+  --theme-border-hero: #EC4899;
+  --theme-border-subtle: #2E2B40;
+  --theme-shell-border: #221F30;
+  --theme-shadow: rgba(124, 58, 237, 0.28);
   --theme-accent-primary: #7C3AED;
   --theme-accent-secondary: #EC4899;
+  --theme-accent-text: #FFFFFF;
   --theme-text-primary: #FFFFFE;
   --theme-text-muted: #A7A1B8;
 }
 
 html[data-theme="oled"] {
   --theme-bg: #000000;
+  --theme-outer-bg: #000000;
   --theme-surface: #121212;
-  --theme-border: #27272A;
+  --theme-surface-elevated: #1C1C1F;
+  --theme-border: #059669;
+  --theme-border-hero: #10B981;
+  --theme-border-subtle: #27272A;
+  --theme-shell-border: #1F1F22;
+  --theme-shadow: rgba(16, 185, 129, 0.25);
   --theme-accent-primary: #10B981;
   --theme-accent-secondary: #3B82F6;
+  --theme-accent-text: #0A0A0A;
   --theme-text-primary: #FFFFFF;
   --theme-text-muted: #71717A;
 }
@@ -99,39 +134,19 @@ html[data-theme="oled"] {
   --color-nb-text: #0A0A0A;
 
   --color-theme-bg: var(--theme-bg);
+  --color-theme-outer-bg: var(--theme-outer-bg);
   --color-theme-surface: var(--theme-surface);
+  --color-theme-surface-elevated: var(--theme-surface-elevated);
   --color-theme-border: var(--theme-border);
+  --color-theme-border-hero: var(--theme-border-hero);
+  --color-theme-border-subtle: var(--theme-border-subtle);
+  --color-theme-shell-border: var(--theme-shell-border);
+  --color-theme-shadow: var(--theme-shadow);
   --color-theme-accent-primary: var(--theme-accent-primary);
   --color-theme-accent-secondary: var(--theme-accent-secondary);
+  --color-theme-accent-text: var(--theme-accent-text);
   --color-theme-text-primary: var(--theme-text-primary);
   --color-theme-text-muted: var(--theme-text-muted);
-}
-
-/* Neo-Brutalism Typography Reset */
-* {
-  /* Cegah teks bertabrakan vertikal saat wrapping */
-  line-height: 1.35;
-}
-
-h1, h2, h3, h4, .font-black {
-  line-height: 1.2 !important;
-  letter-spacing: -0.02em;
-}
-
-/* Hindari pemakaian class leading-none jika elemen memiliki kemungkinan wrap */
-.leading-none {
-  line-height: 1.15 !important;
-}
-
-/* Dynamic Card Surface & Element Sync across Themes */
-html[data-theme]:not([data-theme="classic-brutal"]) .nb-card,
-html[data-theme]:not([data-theme="classic-brutal"]) [data-card="true"],
-html.dark .bg-white,
-html.dark .bg-\[\#FFFDF7\],
-html.dark .bg-\[\#ffffff\] {
-  background-color: var(--theme-surface) !important;
-  border-color: var(--theme-border) !important;
-  color: var(--theme-text-primary) !important;
 }
 
 /* Neo-Brutalism Utility Classes */
@@ -171,8 +186,10 @@ html.dark .bg-\[\#ffffff\] {
 }
 
 .dark .nb-card {
-  box-shadow: 4px 4px 0px #000000;
+  box-shadow: 4px 4px 0px var(--theme-shadow, #000000);
   border-color: var(--theme-border, #2E2E2E);
+  background-color: var(--theme-surface);
+  color: var(--theme-text-primary);
 }
 
 .nb-button {

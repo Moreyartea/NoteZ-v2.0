@@ -60,31 +60,35 @@ export default function TodosPage() {
     <AppShell headerTitle="Tugas & Habit">
       <div className="space-y-4">
         {/* HERO CARD: Ringkasan Fokus Harian */}
-        <NbCard bgColor="#3B6FFF" className="p-4 text-white space-y-2">
+        <NbCard
+          isHero={true}
+          bgColor="#3B6FFF"
+          className="p-4 text-white dark:bg-[var(--theme-surface)] dark:text-[var(--theme-text-primary)] dark:border-[var(--theme-border-hero)] space-y-2"
+        >
           <div className="flex items-center justify-between">
             <span className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] bg-[#FFE135] px-2 py-0.5 rounded-md border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]">
               Fokus Hari Ini
             </span>
-            <span className="text-xs font-bold text-blue-100 font-mono">
+            <span className="text-xs font-bold text-blue-100 dark:text-[var(--theme-text-muted)] font-mono">
               {todayStr}
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-2 pt-1">
-            <div className="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/20">
-              <p className="text-[10px] font-bold text-blue-200 uppercase leading-tight">
+            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2.5 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)]">
+              <p className="text-[10px] font-bold text-blue-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
                 Tugas Hari Ini
               </p>
-              <p className="text-lg font-black font-mono text-white mt-1">
+              <p className="text-lg font-black font-mono text-white dark:text-[var(--theme-text-primary)] mt-1">
                 {completedTodayTasks.length} / {todayTasks.length} Selesai
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/20">
-              <p className="text-[10px] font-bold text-blue-200 uppercase leading-tight">
+            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2.5 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)]">
+              <p className="text-[10px] font-bold text-blue-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
                 Habit Tuntas
               </p>
-              <p className="text-lg font-black font-mono text-white mt-1">
+              <p className="text-lg font-black font-mono text-white dark:text-[var(--theme-text-primary)] mt-1">
                 {habitCompletedToday.length} / {habits.length} Hari Ini
               </p>
             </div>
@@ -92,15 +96,15 @@ export default function TodosPage() {
         </NbCard>
 
         {/* Sub-Tabs Switcher */}
-        <div className="grid grid-cols-3 gap-1.5 p-1 bg-white dark:bg-[var(--theme-surface)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]">
+        <div className="grid grid-cols-3 gap-1.5 p-1 bg-white dark:bg-[var(--theme-surface)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_var(--theme-shadow)]">
           <button
             type="button"
             onClick={() => setActiveTab('todos')}
             className={cn(
               'py-2 text-xs font-black rounded-lg transition-all text-center flex items-center justify-center gap-1 cursor-pointer select-none',
               activeTab === 'todos'
-                ? 'bg-[#FFE135] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                : 'text-gray-600 hover:text-[#0A0A0A]'
+                ? 'bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[1.5px_1.5px_0px_#0A0A0A]'
+                : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
             )}
           >
             <IconChecklist className="w-4 h-4 stroke-[2.5]" />
@@ -114,7 +118,7 @@ export default function TodosPage() {
               'py-2 text-xs font-black rounded-lg transition-all text-center flex items-center justify-center gap-1 cursor-pointer select-none',
               activeTab === 'habits'
                 ? 'bg-[#FF6B2B] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                : 'text-gray-600 hover:text-[#0A0A0A]'
+                : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
             )}
           >
             <IconFlame className="w-4 h-4 stroke-[2.5]" />
@@ -128,7 +132,7 @@ export default function TodosPage() {
               'py-2 text-xs font-black rounded-lg transition-all text-center flex items-center justify-center gap-1 cursor-pointer select-none',
               activeTab === 'pomodoro'
                 ? 'bg-[#3B6FFF] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                : 'text-gray-600 hover:text-[#0A0A0A]'
+                : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
             )}
           >
             <IconClock className="w-4 h-4 stroke-[2.5]" />
@@ -163,7 +167,7 @@ export default function TodosPage() {
                 else setIsHabitModalOpen(true);
               }}
               aria-label={activeTab === 'todos' ? 'Tambah Tugas' : 'Tambah Habit'}
-              className="w-14 h-14 rounded-2xl bg-[#FFE135] text-[#0A0A0A] border-[3px] border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:scale-105 transition-all cursor-pointer"
+              className="w-14 h-14 rounded-2xl bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_var(--theme-shadow)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:scale-105 transition-all cursor-pointer"
             >
               <IconPlus className="w-8 h-8 stroke-[3]" />
             </button>

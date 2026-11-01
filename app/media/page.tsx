@@ -6,14 +6,13 @@ import {
   IconMovie,
   IconPlus,
   IconStar,
-  IconPlayerPlay,
   IconSearch,
   IconSparkles,
   IconDeviceTv,
   IconVideo,
 } from '@tabler/icons-react';
 import { db } from '@/app/lib/db';
-import type { MediaItem, MediaType, MediaStatus } from '@/app/lib/types';
+import type { MediaItem } from '@/app/lib/types';
 import { AppShell } from '@/components/layout/AppShell';
 import { NbCard } from '@/components/ui/NbCard';
 import { MediaCard } from '@/components/media/MediaCard';
@@ -98,13 +97,17 @@ export default function MediaPage() {
     <AppShell headerTitle="Tontonan">
       <div className="space-y-4">
         {/* HERO CARD: Statistik Tontonan */}
-        <NbCard bgColor="#A855F7" className="p-4 text-white space-y-2">
+        <NbCard
+          isHero={true}
+          bgColor="#A855F7"
+          className="p-4 text-white dark:bg-[var(--theme-surface)] dark:text-[var(--theme-text-primary)] dark:border-[var(--theme-border-hero)] space-y-2"
+        >
           <div className="flex items-center justify-between">
             <span className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] bg-[#FFE135] px-2 py-0.5 rounded-md border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]">
               Media & Watchlist Tracker
             </span>
             {avgScore && (
-              <span className="inline-flex items-center gap-1 text-xs font-mono font-black bg-white text-[#0A0A0A] px-2 py-0.5 rounded-md border-2 border-[#0A0A0A]">
+              <span className="inline-flex items-center gap-1 text-xs font-mono font-black bg-white dark:bg-[var(--theme-surface-elevated)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] px-2 py-0.5 rounded-md border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
                 <IconStar className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
                 <span>Rata-rata: {avgScore}</span>
               </span>
@@ -112,26 +115,26 @@ export default function MediaPage() {
           </div>
 
           <div className="grid grid-cols-3 gap-2 pt-1">
-            <div className="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/20 text-center">
-              <p className="text-[10px] font-bold text-purple-200 uppercase leading-tight">
+            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)] text-center">
+              <p className="text-[10px] font-bold text-purple-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
                 Total Judul
               </p>
-              <p className="text-base font-black font-mono text-white mt-1">
+              <p className="text-base font-black font-mono text-white dark:text-[var(--theme-text-primary)] mt-1">
                 {totalItems}
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/20 text-center">
-              <p className="text-[10px] font-bold text-purple-200 uppercase leading-tight">
+            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)] text-center">
+              <p className="text-[10px] font-bold text-purple-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
                 Sedang Nonton
               </p>
-              <p className="text-base font-black font-mono text-[#FFE135] mt-1">
+              <p className="text-base font-black font-mono text-[#FFE135] dark:text-[var(--theme-accent-primary)] mt-1">
                 {watchingCount}
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/20 text-center">
-              <p className="text-[10px] font-bold text-purple-200 uppercase leading-tight">
+            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)] text-center">
+              <p className="text-[10px] font-bold text-purple-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
                 Tamat / Selesai
               </p>
               <p className="text-base font-black font-mono text-[#00E676] mt-1">
@@ -148,13 +151,13 @@ export default function MediaPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari judul tontonan..."
-            className="w-full bg-white text-xs font-bold text-[#0A0A0A] rounded-xl border-[2.5px] border-[#0A0A0A] pl-8 pr-3 py-2 outline-none focus:shadow-[2px_2px_0px_#3B6FFF]"
+            className="w-full bg-white dark:bg-[var(--theme-surface)] text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] rounded-xl border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border)] pl-8 pr-3 py-2 outline-none focus:shadow-[2px_2px_0px_#3B6FFF]"
           />
-          <IconSearch className="w-4 h-4 text-gray-500 absolute left-2.5 top-2.5 pointer-events-none" />
+          <IconSearch className="w-4 h-4 text-gray-500 dark:text-[var(--theme-text-muted)] absolute left-2.5 top-2.5 pointer-events-none" />
         </div>
 
         {/* Status Filter Tabs */}
-        <div className="grid grid-cols-4 gap-1 p-1 bg-white rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+        <div className="grid grid-cols-4 gap-1 p-1 bg-white dark:bg-[var(--theme-surface)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_var(--theme-shadow)]">
           {[
             { id: 'all', label: 'Semua' },
             { id: 'watching', label: 'Nonton' },
@@ -168,8 +171,8 @@ export default function MediaPage() {
               className={cn(
                 'py-1.5 text-xs font-black rounded-lg transition-all text-center cursor-pointer',
                 activeStatus === tab.id
-                  ? 'bg-[#FFE135] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                  : 'text-gray-600 hover:text-[#0A0A0A]'
+                  ? 'bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[1.5px_1.5px_0px_#0A0A0A]'
+                  : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
               )}
             >
               {tab.label}
@@ -195,15 +198,15 @@ export default function MediaPage() {
                 onClick={() => setActiveType(t.id)}
                 title={`Kategori ${t.label}`}
                 className={cn(
-                  'inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-black rounded-lg border-2 border-[#0A0A0A] transition-all cursor-pointer whitespace-nowrap select-none',
+                  'inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-black rounded-lg border-2 transition-all cursor-pointer whitespace-nowrap select-none',
                   isSelected
-                    ? 'bg-[#0A0A0A] text-white shadow-[2px_2px_0px_#0A0A0A]'
-                    : `${t.bg} text-gray-800 shadow-[1.5px_1.5px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px]`
+                    ? 'bg-[#0A0A0A] dark:bg-[var(--theme-accent-primary)] text-white dark:text-[var(--theme-accent-text)] border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[2px_2px_0px_#0A0A0A]'
+                    : 'bg-white dark:bg-[var(--theme-surface)] text-gray-800 dark:text-[var(--theme-text-primary)] border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_var(--theme-shadow)] active:translate-x-[1px] active:translate-y-[1px]'
                 )}
               >
                 <Icon
                   className="w-3.5 h-3.5 stroke-[2.5]"
-                  style={{ color: isSelected ? '#FFFFFF' : t.color }}
+                  style={{ color: isSelected ? 'inherit' : t.color }}
                 />
                 <span className="text-[11px]">{t.label}</span>
               </button>
@@ -213,14 +216,14 @@ export default function MediaPage() {
 
         {/* Media Items List */}
         {filteredMedia.length === 0 ? (
-          <NbCard className="p-8 text-center text-gray-500">
+          <NbCard className="p-8 text-center text-gray-500 dark:text-[var(--theme-text-muted)]">
             <div className="w-12 h-12 rounded-2xl bg-[#FFE135] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center mx-auto mb-2">
               <IconMovie className="w-6 h-6 text-[#0A0A0A]" />
             </div>
-            <p className="text-sm font-bold text-[#0A0A0A]">
+            <p className="text-sm font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
               Belum ada tontonan
             </p>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <p className="text-xs text-gray-500 dark:text-[var(--theme-text-muted)] mt-0.5">
               Tekan tombol "+ Tontonan" untuk mencatat Anime, Film, atau Series favoritmu.
             </p>
           </NbCard>
@@ -242,7 +245,7 @@ export default function MediaPage() {
             type="button"
             onClick={handleCreateNew}
             aria-label="Tambah Tontonan"
-            className="w-14 h-14 rounded-2xl bg-[#FFE135] text-[#0A0A0A] border-[3px] border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:scale-105 transition-all cursor-pointer"
+            className="w-14 h-14 rounded-2xl bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_var(--theme-shadow)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:scale-105 transition-all cursor-pointer"
           >
             <IconPlus className="w-8 h-8 stroke-[3]" />
           </button>

@@ -86,18 +86,18 @@ export default function NotesPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari judul, isi, atau #tag..."
-              className="w-full bg-white text-xs font-bold text-[#0A0A0A] rounded-xl border-[2.5px] border-[#0A0A0A] pl-8 pr-3 py-2 outline-none focus:shadow-[2px_2px_0px_#3B6FFF]"
+              className="w-full bg-white dark:bg-[var(--theme-surface)] text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] rounded-xl border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] pl-8 pr-3 py-2 outline-none focus:shadow-[2px_2px_0px_#3B6FFF] dark:focus:shadow-[2px_2px_0px_var(--theme-accent-primary)] placeholder-gray-400 dark:placeholder-gray-500"
             />
-            <IconSearch className="w-4 h-4 text-gray-500 absolute left-2.5 top-2.5 pointer-events-none" />
+            <IconSearch className="w-4 h-4 text-gray-500 dark:text-[var(--theme-text-muted)] absolute left-2.5 top-2.5 pointer-events-none" />
           </div>
 
           <button
             type="button"
             onClick={() => setIsTrashOpen(true)}
-            className="flex items-center gap-1 bg-white text-xs font-black text-gray-700 px-3 py-2 rounded-xl border-[2.5px] border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer flex-shrink-0"
+            className="flex items-center gap-1 bg-white dark:bg-[var(--theme-surface)] text-xs font-black text-gray-700 dark:text-[var(--theme-text-muted)] px-3 py-2 rounded-xl border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_var(--theme-shadow)] active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer flex-shrink-0"
             title="Buka Tong Sampah"
           >
-            <IconTrash className="w-4 h-4 text-gray-600" />
+            <IconTrash className="w-4 h-4 text-gray-600 dark:text-[var(--theme-text-muted)]" />
             <span>Sampah</span>
             {trashedNotes.length > 0 && (
               <span className="w-4 h-4 rounded-full bg-[#FF3B30] text-white text-[9px] flex items-center justify-center font-black">
@@ -124,10 +124,10 @@ export default function NotesPage() {
               type="button"
               onClick={() => setActiveFolder(f.id)}
               className={cn(
-                'px-2.5 py-1 text-xs font-black rounded-lg border-2 border-[#0A0A0A] transition-all cursor-pointer whitespace-nowrap select-none',
+                'px-2.5 py-1 text-xs font-black rounded-lg border-2 transition-all cursor-pointer whitespace-nowrap select-none',
                 activeFolder === f.id
-                  ? 'bg-[#FFE135] text-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A] -translate-y-0.5'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  ? 'bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[1.5px_1.5px_0px_#0A0A0A] -translate-y-0.5'
+                  : 'bg-white dark:bg-[var(--theme-surface)] text-gray-700 dark:text-[var(--theme-text-muted)] border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] hover:bg-gray-100 dark:hover:bg-white/5'
               )}
             >
               {f.label}
@@ -137,14 +137,14 @@ export default function NotesPage() {
 
         {/* Notes Grid Display */}
         {filteredNotes.length === 0 ? (
-          <NbCard className="p-8 text-center text-gray-500">
-            <div className="w-12 h-12 rounded-2xl bg-[#FFE135] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center mx-auto mb-2">
-              <IconNotes className="w-6 h-6 text-[#0A0A0A]" />
+          <NbCard className="p-8 text-center text-gray-500 dark:text-[var(--theme-text-muted)]">
+            <div className="w-12 h-12 rounded-2xl bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center mx-auto mb-2">
+              <IconNotes className="w-6 h-6 text-[#0A0A0A] dark:text-[var(--theme-accent-text)]" />
             </div>
-            <p className="text-sm font-bold text-[#0A0A0A]">
+            <p className="text-sm font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
               Tidak ada catatan
             </p>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <p className="text-xs text-gray-500 dark:text-[var(--theme-text-muted)] mt-0.5">
               Tekan tombol "+ Catat" untuk membuat catatan ide baru.
             </p>
           </NbCard>
@@ -153,8 +153,8 @@ export default function NotesPage() {
             {/* Pinned Section */}
             {pinnedNotes.length > 0 && (
               <div className="space-y-2">
-                <div className="flex items-center gap-1 text-xs font-black text-[#0A0A0A] uppercase tracking-wide">
-                  <IconPin className="w-3.5 h-3.5 fill-[#FFE135]" />
+                <div className="flex items-center gap-1 text-xs font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] uppercase tracking-wide">
+                  <IconPin className="w-3.5 h-3.5 fill-[#FFE135] text-[#FFE135]" />
                   <span>Disematkan ({pinnedNotes.length})</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -173,7 +173,7 @@ export default function NotesPage() {
             {otherNotes.length > 0 && (
               <div className="space-y-2">
                 {pinnedNotes.length > 0 && (
-                  <div className="text-xs font-black text-gray-600 uppercase tracking-wide pt-2">
+                  <div className="text-xs font-black text-gray-600 dark:text-[var(--theme-text-muted)] uppercase tracking-wide pt-2">
                     Lainnya ({otherNotes.length})
                   </div>
                 )}
@@ -197,7 +197,7 @@ export default function NotesPage() {
             type="button"
             onClick={handleCreateNew}
             aria-label="Catat Baru"
-            className="w-14 h-14 rounded-2xl bg-[#FFE135] text-[#0A0A0A] border-[3px] border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:scale-105 transition-all cursor-pointer"
+            className="w-14 h-14 rounded-2xl bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_var(--theme-shadow)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:scale-105 transition-all cursor-pointer"
           >
             <IconPlus className="w-8 h-8 stroke-[3]" />
           </button>

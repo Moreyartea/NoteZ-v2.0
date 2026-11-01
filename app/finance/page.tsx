@@ -9,12 +9,10 @@ import {
   IconArrowDownLeft,
   IconArrowUpRight,
   IconReceipt2,
-  IconWallet,
 } from '@tabler/icons-react';
 import { db } from '@/app/lib/db';
 import { AppShell } from '@/components/layout/AppShell';
 import { NbCard } from '@/components/ui/NbCard';
-import { NbBadge } from '@/components/ui/NbBadge';
 import { WalletCardList } from '@/components/finance/WalletCardList';
 import { TransactionModal } from '@/components/finance/TransactionModal';
 import { TransactionHistoryList } from '@/components/finance/TransactionHistoryList';
@@ -82,15 +80,19 @@ export default function FinancePage() {
     <AppShell headerTitle="Keuangan">
       <div className="space-y-4">
         {/* HERO CARD: Total Kekayaan Bersih */}
-        <NbCard bgColor="#FFE135" className="p-4 space-y-3 relative overflow-hidden">
+        <NbCard
+          isHero={true}
+          bgColor="#FFE135"
+          className="p-4 space-y-3 relative overflow-hidden dark:bg-[var(--theme-surface)] dark:text-[var(--theme-text-primary)] dark:border-[var(--theme-border-hero)]"
+        >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] bg-white px-2 py-0.5 rounded-md border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]">
+            <span className="text-xs font-black uppercase tracking-wider bg-white dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] px-2 py-0.5 rounded-md border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]">
               Total Kekayaan Bersih
             </span>
             <button
               type="button"
               onClick={() => setIsHideBalance(!isHideBalance)}
-              className="p-1.5 rounded-lg bg-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] text-[#0A0A0A] cursor-pointer"
+              className="p-1.5 rounded-lg bg-white dark:bg-[var(--theme-surface-elevated)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[1.5px_1.5px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] cursor-pointer"
               title={isHideBalance ? 'Tampilkan Saldo' : 'Sembunyikan Saldo'}
             >
               {isHideBalance ? (
@@ -102,36 +104,36 @@ export default function FinancePage() {
           </div>
 
           <div>
-            <p className="font-mono text-2xl font-black text-[#0A0A0A] tracking-tight">
+            <p className="font-mono text-2xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] tracking-tight">
               {isHideBalance ? 'Rp •••••••••' : formatRupiah(totalNetWorth)}
             </p>
-            <p className="text-[11px] font-bold text-gray-800 mt-0.5">
+            <p className="text-[11px] font-bold text-gray-800 dark:text-[var(--theme-text-muted)] mt-0.5">
               Akumulasi dari {wallets.length} dompet aktif
             </p>
           </div>
 
           {/* Monthly Cashflow Pills */}
-          <div className="grid grid-cols-2 gap-2 pt-1 border-t-2 border-[#0A0A0A]/40">
-            <div className="flex items-center gap-2 bg-white/90 p-2 rounded-xl border-2 border-[#0A0A0A]">
+          <div className="grid grid-cols-2 gap-2 pt-1 border-t-2 border-[#0A0A0A]/40 dark:border-[var(--theme-border-subtle)]">
+            <div className="flex items-center gap-2 bg-white/90 dark:bg-[var(--theme-surface-elevated)] p-2 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
               <span className="p-1 rounded-md bg-[#00E676] border border-[#0A0A0A]">
                 <IconArrowDownLeft className="w-3.5 h-3.5 text-[#0A0A0A] stroke-[3]" />
               </span>
               <div className="min-w-0">
-                <p className="text-[10px] font-bold text-gray-600 leading-tight">
+                <p className="text-[10px] font-bold text-gray-600 dark:text-[var(--theme-text-muted)] leading-tight">
                   Masuk ({currentMonth})
                 </p>
-                <p className="text-xs font-mono font-black text-[#00A854] truncate mt-0.5">
+                <p className="text-xs font-mono font-black text-[#00A854] dark:text-[#00E676] truncate mt-0.5">
                   {isHideBalance ? '••••••' : formatRupiah(thisMonthIncome)}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 bg-white/90 p-2 rounded-xl border-2 border-[#0A0A0A]">
+            <div className="flex items-center gap-2 bg-white/90 dark:bg-[var(--theme-surface-elevated)] p-2 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
               <span className="p-1 rounded-md bg-[#FF3B30] border border-[#0A0A0A]">
                 <IconArrowUpRight className="w-3.5 h-3.5 text-white stroke-[3]" />
               </span>
               <div className="min-w-0">
-                <p className="text-[10px] font-bold text-gray-600 leading-tight">
+                <p className="text-[10px] font-bold text-gray-600 dark:text-[var(--theme-text-muted)] leading-tight">
                   Keluar ({currentMonth})
                 </p>
                 <p className="text-xs font-mono font-black text-[#FF3B30] truncate mt-0.5">
@@ -147,7 +149,7 @@ export default function FinancePage() {
           <button
             type="button"
             onClick={() => openTxModalWithType('expense')}
-            className="py-2.5 px-2 bg-[#FF3B30] text-white font-extrabold text-xs rounded-xl border-[2.5px] border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] transition-all flex items-center justify-center gap-1 cursor-pointer"
+            className="py-2.5 px-2 bg-[#FF3B30] text-white font-extrabold text-xs rounded-xl border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[3px_3px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] transition-all flex items-center justify-center gap-1 cursor-pointer"
           >
             <IconArrowUpRight className="w-4 h-4 stroke-[3]" />
             <span>Pengeluaran</span>
@@ -155,7 +157,7 @@ export default function FinancePage() {
           <button
             type="button"
             onClick={() => openTxModalWithType('income')}
-            className="py-2.5 px-2 bg-[#00E676] text-[#0A0A0A] font-extrabold text-xs rounded-xl border-[2.5px] border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] transition-all flex items-center justify-center gap-1 cursor-pointer"
+            className="py-2.5 px-2 bg-[#00E676] text-[#0A0A0A] font-extrabold text-xs rounded-xl border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[3px_3px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] transition-all flex items-center justify-center gap-1 cursor-pointer"
           >
             <IconArrowDownLeft className="w-4 h-4 stroke-[3]" />
             <span>Pemasukan</span>
@@ -163,7 +165,7 @@ export default function FinancePage() {
           <button
             type="button"
             onClick={() => openTxModalWithType('transfer')}
-            className="py-2.5 px-2 bg-[#3B6FFF] text-white font-extrabold text-xs rounded-xl border-[2.5px] border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] transition-all flex items-center justify-center gap-1 cursor-pointer"
+            className="py-2.5 px-2 bg-[#3B6FFF] text-white font-extrabold text-xs rounded-xl border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[3px_3px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] transition-all flex items-center justify-center gap-1 cursor-pointer"
           >
             <IconReceipt2 className="w-4 h-4 stroke-[2.5]" />
             <span>Transfer</span>
@@ -184,10 +186,10 @@ export default function FinancePage() {
               type="button"
               onClick={() => setActiveTab(tab.id as FinanceTab)}
               className={cn(
-                'px-3 py-1.5 text-xs font-black rounded-xl border-2 border-[#0A0A0A] transition-all cursor-pointer whitespace-nowrap select-none',
+                'px-3 py-1.5 text-xs font-black rounded-xl border-2 transition-all cursor-pointer whitespace-nowrap select-none',
                 activeTab === tab.id
-                  ? 'bg-[#FFE135] text-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] -translate-y-0.5'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
+                  ? 'bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[2px_2px_0px_#0A0A0A] -translate-y-0.5'
+                  : 'bg-white dark:bg-[var(--theme-surface)] text-gray-700 dark:text-[var(--theme-text-muted)] border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] hover:bg-gray-50'
               )}
             >
               {tab.label}
@@ -243,7 +245,7 @@ export default function FinancePage() {
               setIsTxModalOpen(true);
             }}
             aria-label="Catat Transaksi"
-            className="w-14 h-14 rounded-2xl bg-[#FFE135] text-[#0A0A0A] border-[3px] border-[#0A0A0A] shadow-[4px_4px_0px_#0A0A0A] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:scale-105 transition-all cursor-pointer"
+            className="w-14 h-14 rounded-2xl bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_var(--theme-shadow)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center hover:scale-105 transition-all cursor-pointer"
           >
             <IconPlus className="w-8 h-8 stroke-[3]" />
           </button>

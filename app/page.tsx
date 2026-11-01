@@ -90,15 +90,16 @@ export default function DashboardPage() {
       <div className="space-y-3.5">
         {/* CARD 1: Financial & Quick Action (All-in-One) */}
         <NbCard
-          className="p-4 rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_#000000] space-y-3.5 bg-[#FFFDF7] dark:bg-[var(--theme-surface,#1E1E1E)] transition-colors"
+          isHero={true}
+          className="p-4 space-y-3.5"
         >
           {/* Top Section: Net Worth & Balance Peek Toggle */}
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-[11px] font-black uppercase tracking-wider text-gray-500 dark:text-[var(--theme-text-muted,#8E929E)] block">
+              <span className="text-[11px] font-black uppercase tracking-wider text-gray-500 dark:text-[var(--theme-text-muted)] block">
                 Kekayaan Bersih
               </span>
-              <p className="font-mono text-2xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] tracking-tight mt-0.5 leading-tight">
+              <p className="font-mono text-2xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] tracking-tight mt-0.5 leading-tight">
                 {isHideBalance ? 'Rp •••••••••' : formatRupiah(totalNetWorth)}
               </p>
             </div>
@@ -106,7 +107,7 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => setIsHideBalance(!isHideBalance)}
-              className="p-2 rounded-xl bg-white dark:bg-[var(--theme-surface,#252525)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] cursor-pointer"
+              className="p-2 rounded-xl bg-white dark:bg-[var(--theme-surface-elevated)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] cursor-pointer"
               title={isHideBalance ? 'Tampilkan Saldo' : 'Sembunyikan Saldo'}
               aria-label="Toggle sensor intip saldo"
             >
@@ -118,20 +119,20 @@ export default function DashboardPage() {
             </button>
           </div>
 
-          {/* Thin Black Divider */}
-          <div className="border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)]" />
+          {/* Thin Divider */}
+          <div className="border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]" />
 
           {/* Bottom Section: 4 Quick Actions in 1 Row */}
           <div className="grid grid-cols-4 gap-2">
             <button
               type="button"
               onClick={() => setIsTxModalOpen(true)}
-              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface,#252525)] hover:bg-emerald-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
+              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface-elevated)] hover:bg-emerald-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
             >
               <div className="w-7 h-7 rounded-lg bg-[#00E676] border border-[#0A0A0A] flex items-center justify-center mb-1">
                 <IconWallet className="w-4 h-4 text-[#0A0A0A] stroke-[2.5]" />
               </div>
-              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] leading-tight">
+              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] leading-tight">
                 + Transaksi
               </span>
             </button>
@@ -139,12 +140,12 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => setIsTodoModalOpen(true)}
-              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface,#252525)] hover:bg-blue-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
+              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface-elevated)] hover:bg-blue-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
             >
               <div className="w-7 h-7 rounded-lg bg-[#3B6FFF] border border-[#0A0A0A] flex items-center justify-center mb-1">
                 <IconChecklist className="w-4 h-4 text-white stroke-[2.5]" />
               </div>
-              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] leading-tight">
+              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] leading-tight">
                 + Tugas
               </span>
             </button>
@@ -152,12 +153,12 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => setIsNoteModalOpen(true)}
-              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface,#252525)] hover:bg-yellow-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
+              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface-elevated)] hover:bg-yellow-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
             >
               <div className="w-7 h-7 rounded-lg bg-[#FFE135] border border-[#0A0A0A] flex items-center justify-center mb-1">
                 <IconNotes className="w-4 h-4 text-[#0A0A0A] stroke-[2.5]" />
               </div>
-              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] leading-tight">
+              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] leading-tight">
                 + Catatan
               </span>
             </button>
@@ -165,12 +166,12 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => setIsMediaModalOpen(true)}
-              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface,#252525)] hover:bg-purple-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
+              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface-elevated)] hover:bg-purple-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
             >
               <div className="w-7 h-7 rounded-lg bg-[#A855F7] border border-[#0A0A0A] flex items-center justify-center mb-1">
                 <IconDeviceTv className="w-4 h-4 text-white stroke-[2.5]" />
               </div>
-              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] leading-tight">
+              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] leading-tight">
                 + Tontonan
               </span>
             </button>
@@ -179,17 +180,17 @@ export default function DashboardPage() {
 
         {/* CARD 2: Agenda Hari Ini (Tugas & Habit Terpadu) */}
         <NbCard
-          className="p-4 rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_#000000] space-y-3 bg-[#FFFDF7] dark:bg-[var(--theme-surface,#1E1E1E)] transition-colors"
+          className="p-4 space-y-3"
         >
           {/* Card Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <IconCalendarCheck className="w-4 h-4 text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] stroke-[2.5]" />
-              <h2 className="text-sm font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] tracking-tight leading-tight">
+              <IconCalendarCheck className="w-4 h-4 text-[#0A0A0A] dark:text-[var(--theme-text-primary)] stroke-[2.5]" />
+              <h2 className="text-sm font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] tracking-tight leading-tight">
                 Agenda Hari Ini
               </h2>
               {todayTodos.length > 0 && (
-                <span className="text-[10px] font-mono font-black px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 border border-[#0A0A0A] dark:border-[#2E2E2E] text-[#0A0A0A] dark:text-[#F4F4F0]">
+                <span className="text-[10px] font-mono font-black px-1.5 py-0.5 rounded bg-gray-100 dark:bg-[var(--theme-surface-elevated)] border border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                   {completedTodayCount}/{todayTodos.length}
                 </span>
               )}
@@ -197,7 +198,7 @@ export default function DashboardPage() {
 
             <Link
               href="/todos"
-              className="text-xs font-black text-[#3B6FFF] hover:underline"
+              className="text-xs font-black text-[#3B6FFF] dark:text-[var(--theme-accent-primary)] hover:underline"
             >
               Lihat Semua
             </Link>
@@ -207,7 +208,7 @@ export default function DashboardPage() {
           <div className="space-y-1.5">
             {topTodos.length === 0 ? (
               <div className="py-4 text-center">
-                <p className="text-xs font-bold text-gray-500 dark:text-gray-400">
+                <p className="text-xs font-bold text-gray-500 dark:text-[var(--theme-text-muted)]">
                   Semua tugas hari ini beres!
                 </p>
               </div>
@@ -215,15 +216,15 @@ export default function DashboardPage() {
               topTodos.map((todo) => (
                 <div
                   key={todo.id}
-                  className="flex items-center justify-between gap-2.5 p-2 rounded-xl bg-white dark:bg-[var(--theme-surface,#252525)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]"
+                  className="flex items-center justify-between gap-2.5 p-2 rounded-xl bg-white dark:bg-[var(--theme-surface-elevated)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]"
                 >
                   <div className="flex items-center gap-2.5 min-w-0 flex-1">
                     <button
                       type="button"
                       onClick={() => toggleTodoStatus(todo.id)}
                       className={cn(
-                        'w-5 h-5 rounded-md border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] flex items-center justify-center flex-shrink-0 transition-all cursor-pointer',
-                        todo.isCompleted ? 'bg-[#00E676]' : 'bg-white dark:bg-[var(--theme-surface,#1E1E1E)]'
+                        'w-5 h-5 rounded-md border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] flex items-center justify-center flex-shrink-0 transition-all cursor-pointer',
+                        todo.isCompleted ? 'bg-[#00E676]' : 'bg-white dark:bg-[var(--theme-surface)]'
                       )}
                       aria-label="Toggle status tugas"
                     >
@@ -235,8 +236,8 @@ export default function DashboardPage() {
                       className={cn(
                         'text-xs font-black truncate',
                         todo.isCompleted
-                          ? 'line-through text-gray-400'
-                          : 'text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)]'
+                          ? 'line-through text-gray-400 dark:text-gray-500'
+                          : 'text-[#0A0A0A] dark:text-[var(--theme-text-primary)]'
                       )}
                     >
                       {todo.title}
@@ -259,7 +260,7 @@ export default function DashboardPage() {
                       return (
                         <span
                           title={`Kategori: ${todo.category}`}
-                          className="w-5 h-5 rounded border border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] shadow-[1px_1px_0px_#0A0A0A] dark:shadow-[1px_1px_0px_#000000]"
+                          className="w-5 h-5 rounded border border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] bg-gray-100 dark:bg-[var(--theme-surface)] flex items-center justify-center text-[#0A0A0A] dark:text-[var(--theme-text-primary)] shadow-[1px_1px_0px_#0A0A0A] dark:shadow-[1px_1px_0px_#000000]"
                         >
                           <CatIcon className="w-3 h-3 stroke-[2.5]" />
                         </span>
@@ -284,14 +285,14 @@ export default function DashboardPage() {
             )}
           </div>
 
-          {/* Thin Black Divider */}
-          <div className="border-t-2 border-[#0A0A0A] dark:border-[#2E2E2E] pt-2.5" />
+          {/* Thin Divider */}
+          <div className="border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] pt-2.5" />
 
           {/* Habit Harian: 1 Baris Horizontal Ringkas */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             <div className="flex items-center gap-1 flex-shrink-0 text-[#FF6B2B]">
               <IconFlame className="w-4 h-4 stroke-[2.5]" />
-              <span className="text-[11px] font-black uppercase text-[#0A0A0A] dark:text-[#F4F4F0]">
+              <span className="text-[11px] font-black uppercase text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                 Habit:
               </span>
             </div>
@@ -310,10 +311,10 @@ export default function DashboardPage() {
                     type="button"
                     onClick={() => toggleHabitToday(habit.id)}
                     className={cn(
-                      'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 border-[#0A0A0A] dark:border-[#2E2E2E] text-xs font-black transition-all flex-shrink-0 select-none cursor-pointer',
+                      'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] text-xs font-black transition-all flex-shrink-0 select-none cursor-pointer',
                       isDone
                         ? 'bg-[#00E676] text-[#0A0A0A] shadow-none'
-                        : 'bg-white dark:bg-[var(--theme-surface,#252525)] text-gray-800 dark:text-[var(--theme-text-primary,#F4F4F0)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px]'
+                        : 'bg-white dark:bg-[var(--theme-surface-elevated)] text-gray-800 dark:text-[var(--theme-text-primary)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px]'
                     )}
                   >
                     <span

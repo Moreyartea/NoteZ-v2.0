@@ -37,12 +37,12 @@ const variantStyles: Record<NbBadgeVariant, string> = {
   wishlist: 'bg-[#FF4DA6] text-white',
   neutral: 'bg-white text-[#0A0A0A]',
   'tier-s': 'bg-[#FFE135] text-[#0A0A0A] font-extrabold',
-  'tier-a': 'bg-[#FF6B2B] text-white font-extrabold',
+  'tier-a': 'bg-[#00E676] text-[#0A0A0A] font-extrabold',
   'tier-b': 'bg-[#3B6FFF] text-white font-extrabold',
-  'tier-c': 'bg-[#E0E0E0] text-[#0A0A0A] font-bold',
+  'tier-c': 'bg-[#A855F7] text-white font-bold',
   'tier-d': 'bg-[#757575] text-white font-bold',
   'priority-high': 'bg-[#FF3B30] text-white',
-  'priority-medium': 'bg-[#FFE135] text-[#0A0A0A]',
+  'priority-medium': 'bg-[#FF6B2B] text-white',
   'priority-low': 'bg-[#3B6FFF] text-white',
 };
 

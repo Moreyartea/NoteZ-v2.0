@@ -35,7 +35,7 @@ export const THEME_PRESETS: ThemePreset[] = [
     colors: {
       bg: '#0C0D10',
       surface: '#16181D',
-      border: '#2A2D36',
+      border: '#84A916',
       accentPrimary: '#CCFF00',
       accentSecondary: '#2563EB',
       textPrimary: '#F4F5F6',
@@ -50,7 +50,7 @@ export const THEME_PRESETS: ThemePreset[] = [
     colors: {
       bg: '#0B0E14',
       surface: '#141A24',
-      border: '#243044',
+      border: '#0284C7',
       accentPrimary: '#00F0FF',
       accentSecondary: '#2563EB',
       textPrimary: '#F0F6FC',
@@ -65,7 +65,7 @@ export const THEME_PRESETS: ThemePreset[] = [
     colors: {
       bg: '#0F0E17',
       surface: '#1B1A26',
-      border: '#2E2B40',
+      border: '#7C3AED',
       accentPrimary: '#7C3AED',
       accentSecondary: '#EC4899',
       textPrimary: '#FFFFFE',
@@ -80,7 +80,7 @@ export const THEME_PRESETS: ThemePreset[] = [
     colors: {
       bg: '#000000',
       surface: '#121212',
-      border: '#27272A',
+      border: '#059669',
       accentPrimary: '#10B981',
       accentSecondary: '#3B82F6',
       textPrimary: '#FFFFFF',

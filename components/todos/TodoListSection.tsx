@@ -135,7 +135,7 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
   return (
     <div className="space-y-3">
       {/* Filter Tabs */}
-      <div className="grid grid-cols-4 gap-1 p-1 bg-white rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+      <div className="grid grid-cols-4 gap-1 p-1 bg-white dark:bg-[var(--theme-surface)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_var(--theme-shadow)]">
         {[
           { id: 'all', label: 'Semua' },
           { id: 'today', label: 'Hari Ini' },
@@ -149,8 +149,8 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
             className={cn(
               'py-1.5 text-xs font-black rounded-lg transition-all text-center cursor-pointer',
               activeFilter === tab.id
-                ? 'bg-[#FFE135] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                : 'text-gray-600 hover:text-[#0A0A0A]'
+                ? 'bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[1.5px_1.5px_0px_#0A0A0A]'
+                : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
             )}
           >
             {tab.label}
@@ -170,15 +170,15 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
               onClick={() => setCategoryFilter(cat.id)}
               title={`Kategori ${cat.label}`}
               className={cn(
-                'inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-black rounded-lg border-2 border-[#0A0A0A] transition-all cursor-pointer whitespace-nowrap select-none',
+                'inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-black rounded-lg border-2 transition-all cursor-pointer whitespace-nowrap select-none',
                 isSelected
-                  ? 'bg-[#0A0A0A] text-white shadow-[2px_2px_0px_#0A0A0A]'
-                  : `${cat.bg} text-gray-800 shadow-[1.5px_1.5px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px]`
+                  ? 'bg-[#0A0A0A] dark:bg-[var(--theme-accent-primary)] text-white dark:text-[var(--theme-accent-text)] border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[2px_2px_0px_#0A0A0A]'
+                  : 'bg-white dark:bg-[var(--theme-surface)] text-gray-800 dark:text-[var(--theme-text-primary)] border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_var(--theme-shadow)] active:translate-x-[1px] active:translate-y-[1px]'
               )}
             >
               <Icon
                 className="w-3.5 h-3.5 stroke-[2.5]"
-                style={{ color: isSelected ? '#FFFFFF' : cat.color }}
+                style={{ color: isSelected ? 'inherit' : cat.color }}
               />
               <span className="text-[11px]">{cat.label}</span>
             </button>
@@ -188,9 +188,9 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
 
       {/* Todo Items List */}
       {filtered.length === 0 ? (
-        <NbCard className="p-6 text-center text-gray-500">
-          <p className="text-sm font-bold text-[#0A0A0A]">Belum ada tugas</p>
-          <p className="text-xs text-gray-500 mt-1">
+        <NbCard className="p-6 text-center text-gray-500 dark:text-[var(--theme-text-muted)]">
+          <p className="text-sm font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">Belum ada tugas</p>
+          <p className="text-xs text-gray-500 dark:text-[var(--theme-text-muted)] mt-1">
             Tekan "+ Tambah Tugas" untuk membuat catatan rencana barumu.
           </p>
         </NbCard>
@@ -207,7 +207,7 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                 key={todo.id}
                 className={cn(
                   'p-3.5 space-y-2 transition-all',
-                  todo.isCompleted && 'bg-gray-50 opacity-80'
+                  todo.isCompleted && 'opacity-80'
                 )}
               >
                 {/* Main Card Header */}
@@ -218,10 +218,10 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                     onClick={() => toggleTodoStatus(todo.id)}
                     aria-label="Tandai Selesai"
                     className={cn(
-                      'w-6 h-6 rounded-lg border-2 border-[#0A0A0A] flex items-center justify-center flex-shrink-0 mt-0.5 transition-all cursor-pointer',
+                      'w-6 h-6 rounded-lg border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] flex items-center justify-center flex-shrink-0 mt-0.5 transition-all cursor-pointer',
                       todo.isCompleted
                         ? 'bg-[#00E676] shadow-none'
-                        : 'bg-white shadow-[2px_2px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px]'
+                        : 'bg-white dark:bg-[var(--theme-surface-elevated)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[1px_1px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px]'
                     )}
                   >
                     {todo.isCompleted && (
@@ -234,8 +234,10 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                     <div className="flex items-start justify-between gap-1">
                       <h3
                         className={cn(
-                          'font-extrabold text-sm text-[#0A0A0A] leading-snug break-words',
-                          todo.isCompleted && 'line-through text-gray-500'
+                          'font-extrabold text-sm leading-snug break-words',
+                          todo.isCompleted
+                            ? 'line-through text-gray-500 dark:text-gray-500'
+                            : 'text-[#0A0A0A] dark:text-[var(--theme-text-primary)]'
                         )}
                       >
                         {todo.title}
@@ -251,10 +253,10 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                             : 'Pin ke Widget Layar HP'
                         }
                         className={cn(
-                          'p-1 rounded-md border border-[#0A0A0A] transition-all cursor-pointer flex-shrink-0',
+                          'p-1 rounded-md border border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] transition-all cursor-pointer flex-shrink-0',
                           todo.pinToHomeWidget
-                            ? 'bg-[#FFE135] shadow-[1px_1px_0px_#0A0A0A]'
-                            : 'bg-gray-100 text-gray-400 hover:text-black'
+                            ? 'bg-[#FFE135] text-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A]'
+                            : 'bg-gray-100 dark:bg-[var(--theme-surface-elevated)] text-gray-400 dark:text-[var(--theme-text-muted)] hover:text-black dark:hover:text-white'
                         )}
                       >
                         <IconPin className="w-3.5 h-3.5" />
@@ -262,7 +264,7 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                     </div>
 
                     {todo.description && (
-                      <p className="text-xs text-gray-600 mt-0.5 line-clamp-2">
+                      <p className="text-xs text-gray-600 dark:text-[var(--theme-text-muted)] mt-0.5 line-clamp-2">
                         {todo.description}
                       </p>
                     )}
@@ -303,7 +305,7 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                             'text-[10px] font-bold px-1.5 py-0.5 rounded border flex items-center gap-0.5',
                             isOverdue
                               ? 'bg-red-100 text-red-700 border-red-300'
-                              : 'bg-yellow-50 text-gray-700 border-yellow-300'
+                              : 'bg-yellow-50 dark:bg-[var(--theme-surface-elevated)] text-gray-700 dark:text-[var(--theme-text-muted)] border-yellow-300 dark:border-[var(--theme-border-subtle)]'
                           )}
                         >
                           <IconCalendar className="w-3 h-3" />
@@ -318,11 +320,11 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
 
                 {/* Subtasks Accordion (if any) */}
                 {todo.subtasks.length > 0 && (
-                  <div className="pt-2 border-t border-gray-200">
+                  <div className="pt-2 border-t border-gray-200 dark:border-[var(--theme-border-subtle)]">
                     <button
                       type="button"
                       onClick={() => toggleExpand(todo.id)}
-                      className="w-full flex items-center justify-between text-xs font-bold text-gray-700 hover:text-[#0A0A0A] py-0.5 cursor-pointer"
+                      className="w-full flex items-center justify-between text-xs font-bold text-gray-700 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)] py-0.5 cursor-pointer"
                     >
                       <span>
                         Sub-tugas: {completedSubtasksCount} / {todo.subtasks.length} Selesai
@@ -335,7 +337,7 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                     </button>
 
                     {isExpanded && (
-                      <div className="mt-2 space-y-1.5 pl-2 border-l-2 border-[#0A0A0A]/30">
+                      <div className="mt-2 space-y-1.5 pl-2 border-l-2 border-[#0A0A0A]/30 dark:border-[var(--theme-border-subtle)]">
                         {todo.subtasks.map((st) => (
                           <div
                             key={st.id}
@@ -350,8 +352,10 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                             />
                             <span
                               className={cn(
-                                'text-xs font-medium text-gray-800',
-                                st.isDone && 'line-through text-gray-400'
+                                'text-xs font-medium',
+                                st.isDone
+                                  ? 'line-through text-gray-400 dark:text-gray-500'
+                                  : 'text-gray-800 dark:text-[var(--theme-text-primary)]'
                               )}
                             >
                               {st.title}
@@ -382,4 +386,3 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
     </div>
   );
 };
-
