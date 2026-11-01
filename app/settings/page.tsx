@@ -191,14 +191,14 @@ export default function SettingsPage() {
         {/* Header Banner */}
         <NbCard bgColor="#FFE135" className="p-4 space-y-1">
           <div className="flex items-center gap-2">
-            <span className="p-2 bg-white rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
-              <IconSettings className="w-5 h-5 text-[#0A0A0A]" />
+            <span className="p-2 bg-white dark:bg-[var(--theme-surface-elevated)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_#000000]">
+              <IconSettings className="w-5 h-5 text-[#0A0A0A] dark:text-[var(--theme-text-primary)]" />
             </span>
             <div>
-              <h1 className="text-base font-black text-[#0A0A0A] leading-tight">
+              <h1 className="text-base font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] leading-tight">
                 Pengaturan Sistem
               </h1>
-              <p className="text-xs font-semibold text-gray-800">
+              <p className="text-xs font-semibold text-gray-600 dark:text-[var(--theme-text-muted)]">
                 Kustomisasi tampilan, alarm pengingat, dan manajemen data offline.
               </p>
             </div>
@@ -243,11 +243,11 @@ export default function SettingsPage() {
           </p>
 
           {/* Quick Light/Dark Switch */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-[var(--theme-surface,#252525)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)]">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-[var(--theme-surface-elevated)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
             <div className="flex items-center gap-2.5">
               <div
                 className={cn(
-                  'w-8 h-8 rounded-lg border-2 border-[#0A0A0A] flex items-center justify-center font-bold text-xs shadow-[1.5px_1.5px_0px_#0A0A0A]',
+                  'w-8 h-8 rounded-lg border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] flex items-center justify-center font-bold text-xs shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_var(--theme-shadow)]',
                   isDark ? 'bg-[#1E1E1E] text-white' : 'bg-white text-[#0A0A0A]'
                 )}
               >
@@ -258,10 +258,10 @@ export default function SettingsPage() {
                 )}
               </div>
               <div>
-                <p className="text-xs font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)]">
+                <p className="text-xs font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                   Mode Cepat: {isDark ? 'Gelap' : 'Terang'}
                 </p>
-                <p className="text-[10px] font-semibold text-gray-500 dark:text-[var(--theme-text-muted,#8E929E)]">
+                <p className="text-[10px] font-semibold text-gray-500 dark:text-[var(--theme-text-muted)]">
                   {isDark
                     ? 'Beralih ke preset Classic Brutal (Terang)'
                     : 'Beralih ke preset Gelap aktif'}
@@ -275,7 +275,7 @@ export default function SettingsPage() {
               onClick={handleToggleDarkMode}
               className={cn(
                 'w-14 h-8 rounded-full border-2 border-[#0A0A0A] p-1 transition-colors relative cursor-pointer select-none shadow-[2px_2px_0px_#0A0A0A]',
-                isDark ? 'bg-[#FFE135] dark:bg-[var(--theme-accent-primary,#FFE135)]' : 'bg-gray-200'
+                isDark ? 'bg-[#FFE135] dark:bg-[var(--theme-accent-primary)]' : 'bg-gray-200'
               )}
               aria-label="Toggle tema gelap atau terang"
             >
@@ -296,7 +296,7 @@ export default function SettingsPage() {
 
           {/* 5 Preset Theme Selector Cards */}
           <div className="space-y-2 pt-1">
-            <span className="text-[11px] font-black uppercase text-gray-700 dark:text-[var(--theme-text-muted,#A7A1B8)] tracking-wider">
+            <span className="text-[11px] font-black uppercase text-gray-700 dark:text-[var(--theme-text-muted)] tracking-wider">
               5 Preset Resmi:
             </span>
             <div className="grid grid-cols-1 gap-2">
@@ -310,8 +310,8 @@ export default function SettingsPage() {
                     className={cn(
                       'w-full text-left p-3 rounded-xl border-2 transition-all cursor-pointer select-none flex items-center justify-between gap-3',
                       isSelected
-                        ? 'border-[#0A0A0A] dark:border-[var(--theme-accent-primary,#FFE135)] shadow-[3px_3px_0px_#0A0A0A] dark:shadow-[3px_3px_0px_var(--theme-accent-primary,#FFE135)] bg-yellow-50/50 dark:bg-[var(--theme-surface,#1E1E1E)] scale-[1.01]'
-                        : 'border-gray-300 dark:border-[var(--theme-border,#2E2E2E)] shadow-none bg-white dark:bg-[var(--theme-surface,#16181D)] hover:border-[#0A0A0A] dark:hover:border-gray-500'
+                        ? 'border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[3px_3px_0px_#0A0A0A] dark:shadow-[3px_3px_0px_var(--theme-shadow)] bg-yellow-50/50 dark:bg-[var(--theme-surface-elevated)] scale-[1.01]'
+                        : 'border-gray-300 dark:border-[var(--theme-border-subtle)] shadow-none bg-white dark:bg-[var(--theme-surface)] hover:border-[#0A0A0A] dark:hover:border-gray-500'
                     )}
                   >
                     <div className="flex items-center gap-3 min-w-0">
@@ -336,7 +336,7 @@ export default function SettingsPage() {
 
                       <div className="min-w-0">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-xs font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] truncate">
+                          <span className="text-xs font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] truncate">
                             {preset.name}
                           </span>
                           <span
@@ -350,7 +350,7 @@ export default function SettingsPage() {
                             {preset.isDark ? 'Dark' : 'Light'}
                           </span>
                         </div>
-                        <p className="text-[10px] text-gray-500 dark:text-[var(--theme-text-muted,#8E929E)] truncate max-w-[200px]">
+                        <p className="text-[10px] text-gray-600 dark:text-[var(--theme-text-muted)] truncate max-w-[200px]">
                           {preset.tagline}
                         </p>
                       </div>
@@ -359,12 +359,12 @@ export default function SettingsPage() {
                     {/* Active Check Indicator */}
                     <div className="flex-shrink-0">
                       {isSelected ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase px-2 py-1 rounded-md bg-[#FFE135] dark:bg-[var(--theme-accent-primary,#FFE135)] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A]">
+                        <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase px-2 py-1 rounded-md bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] border-2 border-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A]">
                           <IconCheck className="w-3 h-3 stroke-[3]" />
                           <span>Aktif</span>
                         </span>
                       ) : (
-                        <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 px-2 py-1">
+                        <span className="text-[10px] font-bold text-gray-500 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)] px-2 py-1 transition-colors">
                           Pilih
                         </span>
                       )}

@@ -179,17 +179,13 @@ html[data-theme="oled"] {
 }
 
 .nb-card {
-  background-color: var(--nb-card-bg);
   border: 3px solid var(--nb-border);
   box-shadow: 4px 4px 0px #0A0A0A;
-  color: var(--nb-text);
 }
 
 .dark .nb-card {
   box-shadow: 4px 4px 0px var(--theme-shadow, #000000);
   border-color: var(--theme-border, #2E2E2E);
-  background-color: var(--theme-surface);
-  color: var(--theme-text-primary);
 }
 
 .nb-button {

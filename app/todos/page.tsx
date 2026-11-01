@@ -61,22 +61,21 @@ export default function TodosPage() {
       <div className="space-y-4">
         {/* HERO CARD: Ringkasan Fokus Harian */}
         <NbCard
+          className="p-4 space-y-2 bg-[#3B6FFF] text-white dark:bg-[var(--theme-surface)] dark:text-[var(--theme-text-primary)] border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_var(--theme-shadow)]"
           isHero={true}
-          bgColor="#3B6FFF"
-          className="p-4 text-white dark:bg-[var(--theme-surface)] dark:text-[var(--theme-text-primary)] dark:border-[var(--theme-border-hero)] space-y-2"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] bg-[#FFE135] px-2 py-0.5 rounded-md border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]">
               Fokus Hari Ini
             </span>
-            <span className="text-xs font-bold text-blue-100 dark:text-[var(--theme-text-muted)] font-mono">
+            <span className="text-xs font-bold text-white/90 dark:text-[var(--theme-text-muted)] font-mono">
               {todayStr}
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-2 pt-1">
-            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2.5 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)]">
-              <p className="text-[10px] font-bold text-blue-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
+            <div className="bg-black/15 dark:bg-[var(--theme-surface-elevated)] p-2.5 rounded-xl border border-white/30 dark:border-[var(--theme-border-subtle)]">
+              <p className="text-[10px] font-bold text-white/90 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
                 Tugas Hari Ini
               </p>
               <p className="text-lg font-black font-mono text-white dark:text-[var(--theme-text-primary)] mt-1">
@@ -84,8 +83,8 @@ export default function TodosPage() {
               </p>
             </div>
 
-            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2.5 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)]">
-              <p className="text-[10px] font-bold text-blue-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
+            <div className="bg-black/15 dark:bg-[var(--theme-surface-elevated)] p-2.5 rounded-xl border border-white/30 dark:border-[var(--theme-border-subtle)]">
+              <p className="text-[10px] font-bold text-white/90 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
                 Habit Tuntas
               </p>
               <p className="text-lg font-black font-mono text-white dark:text-[var(--theme-text-primary)] mt-1">
