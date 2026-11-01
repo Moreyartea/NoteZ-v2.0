@@ -4,7 +4,12 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { IconSettings } from '@tabler/icons-react';
 import { seedInitialData } from '@/app/lib/seed';
-import { requestNotificationPermission } from '@/app/lib/services/notificationService';
+import {
+  requestNotificationPermission,
+  initNotificationListeners,
+  syncDueNotificationsToDrawer,
+} from '@/app/lib/services/notificationService';
+import { syncAllWidgets } from '@/app/lib/services/widgetSyncService';
 import { initTheme } from '@/app/lib/services/settingsService';
 import { LiveDeviceClock } from './LiveDeviceClock';
 import { BottomNav } from './BottomNav';
@@ -31,9 +36,12 @@ export const AppShell: React.FC<AppShellProps> = ({
   showClock = true,
 }) => {
   useEffect(() => {
-    // Run initial seed, notification permission, and dark mode theme initialization
+    // Run initial seed, notification permission, listeners, drawer sync, and widget data sync
     seedInitialData();
     requestNotificationPermission();
+    initNotificationListeners();
+    syncDueNotificationsToDrawer();
+    syncAllWidgets();
     initTheme();
   }, []);
 

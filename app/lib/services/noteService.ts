@@ -115,6 +115,7 @@ export async function softDeleteNote(id: string): Promise<void> {
     showOnHomeWidget: false,
     updatedAt: new Date().toISOString(),
   });
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function restoreNote(id: string): Promise<void> {
@@ -122,10 +123,12 @@ export async function restoreNote(id: string): Promise<void> {
     isTrashed: false,
     updatedAt: new Date().toISOString(),
   });
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function permanentlyDeleteNote(id: string): Promise<void> {
   await db.notes.delete(id);
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function clearTrash(): Promise<void> {

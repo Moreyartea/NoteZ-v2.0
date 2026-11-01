@@ -1,6 +1,7 @@
 import { db } from '@/app/lib/db';
 import type { Todo, Subtask, TodoPriority, TodoRecurrence } from '@/app/lib/types';
 import { syncDataToHomeWidget } from './widgetSyncService';
+import { scheduleTodoReminder } from './notificationService';
 
 function generateId(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -79,8 +80,28 @@ export async function createTodo(data: {
   };
 
   await db.todos.add(newTodo);
+  if (newTodo.dueDate) {
+    scheduleTodoReminder(newTodo).catch(() => {});
+  }
   syncDataToHomeWidget().catch(() => {});
   return id;
+}
+
+export async function updateTodo(id: string, updates: Partial<Todo>): Promise<void> {
+  const todo = await db.todos.get(id);
+  if (!todo) return;
+
+  const updatedTodo: Todo = {
+    ...todo,
+    ...updates,
+    updatedAt: new Date().toISOString(),
+  };
+
+  await db.todos.put(updatedTodo);
+  if (updatedTodo.dueDate && !updatedTodo.isCompleted) {
+    scheduleTodoReminder(updatedTodo).catch(() => {});
+  }
+  syncDataToHomeWidget().catch(() => {});
 }
 
 export async function toggleTodoStatus(id: string): Promise<void> {

@@ -6,6 +6,7 @@ import type {
   MediaTier,
   AiringDay,
 } from '@/app/lib/types';
+import { scheduleMediaReminder } from './notificationService';
 
 function generateId(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -77,6 +78,9 @@ export async function createMediaItem(data: {
   };
 
   await db.media_watchlist.add(newMedia);
+  if (newMedia.reminderEnabled && newMedia.airingDay && newMedia.status === 'watching') {
+    scheduleMediaReminder(newMedia).catch(() => {});
+  }
   return id;
 }
 

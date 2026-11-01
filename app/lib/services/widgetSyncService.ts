@@ -1,6 +1,13 @@
+import { Capacitor, registerPlugin } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 import { db } from '@/app/lib/db';
 import { getLocalTodayDateString } from './todoService';
+
+interface WidgetBridgePlugin {
+  refreshWidget(): Promise<void>;
+}
+
+const WidgetBridge = registerPlugin<WidgetBridgePlugin>('WidgetBridge');
 
 export interface WidgetTodoItem {
   id: string;
@@ -39,25 +46,29 @@ export interface WidgetWishlistPayload {
 }
 
 /**
- * Synchronizes current local app snapshot to Android SharedPreferences via Capacitor Preferences
- * Reads by native Kotlin AppWidgetProvider
+ * Synchronizes current local app snapshot to Android SharedPreferences via Capacitor Preferences (CapacitorStorage)
+ * and triggers immediate native widget refresh.
  */
-export async function syncDataToHomeWidget(): Promise<void> {
+export async function syncAllWidgets(): Promise<void> {
   if (typeof window === 'undefined') return;
 
   try {
     const todayStr = getLocalTodayDateString();
 
-    // 1. Todos for widget
+    // 1. Todos for widget (pinned or due today)
     const allTodos = await db.todos.toArray();
-    const todayTodos = allTodos.filter(
-      (t) => t.dueDate === todayStr || t.pinToHomeWidget
+    const widgetTodos = allTodos.filter(
+      (t) => t.pinToHomeWidget || (t.dueDate === todayStr && !t.isCompleted)
     );
 
-    const completedCount = todayTodos.filter((t) => t.isCompleted).length;
+    const completedCount = allTodos.filter(
+      (t) => t.dueDate === todayStr && t.isCompleted
+    ).length;
+    const totalCount = allTodos.filter((t) => t.dueDate === todayStr).length;
+
     const priorityWeight: Record<string, number> = { high: 3, medium: 2, low: 1 };
 
-    const topTodos: WidgetTodoItem[] = todayTodos
+    const topTodos: WidgetTodoItem[] = widgetTodos
       .sort((a, b) => {
         if (a.isCompleted !== b.isCompleted) return a.isCompleted ? 1 : -1;
         return (priorityWeight[b.priority] || 1) - (priorityWeight[a.priority] || 1);
@@ -74,7 +85,7 @@ export async function syncDataToHomeWidget(): Promise<void> {
       updatedAt: new Date().toISOString(),
       todayDate: todayStr,
       completedCount,
-      totalCount: todayTodos.length,
+      totalCount,
       items: topTodos,
     };
 
@@ -89,7 +100,7 @@ export async function syncDataToHomeWidget(): Promise<void> {
 
     // 3. Pinned Note for widget
     const pinnedNote = await db.notes
-      .filter((n) => !n.isTrashed && n.showOnHomeWidget)
+      .filter((n) => !n.isTrashed && Boolean(n.showOnHomeWidget))
       .first();
 
     const notePayload: WidgetNotePayload | null = pinnedNote
@@ -103,7 +114,7 @@ export async function syncDataToHomeWidget(): Promise<void> {
 
     // 4. Priority Wishlist for widget
     const activeWishlist = await db.wishlists
-      .filter((w) => !w.isAchieved && w.showOnHomeWidget)
+      .filter((w) => !w.isAchieved && Boolean(w.showOnHomeWidget))
       .first();
 
     const wishlistPayload: WidgetWishlistPayload | null = activeWishlist
@@ -119,7 +130,7 @@ export async function syncDataToHomeWidget(): Promise<void> {
         }
       : null;
 
-    // Save to Capacitor Preferences (with live update timestamp)
+    // Save to Capacitor Preferences (CapacitorStorage)
     await Promise.all([
       Preferences.set({
         key: 'widget_todos_data',
@@ -142,8 +153,19 @@ export async function syncDataToHomeWidget(): Promise<void> {
         value: Date.now().toString(),
       }),
     ]);
+
+    // Trigger immediate native widget broadcast refresh if running in Android container
+    if (Capacitor.isNativePlatform()) {
+      try {
+        await WidgetBridge.refreshWidget();
+      } catch (nativeErr) {
+        console.warn('Native widget refresh plugin call failed:', nativeErr);
+      }
+    }
   } catch (err) {
     console.warn('Widget sync skipped or failed:', err);
   }
 }
 
+// Backward-compatible alias
+export const syncDataToHomeWidget = syncAllWidgets;
