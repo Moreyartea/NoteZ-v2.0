@@ -15,8 +15,10 @@ import {
   IconTrash,
   IconDatabase,
   IconInfoCircle,
+  IconPalette,
 } from '@tabler/icons-react';
 import { db } from '@/app/lib/db';
+import type { AppThemeId } from '@/app/lib/types';
 import { AppShell } from '@/components/layout/AppShell';
 import { NbCard } from '@/components/ui/NbCard';
 import { NbButton } from '@/components/ui/NbButton';
@@ -29,6 +31,8 @@ import {
   resetEntireDatabase,
 } from '@/app/lib/services/backupService';
 import {
+  THEME_PRESETS,
+  setTheme,
   setDarkMode,
   updateDailyReminderTime,
   triggerTestNotification,
@@ -57,6 +61,9 @@ export default function SettingsPage() {
     }, []) || null;
 
   const isDark = Boolean(settings?.isDarkMode);
+  const currentThemeId: AppThemeId =
+    (settings?.themeId as AppThemeId) ||
+    (settings?.isDarkMode ? 'cyber-lime' : 'classic-brutal');
 
   useEffect(() => {
     if (settings?.dailyReminderTime) {
@@ -67,6 +74,10 @@ export default function SettingsPage() {
   const handleToggleDarkMode = async () => {
     const nextMode = !isDark;
     await setDarkMode(nextMode);
+  };
+
+  const handleSelectTheme = async (themeId: AppThemeId) => {
+    await setTheme(themeId);
   };
 
   const handleSaveReminderTime = async () => {
@@ -212,29 +223,26 @@ export default function SettingsPage() {
           </div>
         )}
 
-        {/* GRUP 1: TAMPILAN & SUASANA */}
-        <NbCard className="p-4 space-y-3">
+        {/* GRUP 1: TAMPILAN & TEMA PRESET */}
+        <NbCard className="p-4 space-y-4">
           <div className="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center gap-2">
-              {isDark ? (
-                <IconMoon className="w-5 h-5 text-[#FFE135] stroke-[2.5]" />
-              ) : (
-                <IconSun className="w-5 h-5 text-amber-500 stroke-[2.5]" />
-              )}
+              <IconPalette className="w-5 h-5 text-[#FFE135] stroke-[2.5]" />
               <h2 className="text-sm font-black text-[#0A0A0A] dark:text-[#F4F4F0] uppercase tracking-wide">
-                Tampilan & Suasana
+                Tema & Suasana
               </h2>
             </div>
             <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded border border-[#0A0A0A] bg-[#FFE135] text-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A]">
-              {isDark ? 'Mode Gelap' : 'Mode Terang'}
+              {THEME_PRESETS.find((p) => p.id === currentThemeId)?.name || 'Classic Brutal'}
             </span>
           </div>
 
           <p className="text-xs text-gray-600 dark:text-gray-300">
-            Pilih tema kontras Neo-Brutalism. Mode gelap memberikan kenyamanan visual saat mencatat di malam hari.
+            Pilih dari 5 preset tema resmi NoteZ v2.0 bergaya Neo-Brutalism. Mode terang default mempertahankan palet gading klasik, sedangkan 4 mode gelap menghadirkan aksen neon elektrik dan true black hemat baterai.
           </p>
 
-          <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-[#252525] border-2 border-[#0A0A0A] dark:border-[#2E2E2E]">
+          {/* Quick Light/Dark Switch */}
+          <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-[var(--theme-surface,#252525)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)]">
             <div className="flex items-center gap-2.5">
               <div
                 className={cn(
@@ -242,14 +250,20 @@ export default function SettingsPage() {
                   isDark ? 'bg-[#1E1E1E] text-white' : 'bg-white text-[#0A0A0A]'
                 )}
               >
-                {isDark ? <IconMoon className="w-4 h-4 text-[#FFE135]" /> : <IconSun className="w-4 h-4 text-amber-500" />}
+                {isDark ? (
+                  <IconMoon className="w-4 h-4 text-[#FFE135]" />
+                ) : (
+                  <IconSun className="w-4 h-4 text-amber-500" />
+                )}
               </div>
               <div>
-                <p className="text-xs font-black text-[#0A0A0A] dark:text-[#F4F4F0]">
-                  Dark Mode Neo-Brutalism
+                <p className="text-xs font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)]">
+                  Mode Cepat: {isDark ? 'Gelap' : 'Terang'}
                 </p>
-                <p className="text-[10px] font-semibold text-gray-500 dark:text-gray-400">
-                  {isDark ? 'Latar hitam pekat aktif (#121212)' : 'Latar putih gading aktif (#FFFDF7)'}
+                <p className="text-[10px] font-semibold text-gray-500 dark:text-[var(--theme-text-muted,#8E929E)]">
+                  {isDark
+                    ? 'Beralih ke preset Classic Brutal (Terang)'
+                    : 'Beralih ke preset Gelap aktif'}
                 </p>
               </div>
             </div>
@@ -260,7 +274,7 @@ export default function SettingsPage() {
               onClick={handleToggleDarkMode}
               className={cn(
                 'w-14 h-8 rounded-full border-2 border-[#0A0A0A] p-1 transition-colors relative cursor-pointer select-none shadow-[2px_2px_0px_#0A0A0A]',
-                isDark ? 'bg-[#FFE135]' : 'bg-gray-200'
+                isDark ? 'bg-[#FFE135] dark:bg-[var(--theme-accent-primary,#FFE135)]' : 'bg-gray-200'
               )}
               aria-label="Toggle tema gelap atau terang"
             >
@@ -277,6 +291,96 @@ export default function SettingsPage() {
                 )}
               </div>
             </button>
+          </div>
+
+          {/* 5 Preset Theme Selector Cards */}
+          <div className="space-y-2 pt-1">
+            <span className="text-[11px] font-black uppercase text-gray-700 dark:text-[var(--theme-text-muted,#A7A1B8)] tracking-wider">
+              5 Preset Resmi:
+            </span>
+            <div className="grid grid-cols-1 gap-2">
+              {THEME_PRESETS.map((preset) => {
+                const isSelected = preset.id === currentThemeId;
+                return (
+                  <button
+                    key={preset.id}
+                    type="button"
+                    onClick={() => handleSelectTheme(preset.id)}
+                    className={cn(
+                      'w-full text-left p-3 rounded-xl border-2 transition-all cursor-pointer select-none flex items-center justify-between gap-3',
+                      isSelected
+                        ? 'border-[#0A0A0A] dark:border-[var(--theme-accent-primary,#FFE135)] shadow-[3px_3px_0px_#0A0A0A] dark:shadow-[3px_3px_0px_var(--theme-accent-primary,#FFE135)] bg-yellow-50/50 dark:bg-[var(--theme-surface,#1E1E1E)] scale-[1.01]'
+                        : 'border-gray-300 dark:border-[var(--theme-border,#2E2E2E)] shadow-none bg-white dark:bg-[var(--theme-surface,#16181D)] hover:border-[#0A0A0A] dark:hover:border-gray-500'
+                    )}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      {/* Color Palette Preview Swatch */}
+                      <div
+                        className="w-10 h-10 rounded-lg border-2 border-[#0A0A0A] flex flex-col overflow-hidden shadow-[1px_1px_0px_#0A0A0A] flex-shrink-0"
+                        style={{ backgroundColor: preset.colors.bg }}
+                      >
+                        <div
+                          className="h-5 w-full flex items-center justify-end px-1 gap-0.5"
+                          style={{ backgroundColor: preset.colors.surface }}
+                        >
+                          <span
+                            className="w-2 h-2 rounded-full border border-black/40"
+                            style={{ backgroundColor: preset.colors.accentPrimary }}
+                          />
+                          <span
+                            className="w-2 h-2 rounded-full border border-black/40"
+                            style={{ backgroundColor: preset.colors.accentSecondary }}
+                          />
+                        </div>
+                        <div className="flex-1 flex items-center px-1">
+                          <span
+                            className="text-[9px] font-black leading-none"
+                            style={{ color: preset.colors.textPrimary }}
+                          >
+                            Aa
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] truncate">
+                            {preset.name}
+                          </span>
+                          <span
+                            className={cn(
+                              'text-[9px] font-bold px-1.5 py-0.2 rounded border',
+                              preset.isDark
+                                ? 'bg-gray-900 text-gray-200 border-gray-700'
+                                : 'bg-amber-100 text-amber-900 border-amber-300'
+                            )}
+                          >
+                            {preset.isDark ? 'Dark' : 'Light'}
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-gray-500 dark:text-[var(--theme-text-muted,#8E929E)] truncate max-w-[200px]">
+                          {preset.tagline}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Active Check Indicator */}
+                    <div className="flex-shrink-0">
+                      {isSelected ? (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase px-2 py-1 rounded-md bg-[#FFE135] dark:bg-[var(--theme-accent-primary,#FFE135)] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A]">
+                          <IconCheck className="w-3 h-3 stroke-[3]" />
+                          <span>Aktif</span>
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 px-2 py-1">
+                          Pilih
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </NbCard>
 

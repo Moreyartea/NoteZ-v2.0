@@ -1,5 +1,5 @@
 import { db } from '@/app/lib/db';
-import type { AppSettings } from '@/app/lib/types';
+import type { AppSettings, AppThemeId, ThemePreset } from '@/app/lib/types';
 import {
   scheduleDailyReviewNotification,
   requestNotificationPermission,
@@ -9,45 +9,210 @@ import {
 const DEFAULT_SETTINGS_ID = 'default';
 
 /**
- * Initializes app theme immediately on application mount
- * Reads from localStorage first for zero-FOUC, then verifies with Dexie
+ * 5 Official Theme Presets for NoteZ v2.0
  */
-export async function initTheme(): Promise<boolean> {
-  if (typeof window === 'undefined') return false;
+export const THEME_PRESETS: ThemePreset[] = [
+  {
+    id: 'classic-brutal',
+    name: 'Classic Brutal',
+    tagline: 'Neo-Brutalism Light - Mode Terang Default Kontras Tinggi',
+    isDark: false,
+    colors: {
+      bg: '#FFFDF7',
+      surface: '#FFFFFF',
+      border: '#0A0A0A',
+      accentPrimary: '#FFE135',
+      accentSecondary: '#3B6FFF',
+      textPrimary: '#0A0A0A',
+      textMuted: '#555555',
+    },
+  },
+  {
+    id: 'cyber-lime',
+    name: 'Cyber Lime',
+    tagline: 'Electric Cyber Lime - Gelap Berenergi Neon Hijau',
+    isDark: true,
+    colors: {
+      bg: '#0C0D10',
+      surface: '#16181D',
+      border: '#2A2D36',
+      accentPrimary: '#CCFF00',
+      accentSecondary: '#2563EB',
+      textPrimary: '#F4F5F6',
+      textMuted: '#8E929E',
+    },
+  },
+  {
+    id: 'cyber-blue',
+    name: 'Cyber Blue',
+    tagline: 'Electric Cyber Blue - Biru Elektrik Futuristik',
+    isDark: true,
+    colors: {
+      bg: '#0B0E14',
+      surface: '#141A24',
+      border: '#243044',
+      accentPrimary: '#00F0FF',
+      accentSecondary: '#2563EB',
+      textPrimary: '#F0F6FC',
+      textMuted: '#8B98A5',
+    },
+  },
+  {
+    id: 'violet-dark',
+    name: 'Violet Dark',
+    tagline: 'Deep Charcoal & Violet - Ungu Mewah & Elegan',
+    isDark: true,
+    colors: {
+      bg: '#0F0E17',
+      surface: '#1B1A26',
+      border: '#2E2B40',
+      accentPrimary: '#7C3AED',
+      accentSecondary: '#EC4899',
+      textPrimary: '#FFFFFE',
+      textMuted: '#A7A1B8',
+    },
+  },
+  {
+    id: 'oled',
+    name: 'OLED Black',
+    tagline: 'OLED True Black - Hitam Pekat Hemat Baterai Layar OLED',
+    isDark: true,
+    colors: {
+      bg: '#000000',
+      surface: '#121212',
+      border: '#27272A',
+      accentPrimary: '#10B981',
+      accentSecondary: '#3B82F6',
+      textPrimary: '#FFFFFF',
+      textMuted: '#71717A',
+    },
+  },
+];
+
+/**
+ * Applies the given theme preset by setting data-theme attribute and toggling the .dark class
+ */
+export function applyTheme(themeId: AppThemeId): void {
+  if (typeof document === 'undefined') return;
+
+  const validTheme = THEME_PRESETS.some((p) => p.id === themeId)
+    ? themeId
+    : 'classic-brutal';
+  const isDark = validTheme !== 'classic-brutal';
+
+  document.documentElement.setAttribute('data-theme', validTheme);
+  if (isDark) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
 
   try {
-    // 1. Fast path from localStorage
-    const cachedTheme = localStorage.getItem('notez_theme');
-    let isDark = cachedTheme === 'dark';
-
-    // 2. Fallback to Dexie if no cached theme
-    if (!cachedTheme) {
-      const settings = await db.settings.get(DEFAULT_SETTINGS_ID);
-      if (settings?.isDarkMode !== undefined) {
-        isDark = Boolean(settings.isDarkMode);
-      }
+    localStorage.setItem('notez_theme', validTheme);
+    localStorage.setItem('notez_theme_mode', isDark ? 'dark' : 'light');
+    if (isDark) {
+      localStorage.setItem('notez_last_dark_theme', validTheme);
     }
-
-    applyThemeClass(isDark);
-    return isDark;
   } catch (err) {
-    console.warn('Failed to initialize theme from storage:', err);
-    return false;
+    console.warn('Failed to save theme to localStorage:', err);
   }
 }
 
 /**
- * Applies or removes the .dark class on <html> and syncs localStorage
+ * Initializes app theme immediately on application mount
+ * Reads from localStorage first for zero-FOUC, then verifies with Dexie
+ */
+export async function initTheme(): Promise<AppThemeId> {
+  if (typeof window === 'undefined') return 'classic-brutal';
+
+  try {
+    // 1. Fast path: check localStorage
+    let storedTheme = localStorage.getItem('notez_theme') as AppThemeId | null;
+
+    // Handle legacy 'dark' or 'light' values
+    if (storedTheme === ('dark' as any)) {
+      storedTheme = 'cyber-lime';
+    } else if (storedTheme === ('light' as any)) {
+      storedTheme = 'classic-brutal';
+    }
+
+    if (!storedTheme || !THEME_PRESETS.some((p) => p.id === storedTheme)) {
+      // 2. Fallback to Dexie
+      const settings = await db.settings.get(DEFAULT_SETTINGS_ID);
+      if (settings?.themeId && THEME_PRESETS.some((p) => p.id === settings.themeId)) {
+        storedTheme = settings.themeId;
+      } else if (settings?.isDarkMode) {
+        storedTheme = 'cyber-lime';
+      } else {
+        storedTheme = 'classic-brutal';
+      }
+    }
+
+    applyTheme(storedTheme);
+    return storedTheme;
+  } catch (err) {
+    console.warn('Failed to initialize theme from storage:', err);
+    applyTheme('classic-brutal');
+    return 'classic-brutal';
+  }
+}
+
+/**
+ * Backward compatibility: Applies or removes the .dark class on <html> and syncs theme
  */
 export function applyThemeClass(isDark: boolean): void {
-  if (typeof document === 'undefined') return;
-
   if (isDark) {
-    document.documentElement.classList.add('dark');
-    localStorage.setItem('notez_theme', 'dark');
+    let lastDark: AppThemeId = 'cyber-lime';
+    try {
+      const storedLast = localStorage.getItem('notez_last_dark_theme') as AppThemeId;
+      if (storedLast && storedLast !== 'classic-brutal' && THEME_PRESETS.some((p) => p.id === storedLast)) {
+        lastDark = storedLast;
+      }
+    } catch {}
+    applyTheme(lastDark);
   } else {
-    document.documentElement.classList.remove('dark');
-    localStorage.setItem('notez_theme', 'light');
+    applyTheme('classic-brutal');
+  }
+}
+
+/**
+ * Sets active theme preset in DOM, persists to localStorage & Dexie
+ */
+export async function setTheme(themeId: AppThemeId): Promise<AppThemeId> {
+  const isDark = themeId !== 'classic-brutal';
+  applyTheme(themeId);
+
+  try {
+    const settings = await getAppSettings();
+    await db.settings.update(settings.id, {
+      themeId,
+      isDarkMode: isDark,
+      updatedAt: new Date().toISOString(),
+    });
+  } catch (err) {
+    console.warn('Failed to persist theme in Dexie:', err);
+  }
+
+  return themeId;
+}
+
+/**
+ * Toggles or sets the Dark Mode state in Dexie, updates DOM class, and persists to localStorage
+ */
+export async function setDarkMode(isDark: boolean): Promise<boolean> {
+  if (!isDark) {
+    await setTheme('classic-brutal');
+    return false;
+  } else {
+    let lastDark: AppThemeId = 'cyber-lime';
+    try {
+      const storedLast = localStorage.getItem('notez_last_dark_theme') as AppThemeId;
+      if (storedLast && storedLast !== 'classic-brutal' && THEME_PRESETS.some((p) => p.id === storedLast)) {
+        lastDark = storedLast;
+      }
+    } catch {}
+    await setTheme(lastDark);
+    return true;
   }
 }
 
@@ -63,6 +228,7 @@ export async function getAppSettings(): Promise<AppSettings> {
       pomodoroWorkDuration: 25,
       pomodoroBreakDuration: 5,
       isDarkMode: false,
+      themeId: 'classic-brutal',
     };
   }
 
@@ -78,6 +244,7 @@ export async function getAppSettings(): Promise<AppSettings> {
       pomodoroWorkDuration: 25,
       pomodoroBreakDuration: 5,
       isDarkMode: false,
+      themeId: 'classic-brutal',
       enableHaptics: true,
       pinLockEnabled: false,
       pinCode: null,
@@ -88,25 +255,6 @@ export async function getAppSettings(): Promise<AppSettings> {
   }
 
   return settings;
-}
-
-/**
- * Toggles or sets the Dark Mode state in Dexie, updates DOM class, and persists to localStorage
- */
-export async function setDarkMode(isDark: boolean): Promise<boolean> {
-  applyThemeClass(isDark);
-
-  try {
-    const settings = await getAppSettings();
-    await db.settings.update(settings.id, {
-      isDarkMode: isDark,
-      updatedAt: new Date().toISOString(),
-    });
-  } catch (err) {
-    console.warn('Failed to persist dark mode in Dexie:', err);
-  }
-
-  return isDark;
 }
 
 /**

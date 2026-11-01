@@ -50,7 +50,7 @@ export const NbModal: React.FC<NbModalProps> = ({
     >
       <div
         className={cn(
-          'relative w-full max-w-md bg-white dark:bg-[#1E1E1E] text-[#0A0A0A] dark:text-[#F4F4F0] rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[6px_6px_0px_#0A0A0A] dark:shadow-[6px_6px_0px_#000000] p-5 animate-in zoom-in-95 duration-150',
+          'relative w-full max-w-md bg-white dark:bg-[var(--theme-surface,#1E1E1E)] text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[6px_6px_0px_#0A0A0A] dark:shadow-[6px_6px_0px_#000000] p-5 animate-in zoom-in-95 duration-150',
           className
         )}
         onClick={(e) => e.stopPropagation()}

@@ -130,23 +130,23 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
       onClick={onClose}
     >
       <aside
-        className="w-full max-w-sm h-full bg-[#FFFDF7] dark:bg-[#181818] border-l-[3px] border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[-6px_0px_0px_#0A0A0A] dark:shadow-[-6px_0px_0px_#000000] flex flex-col z-50 animate-in slide-in-from-right duration-200"
+        className="w-full max-w-sm h-full bg-[#FFFDF7] dark:bg-[var(--theme-bg,#181818)] border-l-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[-6px_0px_0px_#0A0A0A] dark:shadow-[-6px_0px_0px_#000000] flex flex-col z-50 animate-in slide-in-from-right duration-200"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-label="Laci Notifikasi"
       >
         {/* Header */}
-        <div className="p-4 bg-white dark:bg-[#1E1E1E] border-b-[3px] border-[#0A0A0A] dark:border-[#2E2E2E] flex items-center justify-between">
+        <div className="p-4 bg-white dark:bg-[var(--theme-surface,#1E1E1E)] border-b-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="p-2 rounded-xl bg-[#FFE135] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
               <IconBell className="w-5 h-5 text-[#0A0A0A] stroke-[2.5]" />
             </div>
             <div>
-              <h2 className="text-base font-extrabold text-[#0A0A0A] dark:text-[#F4F4F0] leading-tight">
+              <h2 className="text-base font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] leading-tight">
                 Notifikasi
               </h2>
-              <p className="text-[11px] font-semibold text-gray-600 dark:text-gray-400">
+              <p className="text-[11px] font-semibold text-gray-600 dark:text-[var(--theme-text-muted,#8E929E)]">
                 {unreadCount > 0
                   ? `${unreadCount} belum dibaca`
                   : 'Semua sudah dibaca'}
@@ -158,9 +158,9 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
               href="/settings"
               onClick={onClose}
               title="Pengaturan"
-              className="w-8 h-8 rounded-lg bg-white dark:bg-[#252525] border-2 border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] flex items-center justify-center hover:bg-yellow-50 dark:hover:bg-[#333333] active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
+              className="w-8 h-8 rounded-lg bg-white dark:bg-[var(--theme-surface,#252525)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] flex items-center justify-center hover:bg-yellow-50 dark:hover:bg-[#333333] active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
             >
-              <IconSettings className="w-4 h-4 text-[#0A0A0A] dark:text-[#F4F4F0] stroke-[2.5]" />
+              <IconSettings className="w-4 h-4 text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] stroke-[2.5]" />
             </Link>
             <button
               type="button"

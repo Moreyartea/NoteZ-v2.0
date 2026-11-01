@@ -225,7 +225,25 @@ export interface AppNotification {
   createdAt: string; // ISO
 }
 
-// 11. App Settings
+// 11. App Settings & Themes
+export type AppThemeId = 'classic-brutal' | 'cyber-lime' | 'cyber-blue' | 'violet-dark' | 'oled';
+
+export interface ThemePreset {
+  id: AppThemeId;
+  name: string;
+  tagline: string;
+  isDark: boolean;
+  colors: {
+    bg: string;
+    surface: string;
+    border: string;
+    accentPrimary: string;
+    accentSecondary: string;
+    textPrimary: string;
+    textMuted: string;
+  };
+}
+
 export interface AppSettings {
   id: string; // "default"
   dailyReminderTime: string; // e.g. "20:00"
@@ -235,6 +253,7 @@ export interface AppSettings {
   pomodoroWorkDuration: number; // default 25
   pomodoroBreakDuration: number; // default 5
   isDarkMode?: boolean;
+  themeId?: AppThemeId;
   enableHaptics?: boolean;
   pinLockEnabled?: boolean;
   pinCode?: string | null;

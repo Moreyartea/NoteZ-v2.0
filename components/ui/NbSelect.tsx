@@ -40,7 +40,7 @@ export const NbSelect = React.forwardRef<HTMLSelectElement, NbSelectProps>(
         {label && (
           <label
             htmlFor={id}
-            className="text-sm font-bold text-[#0A0A0A] dark:text-[#F4F4F0] tracking-tight"
+            className="text-sm font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] tracking-tight"
           >
             {label}
           </label>
@@ -51,7 +51,7 @@ export const NbSelect = React.forwardRef<HTMLSelectElement, NbSelectProps>(
             id={id}
             disabled={disabled}
             className={cn(
-              'w-full bg-white dark:bg-[#252525] text-[#0A0A0A] dark:text-[#F4F4F0] font-medium text-sm rounded-xl border-[3px] border-[#0A0A0A] dark:border-[#2E2E2E]',
+              'w-full bg-white dark:bg-[var(--theme-surface,#252525)] text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] font-medium text-sm rounded-xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)]',
               'px-3.5 py-2.5 pr-10 appearance-none transition-all outline-none cursor-pointer',
               'focus:shadow-[3px_3px_0px_#3B6FFF] focus:border-[#0A0A0A] dark:focus:border-[#3B6FFF]',
               disabled && 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed',

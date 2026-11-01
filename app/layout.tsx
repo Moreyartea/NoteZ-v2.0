@@ -35,7 +35,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (localStorage.getItem('notez_theme') === 'dark') {
+                const stored = localStorage.getItem('notez_theme') || 'classic-brutal';
+                const theme = (stored === 'dark') ? 'cyber-lime' : ((stored === 'light') ? 'classic-brutal' : stored);
+                document.documentElement.setAttribute('data-theme', theme);
+                if (theme !== 'classic-brutal') {
                   document.documentElement.classList.add('dark');
                 } else {
                   document.documentElement.classList.remove('dark');

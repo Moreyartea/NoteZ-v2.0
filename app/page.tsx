@@ -90,15 +90,15 @@ export default function DashboardPage() {
       <div className="space-y-3.5">
         {/* CARD 1: Financial & Quick Action (All-in-One) */}
         <NbCard
-          className="p-4 rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_#000000] space-y-3.5 bg-[#FFFDF7] dark:bg-[#1E1E1E] transition-colors"
+          className="p-4 rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_#000000] space-y-3.5 bg-[#FFFDF7] dark:bg-[var(--theme-surface,#1E1E1E)] transition-colors"
         >
           {/* Top Section: Net Worth & Balance Peek Toggle */}
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-[11px] font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 block">
+              <span className="text-[11px] font-black uppercase tracking-wider text-gray-500 dark:text-[var(--theme-text-muted,#8E929E)] block">
                 Kekayaan Bersih
               </span>
-              <p className="font-mono text-2xl font-black text-[#0A0A0A] dark:text-[#F4F4F0] tracking-tight mt-0.5">
+              <p className="font-mono text-2xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] tracking-tight mt-0.5">
                 {isHideBalance ? 'Rp •••••••••' : formatRupiah(totalNetWorth)}
               </p>
             </div>
@@ -106,7 +106,7 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => setIsHideBalance(!isHideBalance)}
-              className="p-2 rounded-xl bg-white dark:bg-[#252525] border-2 border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] text-[#0A0A0A] dark:text-[#F4F4F0] cursor-pointer"
+              className="p-2 rounded-xl bg-white dark:bg-[var(--theme-surface,#252525)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] cursor-pointer"
               title={isHideBalance ? 'Tampilkan Saldo' : 'Sembunyikan Saldo'}
               aria-label="Toggle sensor intip saldo"
             >
@@ -119,19 +119,19 @@ export default function DashboardPage() {
           </div>
 
           {/* Thin Black Divider */}
-          <div className="border-t-2 border-[#0A0A0A] dark:border-[#2E2E2E]" />
+          <div className="border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)]" />
 
           {/* Bottom Section: 4 Quick Actions in 1 Row */}
           <div className="grid grid-cols-4 gap-2">
             <button
               type="button"
               onClick={() => setIsTxModalOpen(true)}
-              className="py-2 px-1 bg-white dark:bg-[#252525] hover:bg-emerald-50 dark:hover:bg-[#2a382e] rounded-xl border-2 border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
+              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface,#252525)] hover:bg-emerald-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
             >
               <div className="w-7 h-7 rounded-lg bg-[#00E676] border border-[#0A0A0A] flex items-center justify-center mb-1">
                 <IconWallet className="w-4 h-4 text-[#0A0A0A] stroke-[2.5]" />
               </div>
-              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[#F4F4F0] leading-tight">
+              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] leading-tight">
                 + Transaksi
               </span>
             </button>
@@ -139,12 +139,12 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => setIsTodoModalOpen(true)}
-              className="py-2 px-1 bg-white dark:bg-[#252525] hover:bg-blue-50 dark:hover:bg-[#26334a] rounded-xl border-2 border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
+              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface,#252525)] hover:bg-blue-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
             >
               <div className="w-7 h-7 rounded-lg bg-[#3B6FFF] border border-[#0A0A0A] flex items-center justify-center mb-1">
                 <IconChecklist className="w-4 h-4 text-white stroke-[2.5]" />
               </div>
-              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[#F4F4F0] leading-tight">
+              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] leading-tight">
                 + Tugas
               </span>
             </button>
@@ -152,12 +152,12 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => setIsNoteModalOpen(true)}
-              className="py-2 px-1 bg-white dark:bg-[#252525] hover:bg-yellow-50 dark:hover:bg-[#3d3820] rounded-xl border-2 border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
+              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface,#252525)] hover:bg-yellow-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
             >
               <div className="w-7 h-7 rounded-lg bg-[#FFE135] border border-[#0A0A0A] flex items-center justify-center mb-1">
                 <IconNotes className="w-4 h-4 text-[#0A0A0A] stroke-[2.5]" />
               </div>
-              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[#F4F4F0] leading-tight">
+              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] leading-tight">
                 + Catatan
               </span>
             </button>
@@ -165,12 +165,12 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => setIsMediaModalOpen(true)}
-              className="py-2 px-1 bg-white dark:bg-[#252525] hover:bg-purple-50 dark:hover:bg-[#382645] rounded-xl border-2 border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
+              className="py-2 px-1 bg-white dark:bg-[var(--theme-surface,#252525)] hover:bg-purple-50 dark:hover:opacity-90 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex flex-col items-center justify-center text-center cursor-pointer select-none transition-transform"
             >
               <div className="w-7 h-7 rounded-lg bg-[#A855F7] border border-[#0A0A0A] flex items-center justify-center mb-1">
                 <IconDeviceTv className="w-4 h-4 text-white stroke-[2.5]" />
               </div>
-              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[#F4F4F0] leading-tight">
+              <span className="text-[10px] font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] leading-tight">
                 + Tontonan
               </span>
             </button>
@@ -179,7 +179,7 @@ export default function DashboardPage() {
 
         {/* CARD 2: Agenda Hari Ini (Tugas & Habit Terpadu) */}
         <NbCard
-          className="p-4 rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_#000000] space-y-3 bg-[#FFFDF7] dark:bg-[#1E1E1E] transition-colors"
+          className="p-4 rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[4px_4px_0px_#0A0A0A] dark:shadow-[4px_4px_0px_#000000] space-y-3 bg-[#FFFDF7] dark:bg-[var(--theme-surface,#1E1E1E)] transition-colors"
         >
           {/* Card Header */}
           <div className="flex items-center justify-between">
@@ -215,15 +215,15 @@ export default function DashboardPage() {
               topTodos.map((todo) => (
                 <div
                   key={todo.id}
-                  className="flex items-center justify-between gap-2.5 p-2 rounded-xl bg-white dark:bg-[#252525] border-2 border-[#0A0A0A] dark:border-[#2E2E2E] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]"
+                  className="flex items-center justify-between gap-2.5 p-2 rounded-xl bg-white dark:bg-[var(--theme-surface,#252525)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]"
                 >
                   <div className="flex items-center gap-2.5 min-w-0 flex-1">
                     <button
                       type="button"
                       onClick={() => toggleTodoStatus(todo.id)}
                       className={cn(
-                        'w-5 h-5 rounded-md border-2 border-[#0A0A0A] dark:border-[#2E2E2E] flex items-center justify-center flex-shrink-0 transition-all cursor-pointer',
-                        todo.isCompleted ? 'bg-[#00E676]' : 'bg-white dark:bg-[#1E1E1E]'
+                        'w-5 h-5 rounded-md border-2 border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] flex items-center justify-center flex-shrink-0 transition-all cursor-pointer',
+                        todo.isCompleted ? 'bg-[#00E676]' : 'bg-white dark:bg-[var(--theme-surface,#1E1E1E)]'
                       )}
                       aria-label="Toggle status tugas"
                     >
@@ -236,7 +236,7 @@ export default function DashboardPage() {
                         'text-xs font-black truncate',
                         todo.isCompleted
                           ? 'line-through text-gray-400'
-                          : 'text-[#0A0A0A] dark:text-[#F4F4F0]'
+                          : 'text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)]'
                       )}
                     >
                       {todo.title}
@@ -259,7 +259,7 @@ export default function DashboardPage() {
                       return (
                         <span
                           title={`Kategori: ${todo.category}`}
-                          className="w-5 h-5 rounded border border-[#0A0A0A] dark:border-[#2E2E2E] bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[#0A0A0A] dark:text-[#F4F4F0] shadow-[1px_1px_0px_#0A0A0A] dark:shadow-[1px_1px_0px_#000000]"
+                          className="w-5 h-5 rounded border border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] shadow-[1px_1px_0px_#0A0A0A] dark:shadow-[1px_1px_0px_#000000]"
                         >
                           <CatIcon className="w-3 h-3 stroke-[2.5]" />
                         </span>
@@ -313,7 +313,7 @@ export default function DashboardPage() {
                       'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 border-[#0A0A0A] dark:border-[#2E2E2E] text-xs font-black transition-all flex-shrink-0 select-none cursor-pointer',
                       isDone
                         ? 'bg-[#00E676] text-[#0A0A0A] shadow-none'
-                        : 'bg-white dark:bg-[#252525] text-gray-800 dark:text-gray-200 shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px]'
+                        : 'bg-white dark:bg-[var(--theme-surface,#252525)] text-gray-800 dark:text-[var(--theme-text-primary,#F4F4F0)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px]'
                     )}
                   >
                     <span
