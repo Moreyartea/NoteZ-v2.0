@@ -63,7 +63,7 @@ export const AppLogo: React.FC<AppLogoProps> = ({
       {showText && (
         <span
           className={cn(
-            'font-black tracking-tight text-[#0A0A0A] leading-none',
+            'font-black tracking-tight text-[#0A0A0A] dark:text-[var(--theme-text-primary)] leading-tight',
             current.text
           )}
         >

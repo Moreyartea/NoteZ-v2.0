@@ -146,10 +146,10 @@ export const HabitTrackerSection: React.FC<HabitTrackerSectionProps> = ({
                               : 'bg-gray-100 text-gray-500 border-gray-200'
                           )}
                         >
-                          <span className="text-[9px] font-bold uppercase leading-none">
+                          <span className="text-[9px] font-bold uppercase leading-tight">
                             {day.dayLabel}
                           </span>
-                          <span className="text-xs font-black mt-0.5 leading-none flex items-center justify-center">
+                          <span className="text-xs font-black mt-0.5 leading-tight flex items-center justify-center">
                             {isCompleted ? (
                               <IconCheck className="w-3.5 h-3.5 stroke-[3.5]" />
                             ) : (

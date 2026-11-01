@@ -51,14 +51,14 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
 
   return (
     <NbCard
-      bgColor={note.color || '#FFFDF7'}
+      bgColor={note.color && note.color !== '#FFFDF7' && note.color !== '#FFFFFF' ? note.color : undefined}
       onClick={() => onEdit(note)}
       className="p-4 flex flex-col justify-between space-y-3 cursor-pointer hover:shadow-[6px_6px_0px_#0A0A0A] hover:-translate-y-0.5 transition-all select-none"
     >
       {/* Top Action Bar */}
       <div className="flex items-center justify-between gap-1">
-        <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase text-[#0A0A0A] bg-white/90 px-2 py-0.5 rounded-md border border-[#0A0A0A] truncate max-w-[120px]">
-          <IconFolder className="w-3 h-3 text-[#0A0A0A]" />
+        <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase text-[#0A0A0A] dark:text-[var(--theme-text-primary)] bg-white/90 dark:bg-[var(--theme-surface)] px-2 py-0.5 rounded-md border border-[#0A0A0A] dark:border-[var(--theme-border)] truncate max-w-[120px]">
+          <IconFolder className="w-3 h-3 text-[#0A0A0A] dark:text-[var(--theme-text-primary)]" />
           <span>{note.folder || 'Ide'}</span>
         </span>
 
@@ -69,10 +69,10 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
             onClick={handlePin}
             title={note.isPinned ? 'Lepas Sematan' : 'Sematkan ke Atas'}
             className={cn(
-              'p-1.5 rounded-md border border-[#0A0A0A] transition-all cursor-pointer',
+              'p-1.5 rounded-md border border-[#0A0A0A] dark:border-[var(--theme-border)] transition-all cursor-pointer',
               note.isPinned
-                ? 'bg-[#FFE135] shadow-[1px_1px_0px_#0A0A0A]'
-                : 'bg-white/80 text-gray-500 hover:text-black'
+                ? 'bg-[#FFE135] text-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A]'
+                : 'bg-white/80 dark:bg-[var(--theme-surface)] text-gray-500 dark:text-[var(--theme-text-muted)] hover:text-black dark:hover:text-white'
             )}
           >
             <IconPin className="w-3.5 h-3.5" />
@@ -84,10 +84,10 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
             onClick={handleWidget}
             title={note.showOnHomeWidget ? 'Tampil di Widget HP' : 'Pasang di Widget Layar HP'}
             className={cn(
-              'p-1.5 rounded-md border border-[#0A0A0A] transition-all cursor-pointer',
+              'p-1.5 rounded-md border border-[#0A0A0A] dark:border-[var(--theme-border)] transition-all cursor-pointer',
               note.showOnHomeWidget
                 ? 'bg-[#3B6FFF] text-white shadow-[1px_1px_0px_#0A0A0A]'
-                : 'bg-white/80 text-gray-500 hover:text-black'
+                : 'bg-white/80 dark:bg-[var(--theme-surface)] text-gray-500 dark:text-[var(--theme-text-muted)] hover:text-black dark:hover:text-white'
             )}
           >
             <IconDeviceMobile className="w-3.5 h-3.5" />
@@ -98,7 +98,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
             type="button"
             onClick={handleDelete}
             title="Pindah ke Sampah"
-            className="p-1.5 rounded-md bg-white/80 border border-[#0A0A0A] text-gray-500 hover:text-[#FF3B30] hover:bg-red-50 transition-all cursor-pointer"
+            className="p-1.5 rounded-md bg-white/80 dark:bg-[var(--theme-surface)] border border-[#0A0A0A] dark:border-[var(--theme-border)] text-gray-500 dark:text-[var(--theme-text-muted)] hover:text-[#FF3B30] hover:bg-red-50 dark:hover:bg-red-950/30 transition-all cursor-pointer"
           >
             <IconTrash className="w-3.5 h-3.5" />
           </button>
@@ -107,11 +107,11 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
 
       {/* Title & Content */}
       <div className="space-y-1">
-        <h3 className="font-black text-base text-[#0A0A0A] leading-tight break-words">
+        <h3 className="font-black text-base text-[#0A0A0A] dark:text-[var(--theme-text-primary)] leading-tight break-words">
           {note.title}
         </h3>
         {note.content && (
-          <p className="text-xs text-gray-700 whitespace-pre-line line-clamp-3 leading-relaxed">
+          <p className="text-xs text-gray-700 dark:text-[var(--theme-text-muted)] whitespace-pre-line line-clamp-3 leading-relaxed">
             {note.content}
           </p>
         )}
@@ -119,8 +119,8 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
 
       {/* Checklists Preview (Interactive) */}
       {checklists.length > 0 && (
-        <div className="p-2.5 rounded-xl bg-white/85 border border-[#0A0A0A] space-y-1.5">
-          <div className="flex items-center justify-between text-[10px] font-extrabold text-gray-600 uppercase">
+        <div className="p-2.5 rounded-xl bg-white/85 dark:bg-[var(--theme-surface)]/80 border border-[#0A0A0A] dark:border-[var(--theme-border)] space-y-1.5">
+          <div className="flex items-center justify-between text-[10px] font-extrabold text-gray-600 dark:text-[var(--theme-text-muted)] uppercase">
             <span>Checklist</span>
             <span>
               {completedChecklists}/{checklists.length} Selesai

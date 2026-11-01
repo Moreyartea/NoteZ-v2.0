@@ -124,7 +124,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
       </div>
 
       {/* Tabs Piutang vs Utang */}
-      <div className="grid grid-cols-2 gap-1.5 p-1 bg-white rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+      <div className="grid grid-cols-2 gap-1.5 p-1 bg-white dark:bg-[var(--theme-surface)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]">
         <button
           type="button"
           onClick={() => setActiveTab('receivable')}
@@ -176,10 +176,10 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
               <NbCard key={item.id} className="p-3.5 space-y-2">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="font-black text-sm text-[#0A0A0A]">
+                    <h3 className="font-black text-sm text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                       {item.personName}
                     </h3>
-                    <p className="text-xs font-mono font-bold text-gray-700 mt-0.5">
+                    <p className="text-xs font-mono font-bold text-gray-700 dark:text-[var(--theme-text-muted)] mt-0.5">
                       Sisa: {formatRupiah(remaining)}{' '}
                       <span className="text-[10px] text-gray-500 font-normal">
                         (Total: {formatRupiah(item.totalAmount)})

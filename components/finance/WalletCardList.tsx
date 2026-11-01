@@ -120,7 +120,7 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-extrabold text-[#0A0A0A] uppercase tracking-wide">
+        <h2 className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] uppercase tracking-wide">
           Dompet Saya ({wallets.length})
         </h2>
         <button
@@ -168,7 +168,7 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
               <button
                 type="button"
                 onClick={() => openAdjustModal(wallet)}
-                className="absolute bottom-2.5 right-2.5 px-2 py-1 bg-white text-[#0A0A0A] font-extrabold text-[10px] rounded-md border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-1 cursor-pointer"
+                className="absolute bottom-2.5 right-2.5 px-2 py-1 bg-white dark:bg-[var(--theme-surface)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] font-extrabold text-[10px] rounded-md border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-1 cursor-pointer"
                 title="Sesuaikan Saldo"
               >
                 <IconScale className="w-3 h-3 stroke-[2.5]" />
@@ -187,9 +187,9 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
       >
         {selectedWallet && (
           <form onSubmit={handleAdjustSubmit} className="space-y-4">
-            <div className="p-3 rounded-xl bg-[#FFFDF7] border-2 border-[#0A0A0A]">
-              <p className="text-xs text-gray-600 font-semibold">Dompet Terpilih</p>
-              <p className="text-sm font-extrabold text-[#0A0A0A]">
+            <div className="p-3 rounded-xl bg-[#FFFDF7] dark:bg-[var(--theme-surface)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
+              <p className="text-xs text-gray-600 dark:text-[var(--theme-text-muted)] font-semibold">Dompet Terpilih</p>
+              <p className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                 {selectedWallet.name} ({getWalletTypeLabel(selectedWallet.type)})
               </p>
               <p className="text-xs text-gray-500 font-mono mt-1">

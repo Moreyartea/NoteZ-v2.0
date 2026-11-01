@@ -117,7 +117,7 @@ export default function FinancePage() {
                 <IconArrowDownLeft className="w-3.5 h-3.5 text-[#0A0A0A] stroke-[3]" />
               </span>
               <div className="min-w-0">
-                <p className="text-[10px] font-bold text-gray-600 leading-none">
+                <p className="text-[10px] font-bold text-gray-600 leading-tight">
                   Masuk ({currentMonth})
                 </p>
                 <p className="text-xs font-mono font-black text-[#00A854] truncate mt-0.5">
@@ -131,7 +131,7 @@ export default function FinancePage() {
                 <IconArrowUpRight className="w-3.5 h-3.5 text-white stroke-[3]" />
               </span>
               <div className="min-w-0">
-                <p className="text-[10px] font-bold text-gray-600 leading-none">
+                <p className="text-[10px] font-bold text-gray-600 leading-tight">
                   Keluar ({currentMonth})
                 </p>
                 <p className="text-xs font-mono font-black text-[#FF3B30] truncate mt-0.5">

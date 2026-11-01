@@ -38,7 +38,7 @@ export const PomodoroSection: React.FC = () => {
     <div className="space-y-4">
       {/* Timer Container Card */}
       <NbCard
-        bgColor={isWork ? '#FFFDF7' : '#E8F5E9'}
+        bgColor={isWork ? undefined : '#E8F5E9'}
         className="p-6 flex flex-col items-center justify-center text-center space-y-5"
       >
         {/* Mode Indicator Badge */}
@@ -65,13 +65,13 @@ export const PomodoroSection: React.FC = () => {
         </div>
 
         {/* Big Digital Timer Display */}
-        <div className="p-6 bg-white rounded-3xl border-[3.5px] border-[#0A0A0A] shadow-[6px_6px_0px_#0A0A0A] w-full max-w-[280px]">
-          <span className="font-mono text-5xl font-black text-[#0A0A0A] tracking-wider select-none">
+        <div className="p-6 bg-white dark:bg-[var(--theme-surface)] rounded-3xl border-[3.5px] border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[6px_6px_0px_#0A0A0A] dark:shadow-[6px_6px_0px_#000000] w-full max-w-[280px]">
+          <span className="font-mono text-5xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] tracking-wider select-none">
             {formattedTime}
           </span>
 
           {/* Progress Bar */}
-          <div className="w-full h-3 rounded-full bg-gray-200 border-2 border-[#0A0A0A] overflow-hidden p-0.5 mt-4 shadow-inner">
+          <div className="w-full h-3 rounded-full bg-gray-200 dark:bg-gray-800 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] overflow-hidden p-0.5 mt-4 shadow-inner">
             <div
               className={cn(
                 'h-full rounded-full transition-all duration-300',
@@ -80,7 +80,7 @@ export const PomodoroSection: React.FC = () => {
               style={{ width: `${progressPercent}%` }}
             />
           </div>
-          <p className="text-[10px] font-bold text-gray-500 mt-1">
+          <p className="text-[10px] font-bold text-gray-500 dark:text-[var(--theme-text-muted)] mt-1">
             {progressPercent}% waktu berjalan
           </p>
         </div>
@@ -106,7 +106,7 @@ export const PomodoroSection: React.FC = () => {
           <button
             type="button"
             onClick={reset}
-            className="w-12 h-12 rounded-xl bg-white text-[#0A0A0A] border-[2.5px] border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] flex items-center justify-center transition-all cursor-pointer"
+            className="w-12 h-12 rounded-xl bg-white dark:bg-[var(--theme-surface)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[3px_3px_0px_#0A0A0A] dark:shadow-[3px_3px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] flex items-center justify-center transition-all cursor-pointer"
             title="Reset Timer"
           >
             <IconRotateClockwise className="w-5 h-5 stroke-[2.5]" />
@@ -115,7 +115,7 @@ export const PomodoroSection: React.FC = () => {
           <button
             type="button"
             onClick={skipMode}
-            className="w-12 h-12 rounded-xl bg-white text-[#0A0A0A] border-[2.5px] border-[#0A0A0A] shadow-[3px_3px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] flex items-center justify-center transition-all cursor-pointer"
+            className="w-12 h-12 rounded-xl bg-white dark:bg-[var(--theme-surface)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[3px_3px_0px_#0A0A0A] dark:shadow-[3px_3px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#0A0A0A] flex items-center justify-center transition-all cursor-pointer"
             title="Ganti Mode (Skip)"
           >
             <IconPlayerSkipForward className="w-5 h-5 stroke-[2.5]" />

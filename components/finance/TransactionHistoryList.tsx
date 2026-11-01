@@ -78,13 +78,13 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-extrabold text-[#0A0A0A] uppercase tracking-wide">
+        <h2 className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] uppercase tracking-wide">
           Riwayat Transaksi ({filtered.length})
         </h2>
       </div>
 
       {/* Filter Chips Bar */}
-      <div className="flex flex-col gap-2 p-3 bg-white rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+      <div className="flex flex-col gap-2 p-3 bg-white dark:bg-[var(--theme-surface)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]">
         <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
           <IconFilter className="w-4 h-4 text-gray-500 flex-shrink-0" />
           {['all', 'expense', 'income', 'transfer'].map((t) => (
@@ -170,11 +170,11 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
                 <div className="flex items-center gap-3 min-w-0">
                   {getTxTypeBadge(tx)}
                   <div className="min-w-0">
-                    <p className="text-sm font-extrabold text-[#0A0A0A] truncate">
+                    <p className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] truncate">
                       {tx.title}
                     </p>
                     <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-                      <span className="text-[10px] font-bold text-gray-700 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-300">
+                      <span className="text-[10px] font-bold text-gray-700 dark:text-[var(--theme-text-muted)] bg-gray-100 dark:bg-[var(--theme-bg)] px-1.5 py-0.5 rounded border border-gray-300 dark:border-[var(--theme-border)]">
                         {tx.category}
                       </span>
                       <span className="text-[10px] text-gray-600 font-semibold truncate">

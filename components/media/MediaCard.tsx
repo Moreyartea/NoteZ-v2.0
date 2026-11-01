@@ -139,11 +139,11 @@ export const MediaCard: React.FC<MediaCardProps> = ({ media, onEdit }) => {
 
       {/* Title */}
       <div>
-        <h3 className="font-black text-base text-[#0A0A0A] leading-tight break-words">
+        <h3 className="font-black text-base text-[#0A0A0A] dark:text-[var(--theme-text-primary)] leading-tight break-words">
           {media.title}
         </h3>
         {media.airingDay && media.status === 'watching' && (
-          <p className="text-[11px] font-bold text-purple-700 flex items-center gap-1 mt-1">
+          <p className="text-[11px] font-bold text-purple-700 dark:text-purple-400 flex items-center gap-1 mt-1 leading-tight">
             <IconCalendar className="w-3.5 h-3.5" />
             <span>Tayang tiap {media.airingDay}</span>
           </p>
@@ -151,12 +151,12 @@ export const MediaCard: React.FC<MediaCardProps> = ({ media, onEdit }) => {
       </div>
 
       {/* Episode Progress & +1 Ep Button */}
-      <div className="p-3 rounded-xl bg-[#FFFDF7] border-2 border-[#0A0A0A] flex items-center justify-between gap-3">
+      <div className="p-3 rounded-xl bg-[#FFFDF7] dark:bg-[var(--theme-surface)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] flex items-center justify-between gap-3">
         <div>
-          <span className="text-[10px] font-bold text-gray-500 uppercase leading-none block">
+          <span className="text-[10px] font-bold text-gray-500 dark:text-[var(--theme-text-muted)] uppercase leading-tight block">
             Progress Episode
           </span>
-          <p className="text-sm font-black font-mono text-[#0A0A0A] mt-0.5">
+          <p className="text-sm font-black font-mono text-[#0A0A0A] dark:text-[var(--theme-text-primary)] mt-0.5 leading-tight">
             Season {media.currentSeason} • Ep {media.currentEpisode}
             {media.totalEpisodes ? ` / ${media.totalEpisodes}` : ''}
           </p>

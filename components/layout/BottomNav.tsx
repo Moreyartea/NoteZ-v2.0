@@ -79,7 +79,7 @@ export const BottomNav: React.FC = () => {
                   isActive ? 'stroke-[2.5] scale-105' : 'stroke-2'
                 )}
               />
-              <span className="text-[10px] mt-0.5 tracking-tight leading-none">
+              <span className="text-[10px] mt-0.5 tracking-tight leading-tight">
                 {tab.name}
               </span>
             </Link>

@@ -126,8 +126,8 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <IconTarget className="w-4 h-4 text-[#0A0A0A]" />
-            <h2 className="text-sm font-extrabold text-[#0A0A0A] uppercase tracking-wide">
+            <IconTarget className="w-4 h-4 text-[#0A0A0A] dark:text-[var(--theme-text-primary)]" />
+            <h2 className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] uppercase tracking-wide">
               Anggaran Bulanan ({currentMonth})
             </h2>
           </div>
@@ -172,10 +172,10 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
                 <NbCard key={b.id} className="p-3.5 space-y-2">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-xs font-black text-[#0A0A0A]">
+                      <span className="text-xs font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                         {b.category}
                       </span>
-                      <p className="text-[11px] font-mono text-gray-600 mt-0.5">
+                      <p className="text-[11px] font-mono text-gray-600 dark:text-[var(--theme-text-muted)] mt-0.5">
                         {formatRupiah(spent)} / {formatRupiah(b.limitAmount)}
                       </p>
                     </div>
@@ -204,8 +204,8 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
       <div className="space-y-3 pt-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <IconReceipt2 className="w-4 h-4 text-[#0A0A0A]" />
-            <h2 className="text-sm font-extrabold text-[#0A0A0A] uppercase tracking-wide">
+            <IconReceipt2 className="w-4 h-4 text-[#0A0A0A] dark:text-[var(--theme-text-primary)]" />
+            <h2 className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] uppercase tracking-wide">
               Tagihan Rutin Bulanan
             </h2>
           </div>
@@ -241,7 +241,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-extrabold text-sm text-[#0A0A0A] truncate">
+                      <span className="font-extrabold text-sm text-[#0A0A0A] dark:text-[var(--theme-text-primary)] truncate">
                         {bill.category}
                       </span>
                       {isPaidThisMonth && (
@@ -250,7 +250,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
                         </NbBadge>
                       )}
                     </div>
-                    <p className="text-xs font-mono font-bold text-gray-700 mt-0.5">
+                    <p className="text-xs font-mono font-bold text-gray-700 dark:text-[var(--theme-text-muted)] mt-0.5">
                       {formatRupiah(bill.limitAmount)}
                     </p>
                     {bill.dueDayOfMonth && (

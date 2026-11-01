@@ -107,6 +107,33 @@ html[data-theme="oled"] {
   --color-theme-text-muted: var(--theme-text-muted);
 }
 
+/* Neo-Brutalism Typography Reset */
+* {
+  /* Cegah teks bertabrakan vertikal saat wrapping */
+  line-height: 1.35;
+}
+
+h1, h2, h3, h4, .font-black {
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em;
+}
+
+/* Hindari pemakaian class leading-none jika elemen memiliki kemungkinan wrap */
+.leading-none {
+  line-height: 1.15 !important;
+}
+
+/* Dynamic Card Surface & Element Sync across Themes */
+html[data-theme]:not([data-theme="classic-brutal"]) .nb-card,
+html[data-theme]:not([data-theme="classic-brutal"]) [data-card="true"],
+html.dark .bg-white,
+html.dark .bg-\[\#FFFDF7\],
+html.dark .bg-\[\#ffffff\] {
+  background-color: var(--theme-surface) !important;
+  border-color: var(--theme-border) !important;
+  color: var(--theme-text-primary) !important;
+}
+
 /* Neo-Brutalism Utility Classes */
 .nb-border {
   border: 3px solid #0A0A0A;

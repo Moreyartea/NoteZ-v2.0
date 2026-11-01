@@ -113,7 +113,7 @@ export default function MediaPage() {
 
           <div className="grid grid-cols-3 gap-2 pt-1">
             <div className="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/20 text-center">
-              <p className="text-[10px] font-bold text-purple-200 uppercase leading-none">
+              <p className="text-[10px] font-bold text-purple-200 uppercase leading-tight">
                 Total Judul
               </p>
               <p className="text-base font-black font-mono text-white mt-1">
@@ -122,7 +122,7 @@ export default function MediaPage() {
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/20 text-center">
-              <p className="text-[10px] font-bold text-purple-200 uppercase leading-none">
+              <p className="text-[10px] font-bold text-purple-200 uppercase leading-tight">
                 Sedang Nonton
               </p>
               <p className="text-base font-black font-mono text-[#FFE135] mt-1">
@@ -131,7 +131,7 @@ export default function MediaPage() {
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/20 text-center">
-              <p className="text-[10px] font-bold text-purple-200 uppercase leading-none">
+              <p className="text-[10px] font-bold text-purple-200 uppercase leading-tight">
                 Tamat / Selesai
               </p>
               <p className="text-base font-black font-mono text-[#00E676] mt-1">

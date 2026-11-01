@@ -72,7 +72,7 @@ export default function TodosPage() {
 
           <div className="grid grid-cols-2 gap-2 pt-1">
             <div className="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/20">
-              <p className="text-[10px] font-bold text-blue-200 uppercase leading-none">
+              <p className="text-[10px] font-bold text-blue-200 uppercase leading-tight">
                 Tugas Hari Ini
               </p>
               <p className="text-lg font-black font-mono text-white mt-1">
@@ -81,7 +81,7 @@ export default function TodosPage() {
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/20">
-              <p className="text-[10px] font-bold text-blue-200 uppercase leading-none">
+              <p className="text-[10px] font-bold text-blue-200 uppercase leading-tight">
                 Habit Tuntas
               </p>
               <p className="text-lg font-black font-mono text-white mt-1">
@@ -92,7 +92,7 @@ export default function TodosPage() {
         </NbCard>
 
         {/* Sub-Tabs Switcher */}
-        <div className="grid grid-cols-3 gap-1.5 p-1 bg-white rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+        <div className="grid grid-cols-3 gap-1.5 p-1 bg-white dark:bg-[var(--theme-surface)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]">
           <button
             type="button"
             onClick={() => setActiveTab('todos')}

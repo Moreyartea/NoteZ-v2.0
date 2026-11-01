@@ -98,7 +98,7 @@ export default function DashboardPage() {
               <span className="text-[11px] font-black uppercase tracking-wider text-gray-500 dark:text-[var(--theme-text-muted,#8E929E)] block">
                 Kekayaan Bersih
               </span>
-              <p className="font-mono text-2xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] tracking-tight mt-0.5">
+              <p className="font-mono text-2xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] tracking-tight mt-0.5 leading-tight">
                 {isHideBalance ? 'Rp •••••••••' : formatRupiah(totalNetWorth)}
               </p>
             </div>
@@ -184,8 +184,8 @@ export default function DashboardPage() {
           {/* Card Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <IconCalendarCheck className="w-4 h-4 text-[#0A0A0A] dark:text-[#F4F4F0] stroke-[2.5]" />
-              <h2 className="text-sm font-black text-[#0A0A0A] dark:text-[#F4F4F0] tracking-tight">
+              <IconCalendarCheck className="w-4 h-4 text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] stroke-[2.5]" />
+              <h2 className="text-sm font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] tracking-tight leading-tight">
                 Agenda Hari Ini
               </h2>
               {todayTodos.length > 0 && (

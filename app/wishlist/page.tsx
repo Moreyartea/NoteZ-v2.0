@@ -64,7 +64,7 @@ export default function WishlistPage() {
 
           <div className="grid grid-cols-2 gap-2 pt-1">
             <div className="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/20">
-              <p className="text-[10px] font-bold text-pink-200 uppercase leading-none">
+              <p className="text-[10px] font-bold text-pink-200 uppercase leading-tight">
                 Total Terkumpul
               </p>
               <p className="text-base font-black font-mono text-white mt-1">
@@ -73,7 +73,7 @@ export default function WishlistPage() {
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/20">
-              <p className="text-[10px] font-bold text-pink-200 uppercase leading-none">
+              <p className="text-[10px] font-bold text-pink-200 uppercase leading-tight">
                 Target Keseluruhan
               </p>
               <p className="text-base font-black font-mono text-pink-100 mt-1">

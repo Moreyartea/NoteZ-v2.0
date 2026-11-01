@@ -89,10 +89,10 @@ export const WishlistCard: React.FC<WishlistCardProps> = ({
                 : 'Pajang di Layar Depan HP'
             }
             className={cn(
-              'p-1.5 rounded-lg border border-[#0A0A0A] transition-all cursor-pointer',
+              'p-1.5 rounded-lg border border-[#0A0A0A] dark:border-[var(--theme-border)] transition-all cursor-pointer',
               wishlist.showOnHomeWidget
                 ? 'bg-[#FF4DA6] text-white shadow-[1px_1px_0px_#0A0A0A]'
-                : 'bg-white text-gray-500 hover:text-black'
+                : 'bg-white dark:bg-[var(--theme-surface)] text-gray-500 dark:text-[var(--theme-text-muted)] hover:text-black dark:hover:text-white'
             )}
           >
             <IconDeviceMobile className="w-3.5 h-3.5" />
@@ -102,7 +102,7 @@ export const WishlistCard: React.FC<WishlistCardProps> = ({
             type="button"
             onClick={handleDelete}
             title="Hapus impian"
-            className="p-1.5 rounded-lg bg-white border border-[#0A0A0A] text-gray-400 hover:text-red-500 transition-all cursor-pointer"
+            className="p-1.5 rounded-lg bg-white dark:bg-[var(--theme-surface)] border border-[#0A0A0A] dark:border-[var(--theme-border)] text-gray-400 dark:text-[var(--theme-text-muted)] hover:text-red-500 transition-all cursor-pointer"
           >
             <IconTrash className="w-3.5 h-3.5" />
           </button>
@@ -115,21 +115,21 @@ export const WishlistCard: React.FC<WishlistCardProps> = ({
           <img
             src={wishlist.imageUrl}
             alt={wishlist.name}
-            className="w-16 h-16 rounded-xl border-2 border-[#0A0A0A] object-cover flex-shrink-0"
+            className="w-16 h-16 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] object-cover flex-shrink-0"
           />
         ) : (
-          <div className="w-16 h-16 rounded-xl bg-pink-100 border-2 border-[#0A0A0A] flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#0A0A0A]">
+          <div className="w-16 h-16 rounded-xl bg-pink-100 dark:bg-pink-950/40 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#0A0A0A]">
             <IconCoin className="w-8 h-8 text-[#FF4DA6]" />
           </div>
         )}
 
         <div className="min-w-0 flex-1">
-          <h3 className="font-black text-base text-[#0A0A0A] leading-snug truncate">
+          <h3 className="font-black text-base text-[#0A0A0A] dark:text-[var(--theme-text-primary)] leading-snug truncate">
             {wishlist.name}
           </h3>
           <p className="font-mono text-sm font-extrabold text-[#00A854] mt-0.5">
             {formatRupiah(wishlist.savedAmount)}{' '}
-            <span className="text-xs font-normal text-gray-500">
+            <span className="text-xs font-normal text-gray-500 dark:text-[var(--theme-text-muted)]">
               / {formatRupiah(wishlist.targetPrice)}
             </span>
           </p>
