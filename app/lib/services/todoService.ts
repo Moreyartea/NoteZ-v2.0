@@ -1,7 +1,11 @@
 import { db } from '@/app/lib/db';
 import type { Todo, Subtask, TodoPriority, TodoRecurrence } from '@/app/lib/types';
 import { syncDataToHomeWidget } from './widgetSyncService';
-import { scheduleTodoReminder } from './notificationService';
+import {
+  scheduleTodoReminder,
+  cancelNotification,
+  generateNumericNotificationId,
+} from './notificationService';
 
 function generateId(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -132,6 +136,7 @@ export async function toggleTodoStatus(id: string): Promise<void> {
         subtasks: completedSubtasks,
         updatedAt: now,
       });
+      cancelNotification(generateNumericNotificationId(id)).catch(() => {});
     }
   } else {
     // Re-opening completed task
@@ -196,6 +201,7 @@ export async function togglePinWidget(todoId: string): Promise<void> {
 
 export async function deleteTodo(id: string): Promise<void> {
   await db.todos.delete(id);
+  cancelNotification(generateNumericNotificationId(id)).catch(() => {});
   syncDataToHomeWidget().catch(() => {});
 }
 

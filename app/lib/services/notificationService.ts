@@ -76,20 +76,29 @@ export async function initNotificationListeners(): Promise<void> {
       'localNotificationReceived',
       async (notification) => {
         // Record into In-App Notification drawer upon native arrival
-        const existing = notification.extra?.relatedEntityId
-          ? await db.notifications
-              .where('relatedEntityId')
-              .equals(notification.extra.relatedEntityId)
-              .first()
-          : null;
+        const relatedId =
+          notification.extra?.relatedEntityId || notification.extra?.todoId || null;
 
-        if (!existing) {
+        if (relatedId) {
+          const existing = await db.notifications
+            .where('relatedEntityId')
+            .equals(relatedId)
+            .first();
+
+          if (!existing) {
+            await recordInAppNotification({
+              title: notification.title || 'Pengingat NoteZ',
+              message: notification.body || '',
+              category: (notification.extra?.category as NotificationCategory) || 'todo',
+              relatedEntityId: relatedId,
+              actionType: (notification.extra?.actionType as NotificationActionType) || 'complete_todo',
+            });
+          }
+        } else {
           await recordInAppNotification({
             title: notification.title || 'Pengingat NoteZ',
             message: notification.body || '',
             category: (notification.extra?.category as NotificationCategory) || 'system',
-            relatedEntityId: notification.extra?.relatedEntityId || null,
-            actionType: (notification.extra?.actionType as NotificationActionType) || null,
           });
         }
       }
@@ -99,10 +108,11 @@ export async function initNotificationListeners(): Promise<void> {
       'localNotificationActionPerformed',
       async (action) => {
         const notif = action.notification;
-        if (notif.extra?.relatedEntityId) {
+        const relatedId = notif.extra?.relatedEntityId || notif.extra?.todoId;
+        if (relatedId) {
           const matched = await db.notifications
             .where('relatedEntityId')
-            .equals(notif.extra.relatedEntityId)
+            .equals(relatedId)
             .first();
           if (matched && !matched.isRead) {
             await db.notifications.update(matched.id, { isRead: true });
@@ -130,7 +140,7 @@ export async function recordInAppNotification(data: {
   const id = generateId();
   const now = new Date().toISOString();
 
-  // Deduplicate: avoid writing duplicate notification for same relatedEntityId within same day
+  // Deduplicate: avoid writing duplicate notification for same relatedEntityId
   if (data.relatedEntityId) {
     const existing = await db.notifications
       .where('relatedEntityId')
@@ -226,6 +236,8 @@ export async function scheduleDailyReviewNotification(
               allowWhileIdle: true,
             },
             sound: 'beep.wav',
+            smallIcon: 'ic_stat_notez',
+            iconColor: '#FFE135',
             extra: {
               category: 'system',
             },
@@ -252,20 +264,29 @@ export async function scheduleTodoReminder(todo: Todo): Promise<number | null> {
   if (!todo.dueDate) return null;
 
   const notifId = generateNumericNotificationId(todo.id);
-  const timeStr = todo.reminderTime || '09:00';
-  const [hour, minute] = timeStr.split(':').map((v) => parseInt(v, 10) || 0);
+  const reminderTime = todo.reminderTime || '09:00';
+  const [year, month, day] = todo.dueDate.split('-').map(Number);
+  const [hour, minute] = reminderTime.split(':').map(Number);
+  let scheduledDate = new Date(year, month - 1, day, hour, minute, 0, 0);
 
-  const [y, m, d] = todo.dueDate.split('-').map((v) => parseInt(v, 10));
-  const triggerDate = new Date(y, m - 1, d, hour, minute, 0);
+  const now = Date.now();
+  const diffMs = now - scheduledDate.getTime();
 
-  const title = `Pengingat Tugas: ${todo.title}`;
-  const body = `Tugas kategori ${todo.category} harus diselesaikan sebelum deadline!`;
+  // If scheduledDate is in current minute (diff < 60s), advance to now + 3s so AlarmManager doesn't discard as past
+  if (scheduledDate.getTime() <= now && diffMs >= 0 && diffMs < 60000) {
+    scheduledDate = new Date(now + 3000);
+  }
+
+  const title = `⏰ Pengingat Tugas: ${todo.title}`;
+  const body =
+    todo.description ||
+    `Kategori: ${todo.category} • Prioritas: ${todo.priority.toUpperCase()}`;
 
   try {
     await ensureNotificationChannel();
 
-    // Only schedule OS alarm if trigger time is in future
-    if (triggerDate.getTime() > Date.now()) {
+    // Only schedule native OS alarm if scheduled time is in future
+    if (scheduledDate.getTime() > Date.now()) {
       if (Capacitor.isNativePlatform()) {
         await LocalNotifications.schedule({
           notifications: [
@@ -275,29 +296,32 @@ export async function scheduleTodoReminder(todo: Todo): Promise<number | null> {
               title,
               body,
               schedule: {
-                at: triggerDate,
+                at: scheduledDate,
                 allowWhileIdle: true,
               },
               sound: 'beep.wav',
+              smallIcon: 'ic_stat_notez',
+              iconColor: '#FFE135',
               extra: {
-                category: 'todo',
+                todoId: todo.id,
                 relatedEntityId: todo.id,
+                category: 'todo',
                 actionType: 'complete_todo',
               },
             },
           ],
         });
       }
+    } else {
+      // Past deadline: immediately record into in-app drawer
+      await recordInAppNotification({
+        title,
+        message: body,
+        category: 'todo',
+        relatedEntityId: todo.id,
+        actionType: 'complete_todo',
+      });
     }
-
-    // Always record active task reminder in in-app drawer
-    await recordInAppNotification({
-      title,
-      message: body,
-      category: 'todo',
-      relatedEntityId: todo.id,
-      actionType: 'complete_todo',
-    });
 
     return notifId;
   } catch (err) {
@@ -305,6 +329,11 @@ export async function scheduleTodoReminder(todo: Todo): Promise<number | null> {
     return null;
   }
 }
+
+/**
+ * Alias for scheduleTodoReminder
+ */
+export const scheduleTodoNotification = scheduleTodoReminder;
 
 /**
  * Schedules weekly recurring release notification for on-going anime/series
@@ -336,6 +365,8 @@ export async function scheduleMediaReminder(media: MediaItem): Promise<number | 
               allowWhileIdle: true,
             },
             sound: 'beep.wav',
+            smallIcon: 'ic_stat_notez',
+            iconColor: '#FFE135',
             extra: {
               category: 'media',
               relatedEntityId: media.id,
@@ -377,30 +408,43 @@ export async function cancelNotification(notificationId: number): Promise<void> 
 
 /**
  * Scans all active due tasks and synchronizes them to the in-app drawer
+ * Checks uncompleted tasks with dueDate and reminderTime where scheduledDate <= Date.now()
  */
 export async function syncDueNotificationsToDrawer(): Promise<void> {
   if (typeof window === 'undefined') return;
 
   try {
-    const todayStr = getLocalTodayDateString();
-    const activeTodos = await db.todos
-      .filter((t) => !t.isCompleted && Boolean(t.dueDate) && t.dueDate! <= todayStr)
+    const uncompletedTodos = await db.todos
+      .filter((t) => !t.isCompleted && Boolean(t.dueDate))
       .toArray();
 
-    for (const todo of activeTodos) {
-      const existing = await db.notifications
-        .where('relatedEntityId')
-        .equals(todo.id)
-        .first();
+    const now = Date.now();
 
-      if (!existing) {
-        await recordInAppNotification({
-          title: `Pengingat Tugas: ${todo.title}`,
-          message: `Tugas kategori ${todo.category} harus diselesaikan (Jatuh tempo: ${todo.dueDate}).`,
-          category: 'todo',
-          relatedEntityId: todo.id,
-          actionType: 'complete_todo',
-        });
+    for (const todo of uncompletedTodos) {
+      if (!todo.dueDate) continue;
+      const [year, month, day] = todo.dueDate.split('-').map(Number);
+      const reminderTime = todo.reminderTime || '09:00';
+      const [hour, minute] = reminderTime.split(':').map(Number);
+      const scheduledDate = new Date(year, month - 1, day, hour, minute, 0, 0);
+
+      // Task is due or past due
+      if (scheduledDate.getTime() <= now) {
+        const existing = await db.notifications
+          .where('relatedEntityId')
+          .equals(todo.id)
+          .first();
+
+        if (!existing) {
+          await recordInAppNotification({
+            title: `⏰ Pengingat Tugas: ${todo.title}`,
+            message:
+              todo.description ||
+              `Kategori: ${todo.category} • Prioritas: ${todo.priority.toUpperCase()}`,
+            category: 'todo',
+            relatedEntityId: todo.id,
+            actionType: 'complete_todo',
+          });
+        }
       }
     }
   } catch (err) {
@@ -431,8 +475,10 @@ export async function triggerTestNotification(): Promise<boolean> {
             channelId: HIGH_PRIORITY_CHANNEL_ID,
             title,
             body: message,
-            schedule: { at: new Date(Date.now() + 2000) },
+            schedule: { at: new Date(Date.now() + 2000), allowWhileIdle: true },
             sound: 'beep.wav',
+            smallIcon: 'ic_stat_notez',
+            iconColor: '#FFE135',
             extra: { category: 'system' },
           },
         ],

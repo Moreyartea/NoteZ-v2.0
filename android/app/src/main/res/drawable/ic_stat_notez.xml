@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Top Spirals / Binder Rings -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M6,2 C5.17,2 4.5,2.67 4.5,3.5 L4.5,4.5 L7.5,4.5 L7.5,3.5 C7.5,2.67 6.83,2 6,2 Z M12,2 C11.17,2 10.5,2.67 10.5,3.5 L10.5,4.5 L13.5,4.5 L13.5,3.5 C13.5,2.67 12.83,2 12,2 Z M18,2 C17.17,2 16.5,2.67 16.5,3.5 L16.5,4.5 L19.5,4.5 L19.5,3.5 C19.5,2.67 18.83,2 18,2 Z" />
+    <!-- Notebook Body with Checkmark Cutout -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M4,4 C2.9,4 2,4.9 2,6 L2,20 C2,21.1 2.9,22 4,22 L20,22 C21.1,22 22,21.1 22,20 L22,6 C22,4.9 21.1,4 20,4 L4,4 Z M10.5,16.5 L6.5,12.5 L8,11 L10.5,13.5 L16,8 L17.5,9.5 L10.5,16.5 Z" />
+</vector>
+

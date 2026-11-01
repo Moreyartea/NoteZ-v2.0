@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Index Tabs (Right Side) -->
+    <path
+        android:fillColor="#FF6584"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1.5"
+        android:pathData="M80,41 L85,41 C86,41 87,42 87,43 L87,47 C87,48 86,49 85,49 L80,49 Z" />
+    <path
+        android:fillColor="#F59E0B"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1.5"
+        android:pathData="M80,51 L85,51 C86,51 87,52 87,53 L87,57 C87,58 86,59 85,59 L80,59 Z" />
+    <path
+        android:fillColor="#3B82F6"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1.5"
+        android:pathData="M80,61 L85,61 C86,61 87,62 87,63 L87,67 C87,68 86,69 85,69 L80,69 Z" />
+    <path
+        android:fillColor="#22C55E"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1.5"
+        android:pathData="M80,71 L85,71 C86,71 87,72 87,73 L87,77 C87,78 86,79 85,79 L80,79 Z" />
+
+    <!-- Notebook Base Body Shadow / Outer Rim -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="3"
+        android:pathData="M30,28 L74,28 C77.5,28 80.5,31 80.5,34.5 L80.5,77.5 C80.5,81 77.5,84 74,84 L30,84 C26.5,84 23.5,81 23.5,77.5 L23.5,34.5 C23.5,31 26.5,28 30,28 Z" />
+
+    <!-- Header Margin (White) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="2"
+        android:pathData="M23.5,38 L80.5,38" />
+
+    <!-- 4 Modules / Quadrants -->
+    <!-- Top-Left: Red/Pink (Habits/Health) -->
+    <path
+        android:fillColor="#FF6584"
+        android:pathData="M24.5,39 L51.5,39 L51.5,60.5 L24.5,60.5 Z" />
+    <!-- Top-Right: Yellow (Finance) -->
+    <path
+        android:fillColor="#FFE135"
+        android:pathData="M52.5,39 L79.5,39 L79.5,60.5 L52.5,60.5 Z" />
+    <!-- Bottom-Left: Green (Tasks) -->
+    <path
+        android:fillColor="#22C55E"
+        android:pathData="M24.5,61.5 L51.5,61.5 L51.5,83 L24.5,83 Z" />
+    <!-- Bottom-Right: Blue (Calendar/Media) -->
+    <path
+        android:fillColor="#3B82F6"
+        android:pathData="M52.5,61.5 L79.5,61.5 L79.5,83 L52.5,83 Z" />
+
+    <!-- Cross Divider Grid -->
+    <path
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="2.5"
+        android:pathData="M24,61 L80,61 M52,38 L52,83" />
+
+    <!-- Module Icons: Heart (Top-Left) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1.2"
+        android:pathData="M38,47 C38,45 36.5,43.5 34.5,43.5 C33,43.5 32,44.5 31.5,45.5 C31,44.5 30,43.5 28.5,43.5 C26.5,43.5 25,45 25,47 C25,50 31.5,54.5 31.5,54.5 C31.5,54.5 38,50 38,47 Z" />
+
+    <!-- Module Icons: Coin (Top-Right) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1.2"
+        android:pathData="M66,49 C66,52.3 63.3,55 60,55 C56.7,55 54,52.3 54,49 C54,45.7 56.7,43 60,43 C63.3,43 66,45.7 66,49 Z" />
+    <path
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1"
+        android:pathData="M60,45.5 L60,52.5 M58.5,47.5 L61.5,47.5 M58.5,50.5 L61.5,50.5" />
+
+    <!-- Module Icons: Checklist (Bottom-Left) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1.2"
+        android:pathData="M29,66 L47,66 C48,66 49,67 49,68 L49,78 C49,79 48,80 47,80 L29,80 C28,80 27,79 27,78 L27,68 C27,67 28,66 29,66 Z" />
+    <path
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1"
+        android:pathData="M30,70 L32,72 L36,68 M38,70 L46,70 M38,74 L46,74 M38,77 L44,77" />
+
+    <!-- Module Icons: Calendar (Bottom-Right) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="1.2"
+        android:pathData="M57,67 L75,67 C76,67 77,68 77,69 L77,79 C77,80 76,81 75,81 L57,81 C56,81 55,80 55,79 L55,69 C55,68 56,67 57,67 Z" />
+    <path
+        android:fillColor="#FF6584"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="0.8"
+        android:pathData="M55,67 L77,67 L77,70.5 L55,70.5 Z" />
+
+    <!-- Top Spiral Binder Rings -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="2"
+        android:pathData="M34,22 C32,22 30.5,23.5 30.5,25.5 L30.5,31 C30.5,33 32,34.5 34,34.5 C36,34.5 37.5,33 37.5,31 L37.5,25.5 C37.5,23.5 36,22 34,22 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="2"
+        android:pathData="M46,22 C44,22 42.5,23.5 42.5,25.5 L42.5,31 C42.5,33 44,34.5 46,34.5 C48,34.5 49.5,33 49.5,31 L49.5,25.5 C49.5,23.5 48,22 46,22 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="2"
+        android:pathData="M58,22 C56,22 54.5,23.5 54.5,25.5 L54.5,31 C54.5,33 56,34.5 58,34.5 C60,34.5 61.5,33 61.5,31 L61.5,25.5 C61.5,23.5 60,22 58,22 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0A0A0A"
+        android:strokeWidth="2"
+        android:pathData="M70,22 C68,22 66.5,23.5 66.5,25.5 L66.5,31 C66.5,33 68,34.5 70,34.5 C72,34.5 73.5,33 73.5,31 L73.5,25.5 C73.5,23.5 72,22 70,22 Z" />
+</vector>
+

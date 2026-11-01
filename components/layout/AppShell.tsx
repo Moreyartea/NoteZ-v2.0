@@ -43,6 +43,13 @@ export const AppShell: React.FC<AppShellProps> = ({
     syncDueNotificationsToDrawer();
     syncAllWidgets();
     initTheme();
+
+    // Light 15-second interval to check and sync due task notifications in real-time
+    const intervalId = setInterval(() => {
+      syncDueNotificationsToDrawer().catch(() => {});
+    }, 15000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
