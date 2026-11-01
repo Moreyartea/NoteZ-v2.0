@@ -85,7 +85,7 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
 
       {/* Filter Chips Bar */}
       <div className="flex flex-col gap-2 p-3 bg-white dark:bg-[var(--theme-surface)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]">
-        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
+        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1 px-1 -mx-1">
           <IconFilter className="w-4 h-4 text-gray-500 flex-shrink-0" />
           {['all', 'expense', 'income', 'transfer'].map((t) => (
             <button

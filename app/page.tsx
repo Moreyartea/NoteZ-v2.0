@@ -289,7 +289,7 @@ export default function DashboardPage() {
           <div className="border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] pt-2.5" />
 
           {/* Habit Harian: 1 Baris Horizontal Ringkas */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto py-1 px-1 -mx-1 scrollbar-none">
             <div className="flex items-center gap-1 flex-shrink-0 text-[#FF6B2B]">
               <IconFlame className="w-4 h-4 stroke-[2.5]" />
               <span className="text-[11px] font-black uppercase text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">

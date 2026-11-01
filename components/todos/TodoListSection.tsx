@@ -159,7 +159,7 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
       </div>
 
       {/* Category Pills Filter (Colored Neo-Brutalism Icon Chips) */}
-      <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
+      <div className="flex gap-1.5 overflow-x-auto py-1 px-1 -mx-1 scrollbar-none">
         {todoCategoryFilters.map((cat) => {
           const Icon = cat.icon;
           const isSelected = categoryFilter === cat.id;

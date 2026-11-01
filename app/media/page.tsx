@@ -115,29 +115,29 @@ export default function MediaPage() {
           </div>
 
           <div className="grid grid-cols-3 gap-2 pt-1">
-            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)] text-center">
-              <p className="text-[10px] font-bold text-purple-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
+            <div className="bg-white dark:bg-[var(--theme-surface-elevated)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] p-2.5 rounded-xl text-center">
+              <p className="text-[10px] font-black uppercase text-gray-700 dark:text-[var(--theme-text-muted)] tracking-wider">
                 Total Judul
               </p>
-              <p className="text-base font-black font-mono text-white dark:text-[var(--theme-text-primary)] mt-1">
+              <p className="font-mono text-xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] mt-1">
                 {totalItems}
               </p>
             </div>
 
-            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)] text-center">
-              <p className="text-[10px] font-bold text-purple-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
+            <div className="bg-white dark:bg-[var(--theme-surface-elevated)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] p-2.5 rounded-xl text-center">
+              <p className="text-[10px] font-black uppercase text-gray-700 dark:text-[var(--theme-text-muted)] tracking-wider">
                 Sedang Nonton
               </p>
-              <p className="text-base font-black font-mono text-[#FFE135] dark:text-[var(--theme-accent-primary)] mt-1">
+              <p className="font-mono text-xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] mt-1">
                 {watchingCount}
               </p>
             </div>
 
-            <div className="bg-white/10 dark:bg-[var(--theme-surface-elevated)] backdrop-blur-sm p-2 rounded-xl border border-white/20 dark:border-[var(--theme-border-subtle)] text-center">
-              <p className="text-[10px] font-bold text-purple-200 dark:text-[var(--theme-text-muted)] uppercase leading-tight">
+            <div className="bg-white dark:bg-[var(--theme-surface-elevated)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] p-2.5 rounded-xl text-center">
+              <p className="text-[10px] font-black uppercase text-gray-700 dark:text-[var(--theme-text-muted)] tracking-wider">
                 Tamat / Selesai
               </p>
-              <p className="text-base font-black font-mono text-[#00E676] mt-1">
+              <p className="font-mono text-xl font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)] mt-1">
                 {completedCount}
               </p>
             </div>
@@ -181,7 +181,7 @@ export default function MediaPage() {
         </div>
 
         {/* Media Type Chips Filter (Colored Neo-Brutalism Icon Chips) */}
-        <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
+        <div className="flex gap-1.5 overflow-x-auto py-1 px-1 -mx-1 scrollbar-none">
           {[
             { id: 'all', label: 'Semua', icon: IconMovie, color: '#0A0A0A', bg: 'bg-white' },
             { id: 'anime', label: 'Anime', icon: IconSparkles, color: '#A855F7', bg: 'bg-purple-50' },

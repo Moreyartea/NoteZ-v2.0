@@ -108,7 +108,7 @@ export default function NotesPage() {
         </div>
 
         {/* Folder Filter Chips */}
-        <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
+        <div className="flex gap-1.5 overflow-x-auto py-1 px-1 -mx-1 scrollbar-none">
           {[
             { id: 'all', label: 'Semua' },
             { id: 'pinned', label: 'Disematkan' },

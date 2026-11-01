@@ -173,7 +173,7 @@ export default function FinancePage() {
         </div>
 
         {/* Sub-Tabs Switcher */}
-        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex gap-1.5 overflow-x-auto py-1 px-1 -mx-1 scrollbar-none">
           {[
             { id: 'overview', label: 'Ringkasan' },
             { id: 'transactions', label: 'Transaksi' },
