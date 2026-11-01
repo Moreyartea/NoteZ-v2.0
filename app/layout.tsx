@@ -35,10 +35,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                const stored = localStorage.getItem('notez_theme') || 'classic-brutal';
-                const theme = (stored === 'dark') ? 'cyber-lime' : ((stored === 'light') ? 'classic-brutal' : stored);
-                document.documentElement.setAttribute('data-theme', theme);
-                if (theme !== 'classic-brutal') {
+                const savedTheme = localStorage.getItem('notez_theme_id') || localStorage.getItem('notez_theme') || 'classic-brutal';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                if (savedTheme !== 'classic-brutal') {
                   document.documentElement.classList.add('dark');
                 } else {
                   document.documentElement.classList.remove('dark');

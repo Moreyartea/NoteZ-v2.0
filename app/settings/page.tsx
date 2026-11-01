@@ -32,6 +32,7 @@ import {
 } from '@/app/lib/services/backupService';
 import {
   THEME_PRESETS,
+  setAppTheme,
   setTheme,
   setDarkMode,
   updateDailyReminderTime,
@@ -77,7 +78,7 @@ export default function SettingsPage() {
   };
 
   const handleSelectTheme = async (themeId: AppThemeId) => {
-    await setTheme(themeId);
+    await setAppTheme(themeId);
   };
 
   const handleSaveReminderTime = async () => {
@@ -313,33 +314,24 @@ export default function SettingsPage() {
                         : 'border-gray-300 dark:border-[var(--theme-border,#2E2E2E)] shadow-none bg-white dark:bg-[var(--theme-surface,#16181D)] hover:border-[#0A0A0A] dark:hover:border-gray-500'
                     )}
                   >
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      {/* Color Palette Preview Swatch */}
+                    <div className="flex items-center gap-3 min-w-0">
+                      {/* Swatch Warna Preview (3 Bulatan: BG, Surface, Accent) */}
                       <div
-                        className="w-10 h-10 rounded-lg border-2 border-[#0A0A0A] flex flex-col overflow-hidden shadow-[1px_1px_0px_#0A0A0A] flex-shrink-0"
-                        style={{ backgroundColor: preset.colors.bg }}
+                        className="flex items-center flex-shrink-0"
+                        title={`Palet: ${preset.colors.bg}, ${preset.colors.surface}, ${preset.colors.accentPrimary}`}
                       >
-                        <div
-                          className="h-5 w-full flex items-center justify-end px-1 gap-0.5"
+                        <span
+                          className="w-5 h-5 rounded-full border-2 border-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A] z-30"
+                          style={{ backgroundColor: preset.colors.bg }}
+                        />
+                        <span
+                          className="w-5 h-5 rounded-full border-2 border-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A] -ml-2 z-20"
                           style={{ backgroundColor: preset.colors.surface }}
-                        >
-                          <span
-                            className="w-2 h-2 rounded-full border border-black/40"
-                            style={{ backgroundColor: preset.colors.accentPrimary }}
-                          />
-                          <span
-                            className="w-2 h-2 rounded-full border border-black/40"
-                            style={{ backgroundColor: preset.colors.accentSecondary }}
-                          />
-                        </div>
-                        <div className="flex-1 flex items-center px-1">
-                          <span
-                            className="text-[9px] font-black leading-none"
-                            style={{ color: preset.colors.textPrimary }}
-                          >
-                            Aa
-                          </span>
-                        </div>
+                        />
+                        <span
+                          className="w-5 h-5 rounded-full border-2 border-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A] -ml-2 z-10"
+                          style={{ backgroundColor: preset.colors.accentPrimary }}
+                        />
                       </div>
 
                       <div className="min-w-0">

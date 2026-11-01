@@ -108,6 +108,7 @@ export function applyTheme(themeId: AppThemeId): void {
   }
 
   try {
+    localStorage.setItem('notez_theme_id', validTheme);
     localStorage.setItem('notez_theme', validTheme);
     localStorage.setItem('notez_theme_mode', isDark ? 'dark' : 'light');
     if (isDark) {
@@ -126,8 +127,9 @@ export async function initTheme(): Promise<AppThemeId> {
   if (typeof window === 'undefined') return 'classic-brutal';
 
   try {
-    // 1. Fast path: check localStorage
-    let storedTheme = localStorage.getItem('notez_theme') as AppThemeId | null;
+    // 1. Fast path: check localStorage ('notez_theme_id' with fallback to legacy 'notez_theme')
+    let storedTheme = (localStorage.getItem('notez_theme_id') ||
+      localStorage.getItem('notez_theme')) as AppThemeId | null;
 
     // Handle legacy 'dark' or 'light' values
     if (storedTheme === ('dark' as any)) {
@@ -164,7 +166,8 @@ export function applyThemeClass(isDark: boolean): void {
   if (isDark) {
     let lastDark: AppThemeId = 'cyber-lime';
     try {
-      const storedLast = localStorage.getItem('notez_last_dark_theme') as AppThemeId;
+      const storedLast = (localStorage.getItem('notez_theme_id') ||
+        localStorage.getItem('notez_last_dark_theme')) as AppThemeId;
       if (storedLast && storedLast !== 'classic-brutal' && THEME_PRESETS.some((p) => p.id === storedLast)) {
         lastDark = storedLast;
       }
@@ -176,16 +179,40 @@ export function applyThemeClass(isDark: boolean): void {
 }
 
 /**
- * Sets active theme preset in DOM, persists to localStorage & Dexie
+ * Core helper setAppTheme(themeId: AppThemeId):
+ * - Sets data-theme attribute on document.documentElement
+ * - Toggles dark class based on whether theme is 'classic-brutal'
+ * - Persists preference to localStorage ('notez_theme_id') and updates Dexie settings
  */
-export async function setTheme(themeId: AppThemeId): Promise<AppThemeId> {
-  const isDark = themeId !== 'classic-brutal';
-  applyTheme(themeId);
+export async function setAppTheme(themeId: AppThemeId): Promise<AppThemeId> {
+  const validTheme = THEME_PRESETS.some((p) => p.id === themeId)
+    ? themeId
+    : 'classic-brutal';
+  const isDark = validTheme !== 'classic-brutal';
+
+  if (typeof document !== 'undefined') {
+    document.documentElement.setAttribute('data-theme', validTheme);
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+
+  try {
+    localStorage.setItem('notez_theme_id', validTheme);
+    localStorage.setItem('notez_theme', validTheme);
+    if (isDark) {
+      localStorage.setItem('notez_last_dark_theme', validTheme);
+    }
+  } catch (err) {
+    console.warn('Failed to save theme in localStorage:', err);
+  }
 
   try {
     const settings = await getAppSettings();
     await db.settings.update(settings.id, {
-      themeId,
+      themeId: validTheme,
       isDarkMode: isDark,
       updatedAt: new Date().toISOString(),
     });
@@ -193,25 +220,28 @@ export async function setTheme(themeId: AppThemeId): Promise<AppThemeId> {
     console.warn('Failed to persist theme in Dexie:', err);
   }
 
-  return themeId;
+  return validTheme;
 }
+
+export const setTheme = setAppTheme;
 
 /**
  * Toggles or sets the Dark Mode state in Dexie, updates DOM class, and persists to localStorage
  */
 export async function setDarkMode(isDark: boolean): Promise<boolean> {
   if (!isDark) {
-    await setTheme('classic-brutal');
+    await setAppTheme('classic-brutal');
     return false;
   } else {
     let lastDark: AppThemeId = 'cyber-lime';
     try {
-      const storedLast = localStorage.getItem('notez_last_dark_theme') as AppThemeId;
+      const storedLast = (localStorage.getItem('notez_theme_id') ||
+        localStorage.getItem('notez_last_dark_theme')) as AppThemeId;
       if (storedLast && storedLast !== 'classic-brutal' && THEME_PRESETS.some((p) => p.id === storedLast)) {
         lastDark = storedLast;
       }
     } catch {}
-    await setTheme(lastDark);
+    await setAppTheme(lastDark);
     return true;
   }
 }
