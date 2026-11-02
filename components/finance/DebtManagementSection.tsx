@@ -17,7 +17,7 @@ import { NbModal } from '@/components/ui/NbModal';
 import { NbInput } from '@/components/ui/NbInput';
 import { NbSelect } from '@/components/ui/NbSelect';
 import { addDebt, payDebtInstallment } from '@/app/lib/services/financeService';
-import { formatRupiah, cn } from '@/app/lib/utils';
+import { formatRupiah, formatCurrencyInput, parseCurrencyInput, cn } from '@/app/lib/utils';
 
 export interface DebtManagementSectionProps {
   debts: Debt[];
@@ -50,7 +50,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
 
   const handleAddSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const amount = Number(totalAmountStr.replace(/[^0-9]/g, ''));
+    const amount = parseCurrencyInput(totalAmountStr);
     if (!personName.trim()) {
       setAddError('Nama orang wajib diisi');
       return;
@@ -85,7 +85,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
   const handlePaySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!payingDebt) return;
-    const amount = Number(payAmountStr.replace(/[^0-9]/g, ''));
+    const amount = parseCurrencyInput(payAmountStr);
     if (!amount || amount <= 0) {
       setPayError('Nominal cicilan harus lebih dari 0');
       return;
@@ -107,7 +107,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-extrabold text-[#0A0A0A] uppercase tracking-wide">
+        <h2 className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] uppercase tracking-wide">
           Utang & Piutang
         </h2>
         <button
@@ -132,7 +132,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
             'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
             activeTab === 'receivable'
               ? 'bg-[#00E676] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-              : 'text-gray-600 hover:text-[#0A0A0A]'
+              : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
           )}
         >
           <IconArrowDownLeft className="w-4 h-4 stroke-[2.5]" />
@@ -145,7 +145,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
             'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
             activeTab === 'payable'
               ? 'bg-[#FF6B2B] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-              : 'text-gray-600 hover:text-[#0A0A0A]'
+              : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
           )}
         >
           <IconArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -155,11 +155,11 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
 
       {/* List items */}
       {filteredDebts.length === 0 ? (
-        <NbCard className="p-5 text-center text-gray-500">
-          <p className="text-xs font-bold text-[#0A0A0A]">
+        <NbCard className="p-5 text-center border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
+          <p className="text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
             Belum ada catatan {activeTab === 'receivable' ? 'piutang' : 'utang'}
           </p>
-          <p className="text-[11px] text-gray-500 mt-0.5">
+          <p className="text-[11px] text-gray-500 dark:text-[var(--theme-text-muted)] mt-0.5">
             Tekan "+ Catat Baru" untuk mendokumentasikan pinjaman.
           </p>
         </NbCard>
@@ -173,7 +173,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
             );
 
             return (
-              <NbCard key={item.id} className="p-3.5 space-y-2">
+              <NbCard key={item.id} className="p-3.5 space-y-2 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <h3 className="font-black text-sm text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
@@ -181,7 +181,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
                     </h3>
                     <p className="text-xs font-mono font-bold text-gray-700 dark:text-[var(--theme-text-muted)] mt-0.5">
                       Sisa: {formatRupiah(remaining)}{' '}
-                      <span className="text-[10px] text-gray-500 font-normal">
+                      <span className="text-[10px] text-gray-500 dark:text-[var(--theme-text-muted)] font-normal">
                         (Total: {formatRupiah(item.totalAmount)})
                       </span>
                     </p>
@@ -196,7 +196,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
                 </div>
 
                 {/* Progress bar */}
-                <div className="w-full h-2.5 rounded-full bg-gray-200 border-2 border-[#0A0A0A] overflow-hidden p-0.5 shadow-inner">
+                <div className="w-full h-2.5 rounded-full bg-gray-200 dark:bg-black/30 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] overflow-hidden p-0.5 shadow-inner">
                   <div
                     className="h-full rounded-full bg-[#00E676] transition-all duration-300"
                     style={{ width: `${percent}%` }}
@@ -206,12 +206,12 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
                 {/* Due Date & Pay Button */}
                 <div className="flex items-center justify-between pt-1">
                   {item.dueDate ? (
-                    <span className="text-[10px] font-semibold text-gray-600 flex items-center gap-1">
+                    <span className="text-[10px] font-semibold text-gray-600 dark:text-[var(--theme-text-muted)] flex items-center gap-1">
                       <IconCalendar className="w-3 h-3 text-gray-400" />
                       Jatuh tempo: {item.dueDate}
                     </span>
                   ) : (
-                    <span className="text-[10px] text-gray-400">Tanpa batas jatuh tempo</span>
+                    <span className="text-[10px] text-gray-400 dark:text-[var(--theme-text-muted)]">Tanpa batas jatuh tempo</span>
                   )}
 
                   {!item.isSettled && (
@@ -220,7 +220,7 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
                       variant="primary"
                       onClick={() => {
                         setPayingDebt(item);
-                        setPayAmountStr(String(remaining));
+                        setPayAmountStr(formatCurrencyInput(remaining));
                         setPayWalletId(wallets[0]?.id || '');
                         setPayError('');
                       }}
@@ -254,10 +254,11 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
 
           <NbInput
             label="Total Nominal Pinjaman (Rp)"
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={totalAmountStr}
-            onChange={(e) => setTotalAmountStr(e.target.value)}
-            placeholder="Contoh: 250000"
+            onChange={(e) => setTotalAmountStr(formatCurrencyInput(e.target.value))}
+            placeholder="Contoh: 250.000"
             required
           />
 
@@ -277,10 +278,10 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
           />
 
           {addError && (
-            <p className="text-xs font-bold text-[#FF3B30]">{addError}</p>
+            <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">{addError}</p>
           )}
 
-          <div className="flex gap-2 justify-end pt-2">
+          <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
             <NbButton
               type="button"
               variant="neutral"
@@ -307,21 +308,22 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
       >
         {payingDebt && (
           <form onSubmit={handlePaySubmit} className="space-y-4">
-            <div className="p-3 rounded-xl bg-[#FFFDF7] border-2 border-[#0A0A0A]">
-              <p className="text-xs text-gray-600 font-semibold">Nama:</p>
-              <p className="text-sm font-extrabold text-[#0A0A0A]">
+            <div className="p-3 rounded-xl bg-[#FFFDF7] dark:bg-[var(--theme-surface-elevated)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
+              <p className="text-xs text-gray-600 dark:text-[var(--theme-text-muted)] font-semibold">Nama:</p>
+              <p className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                 {payingDebt.personName}
               </p>
-              <p className="text-xs font-mono font-bold text-gray-700 mt-1">
+              <p className="text-xs font-mono font-bold text-gray-700 dark:text-[var(--theme-text-muted)] mt-1">
                 Sisa Pinjaman: {formatRupiah(payingDebt.totalAmount - payingDebt.paidAmount)}
               </p>
             </div>
 
             <NbInput
               label="Nominal Pembayaran (Rp)"
-              type="number"
+              type="text"
+              inputMode="numeric"
               value={payAmountStr}
-              onChange={(e) => setPayAmountStr(e.target.value)}
+              onChange={(e) => setPayAmountStr(formatCurrencyInput(e.target.value))}
               placeholder="0"
               required
             />
@@ -342,10 +344,10 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
             />
 
             {payError && (
-              <p className="text-xs font-bold text-[#FF3B30]">{payError}</p>
+              <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">{payError}</p>
             )}
 
-            <div className="flex gap-2 justify-end pt-2">
+            <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
               <NbButton
                 type="button"
                 variant="neutral"
@@ -367,4 +369,3 @@ export const DebtManagementSection: React.FC<DebtManagementSectionProps> = ({
     </div>
   );
 };
-

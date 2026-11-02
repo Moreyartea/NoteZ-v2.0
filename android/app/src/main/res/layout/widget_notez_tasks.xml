@@ -334,7 +334,7 @@
             android:id="@+id/widget_updated_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NoteZ v2.0"
+            android:text="NoteZ v2.1"
             android:textColor="#666666"
             android:textSize="9sp" />
     </LinearLayout>

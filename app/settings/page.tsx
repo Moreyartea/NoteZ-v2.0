@@ -24,6 +24,7 @@ import { NbCard } from '@/components/ui/NbCard';
 import { NbButton } from '@/components/ui/NbButton';
 import { NbInput } from '@/components/ui/NbInput';
 import { NbModal } from '@/components/ui/NbModal';
+import { NbConfirmModal } from '@/components/ui/NbConfirmModal';
 import { AppLogo } from '@/components/ui/AppLogo';
 import {
   exportAllDataToJson,
@@ -44,6 +45,7 @@ export default function SettingsPage() {
   const [dailyTime, setDailyTime] = useState<string>('20:00');
   const [isExporting, setIsExporting] = useState<boolean>(false);
   const [isImporting, setIsImporting] = useState<boolean>(false);
+  const [pendingRestoreFile, setPendingRestoreFile] = useState<File | null>(null);
   const [isTestingNotif, setIsTestingNotif] = useState<boolean>(false);
   const [isResetConfirmOpen, setIsResetConfirmOpen] = useState<boolean>(false);
   const [resetConfirmInput, setResetConfirmInput] = useState<string>('');
@@ -133,28 +135,26 @@ export default function SettingsPage() {
     }
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setPendingRestoreFile(file);
+    e.target.value = '';
+  };
 
-    if (
-      !window.confirm(
-        'Pulihkan data dari file ini? Seluruh data saat ini akan digantikan oleh isi file backup.'
-      )
-    ) {
-      e.target.value = '';
-      return;
-    }
+  const handleConfirmRestore = async () => {
+    if (!pendingRestoreFile) return;
 
     setIsImporting(true);
     setFeedbackMsg(null);
     try {
-      const text = await file.text();
+      const text = await pendingRestoreFile.text();
       await importDataFromJson(text);
       setFeedbackMsg({
         text: 'Data berhasil dipulihkan dari file backup!',
         type: 'success',
       });
+      setPendingRestoreFile(null);
     } catch (err: unknown) {
       setFeedbackMsg({
         text: err instanceof Error ? err.message : 'Gagal memulihkan data',
@@ -162,7 +162,6 @@ export default function SettingsPage() {
       });
     } finally {
       setIsImporting(false);
-      e.target.value = '';
     }
   };
 
@@ -226,7 +225,7 @@ export default function SettingsPage() {
 
         {/* GRUP 1: TAMPILAN & TEMA PRESET */}
         <NbCard className="p-4 space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between pb-2 border-b-2 border-[#0A0A0A]/15 dark:border-[var(--theme-border-subtle)]">
             <div className="flex items-center gap-2">
               <IconPalette className="w-5 h-5 text-[#FFE135] stroke-[2.5]" />
               <h2 className="text-sm font-black text-[#0A0A0A] dark:text-[#F4F4F0] uppercase tracking-wide">
@@ -239,7 +238,7 @@ export default function SettingsPage() {
           </div>
 
           <p className="text-xs text-gray-600 dark:text-gray-300">
-            Pilih dari 5 preset tema resmi NoteZ v2.0 bergaya Neo-Brutalism. Mode terang default mempertahankan palet gading klasik, sedangkan 4 mode gelap menghadirkan aksen neon elektrik dan true black hemat baterai.
+            Pilih dari 5 preset tema resmi NoteZ v2.1 bergaya Neo-Brutalism. Mode terang default mempertahankan palet gading klasik, sedangkan 4 mode gelap menghadirkan aksen neon elektrik dan true black hemat baterai.
           </p>
 
           {/* Quick Light/Dark Switch */}
@@ -378,7 +377,7 @@ export default function SettingsPage() {
 
         {/* GRUP 2: PENGINGAT & NOTIFIKASI */}
         <NbCard className="p-4 space-y-3">
-          <div className="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between pb-2 border-b-2 border-[#0A0A0A]/15 dark:border-[var(--theme-border-subtle)]">
             <div className="flex items-center gap-2">
               <IconBell className="w-5 h-5 text-[#0A0A0A] dark:text-[#F4F4F0] stroke-[2.5]" />
               <h2 className="text-sm font-black text-[#0A0A0A] dark:text-[#F4F4F0] uppercase tracking-wide">
@@ -414,7 +413,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Test Notification Button */}
-          <div className="pt-2 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <div className="pt-2 border-t-2 border-[#0A0A0A]/15 dark:border-[var(--theme-border-subtle)] flex items-center justify-between">
             <div>
               <p className="text-xs font-black text-[#0A0A0A] dark:text-[#F4F4F0]">
                 Cek Izin Notifikasi Perangkat
@@ -437,7 +436,7 @@ export default function SettingsPage() {
 
         {/* GRUP 3: MANAJEMEN DATA (OFFLINE BACKUP & RESTORE) */}
         <NbCard className="p-4 space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between pb-2 border-b-2 border-[#0A0A0A]/15 dark:border-[var(--theme-border-subtle)]">
             <div className="flex items-center gap-2">
               <IconDatabase className="w-5 h-5 text-[#0A0A0A] dark:text-[#F4F4F0] stroke-[2.5]" />
               <h2 className="text-sm font-black text-[#0A0A0A] dark:text-[#F4F4F0] uppercase tracking-wide">
@@ -539,7 +538,7 @@ export default function SettingsPage() {
 
         {/* GRUP 4: INFO APLIKASI */}
         <NbCard className="p-4 space-y-3">
-          <div className="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between pb-2 border-b-2 border-[#0A0A0A]/15 dark:border-[var(--theme-border-subtle)]">
             <div className="flex items-center gap-2">
               <IconInfoCircle className="w-5 h-5 text-[#0A0A0A] dark:text-[#F4F4F0] stroke-[2.5]" />
               <h2 className="text-sm font-black text-[#0A0A0A] dark:text-[#F4F4F0] uppercase tracking-wide">
@@ -547,7 +546,7 @@ export default function SettingsPage() {
               </h2>
             </div>
             <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded border border-[#0A0A0A] bg-[#FFE135] text-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A]">
-              v2.0.0
+              v2.1.0
             </span>
           </div>
 
@@ -565,8 +564,8 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed pt-1 border-t border-gray-100 dark:border-gray-800">
-            NoteZ v2.0 dibangun tanpa dependensi cloud eksternal. Seluruh operasi bersifat atomik (ACID) dan tersimpan aman di penyimpanan lokal HP Anda.
+          <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed pt-1 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
+            NoteZ v2.1 dibangun tanpa dependensi cloud eksternal. Seluruh operasi bersifat atomik (ACID) dan tersimpan aman di penyimpanan lokal HP Anda.
           </p>
         </NbCard>
 
@@ -600,7 +599,7 @@ export default function SettingsPage() {
               />
             </div>
 
-            <div className="flex gap-2 justify-end pt-2 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
               <NbButton
                 variant="neutral"
                 onClick={() => setIsResetConfirmOpen(false)}
@@ -620,6 +619,19 @@ export default function SettingsPage() {
             </div>
           </div>
         </NbModal>
+
+        {/* Confirmation Modal for Data Restore */}
+        <NbConfirmModal
+          isOpen={!!pendingRestoreFile}
+          onClose={() => setPendingRestoreFile(null)}
+          onConfirm={handleConfirmRestore}
+          title="PULIHKAN DATA BACKUP"
+          message={`Pulihkan data dari file "${pendingRestoreFile?.name || 'backup'}"? Seluruh data saat ini akan digantikan oleh isi file backup.`}
+          confirmText="Ya, Pulihkan"
+          cancelText="Batal"
+          variant="warning"
+          isLoading={isImporting}
+        />
       </div>
     </AppShell>
   );

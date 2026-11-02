@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NoteZ v2.0 - Pure Offline Super-App",
+  title: "NoteZ v2.1 - Pure Offline Super-App",
   description: "Aplikasi produktivitas dan pencatatan harian pribadi all-in-one bergaya Neo-Brutalism",
 };
 

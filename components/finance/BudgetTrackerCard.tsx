@@ -21,7 +21,7 @@ import {
   payBill,
   getCurrentMonthYear,
 } from '@/app/lib/services/financeService';
-import { formatRupiah, cn } from '@/app/lib/utils';
+import { formatRupiah, formatCurrencyInput, parseCurrencyInput, cn } from '@/app/lib/utils';
 
 export interface BudgetTrackerCardProps {
   budgetsAndBills: BudgetAndBill[];
@@ -65,7 +65,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
 
   const handleBudgetSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const limit = Number(budgetLimitStr.replace(/[^0-9]/g, ''));
+    const limit = parseCurrencyInput(budgetLimitStr);
     if (!limit || limit <= 0) {
       setActionError('Nominal limit budget harus lebih dari 0');
       return;
@@ -83,7 +83,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
 
   const handleBillSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const amount = Number(billAmountStr.replace(/[^0-9]/g, ''));
+    const amount = parseCurrencyInput(billAmountStr);
     if (!amount || amount <= 0) {
       setActionError('Nominal tagihan harus lebih dari 0');
       return;
@@ -145,9 +145,9 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
         </div>
 
         {budgets.length === 0 ? (
-          <NbCard className="p-4 text-center text-gray-500">
-            <p className="text-xs font-bold text-[#0A0A0A]">Belum ada batas budget kategori</p>
-            <p className="text-[11px] text-gray-500 mt-0.5">
+          <NbCard className="p-4 text-center border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
+            <p className="text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">Belum ada batas budget kategori</p>
+            <p className="text-[11px] text-gray-500 dark:text-[var(--theme-text-muted)] mt-0.5">
               Tetapkan batas pengeluaran untuk mencegah boros bulan ini.
             </p>
           </NbCard>
@@ -169,7 +169,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
                 : 'bg-[#00E676]';
 
               return (
-                <NbCard key={b.id} className="p-3.5 space-y-2">
+                <NbCard key={b.id} className="p-3.5 space-y-2 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
                   <div className="flex items-center justify-between">
                     <div>
                       <span className="text-xs font-black text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
@@ -187,7 +187,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
                   </div>
 
                   {/* Neo-Brutalism Progress Bar */}
-                  <div className="w-full h-3 rounded-full bg-gray-200 border-2 border-[#0A0A0A] overflow-hidden p-0.5 shadow-inner">
+                  <div className="w-full h-3 rounded-full bg-gray-200 dark:bg-black/30 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] overflow-hidden p-0.5 shadow-inner">
                     <div
                       className={cn('h-full rounded-full transition-all duration-300', progressColor)}
                       style={{ width: `${percent}%` }}
@@ -223,9 +223,9 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
         </div>
 
         {bills.length === 0 ? (
-          <NbCard className="p-4 text-center text-gray-500">
-            <p className="text-xs font-bold text-[#0A0A0A]">Belum ada tagihan rutin</p>
-            <p className="text-[11px] text-gray-500 mt-0.5">
+          <NbCard className="p-4 text-center border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
+            <p className="text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">Belum ada tagihan rutin</p>
+            <p className="text-[11px] text-gray-500 dark:text-[var(--theme-text-muted)] mt-0.5">
               Catat tagihan seperti Kos, Listrik, Internet, atau Langganan di sini.
             </p>
           </NbCard>
@@ -237,7 +237,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
               return (
                 <NbCard
                   key={bill.id}
-                  className="p-3 flex items-center justify-between gap-3"
+                  className="p-3 flex items-center justify-between gap-3 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
@@ -254,7 +254,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
                       {formatRupiah(bill.limitAmount)}
                     </p>
                     {bill.dueDayOfMonth && (
-                      <p className="text-[10px] text-gray-500 font-semibold mt-0.5">
+                      <p className="text-[10px] text-gray-500 dark:text-[var(--theme-text-muted)] font-semibold mt-0.5">
                         Jatuh tempo tiap tanggal {bill.dueDayOfMonth}
                       </p>
                     )}
@@ -274,7 +274,7 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
                       Bayar
                     </NbButton>
                   ) : (
-                    <span className="text-[11px] font-bold text-green-700 bg-green-100 px-2.5 py-1 rounded-md border border-green-400">
+                    <span className="text-[11px] font-bold text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-950/60 px-2.5 py-1 rounded-md border-2 border-green-500">
                       Terbayar
                     </span>
                   )}
@@ -310,18 +310,19 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
 
           <NbInput
             label="Batas Maksimal Pengeluaran (Rp/Bulan)"
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={budgetLimitStr}
-            onChange={(e) => setBudgetLimitStr(e.target.value)}
-            placeholder="Contoh: 1500000"
+            onChange={(e) => setBudgetLimitStr(formatCurrencyInput(e.target.value))}
+            placeholder="Contoh: 1.500.000"
             required
           />
 
           {actionError && (
-            <p className="text-xs font-bold text-[#FF3B30]">{actionError}</p>
+            <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">{actionError}</p>
           )}
 
-          <div className="flex gap-2 justify-end pt-2">
+          <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
             <NbButton
               type="button"
               variant="neutral"
@@ -354,10 +355,11 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
 
           <NbInput
             label="Nominal Tagihan (Rp)"
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={billAmountStr}
-            onChange={(e) => setBillAmountStr(e.target.value)}
-            placeholder="Contoh: 500000"
+            onChange={(e) => setBillAmountStr(formatCurrencyInput(e.target.value))}
+            placeholder="Contoh: 500.000"
             required
           />
 
@@ -382,10 +384,10 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
           />
 
           {actionError && (
-            <p className="text-xs font-bold text-[#FF3B30]">{actionError}</p>
+            <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">{actionError}</p>
           )}
 
-          <div className="flex gap-2 justify-end pt-2">
+          <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
             <NbButton
               type="button"
               variant="neutral"
@@ -408,12 +410,12 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
       >
         {payingBill && (
           <div className="space-y-4">
-            <div className="p-3 rounded-xl bg-yellow-50 border-2 border-[#0A0A0A]">
-              <p className="text-xs font-bold text-gray-700">Tagihan:</p>
-              <p className="text-base font-extrabold text-[#0A0A0A]">
+            <div className="p-3 rounded-xl bg-yellow-50 dark:bg-yellow-950/40 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
+              <p className="text-xs font-bold text-gray-700 dark:text-[var(--theme-text-muted)]">Tagihan:</p>
+              <p className="text-base font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                 {payingBill.category}
               </p>
-              <p className="text-sm font-mono font-black text-[#FF3B30] mt-1">
+              <p className="text-sm font-mono font-black text-[#FF3B30] dark:text-red-400 mt-1">
                 Nominal: {formatRupiah(payingBill.limitAmount)}
               </p>
             </div>
@@ -429,10 +431,10 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
             />
 
             {actionError && (
-              <p className="text-xs font-bold text-[#FF3B30]">{actionError}</p>
+              <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">{actionError}</p>
             )}
 
-            <div className="flex gap-2 justify-end pt-2">
+            <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
               <NbButton
                 type="button"
                 variant="neutral"
@@ -456,4 +458,3 @@ export const BudgetTrackerCard: React.FC<BudgetTrackerCardProps> = ({
     </div>
   );
 };
-

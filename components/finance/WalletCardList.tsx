@@ -14,7 +14,7 @@ import { NbModal } from '@/components/ui/NbModal';
 import { NbInput } from '@/components/ui/NbInput';
 import { NbSelect } from '@/components/ui/NbSelect';
 import { createWallet, updateWalletBalance } from '@/app/lib/services/financeService';
-import { formatRupiah } from '@/app/lib/utils';
+import { formatRupiah, formatCurrencyInput, parseCurrencyInput } from '@/app/lib/utils';
 
 export interface WalletCardListProps {
   wallets: Wallet[];
@@ -39,7 +39,7 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
 
   const openAdjustModal = (wallet: Wallet) => {
     setSelectedWallet(wallet);
-    setActualBalanceInput(wallet.balance.toString());
+    setActualBalanceInput(formatCurrencyInput(wallet.balance));
     setAdjustReason('');
     setAdjustError('');
   };
@@ -48,11 +48,7 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
     e.preventDefault();
     if (!selectedWallet) return;
 
-    const parsed = Number(actualBalanceInput.replace(/[^0-9.-]/g, ''));
-    if (isNaN(parsed)) {
-      setAdjustError('Nominal saldo tidak valid');
-      return;
-    }
+    const parsed = parseCurrencyInput(actualBalanceInput);
 
     setIsAdjusting(true);
     setAdjustError('');
@@ -73,7 +69,7 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
       return;
     }
 
-    const parsedBalance = Number(newWalletBalance.replace(/[^0-9.-]/g, '')) || 0;
+    const parsedBalance = parseCurrencyInput(newWalletBalance);
     setIsCreating(true);
     setCreateError('');
     try {
@@ -164,7 +160,7 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
               </div>
 
               {/* Baris 3 (Footer Khusus di Bawah): Pembatas, Status Aktif, dan Tombol Sesuaikan */}
-              <div className="pt-2 border-t border-black/20 flex items-center justify-between gap-2">
+              <div className="pt-2 border-t-2 border-black/30 dark:border-white/20 flex items-center justify-between gap-2">
                 <span className="text-[10px] font-mono font-bold opacity-85">
                   ● Aktif
                 </span>
@@ -191,22 +187,23 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
       >
         {selectedWallet && (
           <form onSubmit={handleAdjustSubmit} className="space-y-4">
-            <div className="p-3 rounded-xl bg-[#FFFDF7] dark:bg-[var(--theme-surface)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
+            <div className="p-3 rounded-xl bg-[#FFFDF7] dark:bg-[var(--theme-surface-elevated)] border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
               <p className="text-xs text-gray-600 dark:text-[var(--theme-text-muted)] font-semibold">Dompet Terpilih</p>
               <p className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                 {selectedWallet.name} ({getWalletTypeLabel(selectedWallet.type)})
               </p>
-              <p className="text-xs text-gray-500 font-mono mt-1">
+              <p className="text-xs text-gray-500 dark:text-[var(--theme-text-muted)] font-mono mt-1">
                 Saldo tercatat saat ini: {formatRupiah(selectedWallet.balance)}
               </p>
             </div>
 
             <NbInput
               label="Saldo Uang Asli Saat Ini (Rp)"
-              type="number"
+              type="text"
+              inputMode="numeric"
               value={actualBalanceInput}
-              onChange={(e) => setActualBalanceInput(e.target.value)}
-              placeholder="Contoh: 150000"
+              onChange={(e) => setActualBalanceInput(formatCurrencyInput(e.target.value))}
+              placeholder="Contoh: 150.000"
               hint="Sistem otomatis membuat transaksi penyesuaian selisihnya."
               required
             />
@@ -220,10 +217,12 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
             />
 
             {adjustError && (
-              <p className="text-xs font-bold text-[#FF3B30]">{adjustError}</p>
+              <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">
+                {adjustError}
+              </p>
             )}
 
-            <div className="flex gap-2 justify-end pt-2">
+            <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
               <NbButton
                 type="button"
                 variant="neutral"
@@ -268,14 +267,15 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
 
           <NbInput
             label="Saldo Awal (Rp)"
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={newWalletBalance}
-            onChange={(e) => setNewWalletBalance(e.target.value)}
+            onChange={(e) => setNewWalletBalance(formatCurrencyInput(e.target.value))}
             placeholder="0"
           />
 
           <div>
-            <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
+            <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)] block mb-1.5">
               Warna Kartu
             </label>
             <div className="flex gap-2">
@@ -296,10 +296,12 @@ export const WalletCardList: React.FC<WalletCardListProps> = ({ wallets }) => {
           </div>
 
           {createError && (
-            <p className="text-xs font-bold text-[#FF3B30]">{createError}</p>
+            <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">
+              {createError}
+            </p>
           )}
 
-          <div className="flex gap-2 justify-end pt-2">
+          <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
             <NbButton
               type="button"
               variant="neutral"

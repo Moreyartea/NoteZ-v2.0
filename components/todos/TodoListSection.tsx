@@ -18,6 +18,7 @@ import {
 import type { Todo, TodoPriority } from '@/app/lib/types';
 import { NbCard } from '@/components/ui/NbCard';
 import { NbBadge } from '@/components/ui/NbBadge';
+import { NbConfirmModal } from '@/components/ui/NbConfirmModal';
 import {
   toggleTodoStatus,
   toggleSubtask,
@@ -41,6 +42,8 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [expandedTodoIds, setExpandedTodoIds] = useState<Set<string>>(new Set());
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const todayStr = getLocalTodayDateString();
 
@@ -71,9 +74,18 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
     return true;
   });
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Hapus tugas ini?')) {
-      await deleteTodo(id);
+  const handleDelete = (id: string) => {
+    setPendingDeleteId(id);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!pendingDeleteId) return;
+    try {
+      setIsDeleting(true);
+      await deleteTodo(pendingDeleteId);
+      setPendingDeleteId(null);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -320,7 +332,7 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
 
                 {/* Subtasks Accordion (if any) */}
                 {todo.subtasks.length > 0 && (
-                  <div className="pt-2 border-t border-gray-200 dark:border-[var(--theme-border-subtle)]">
+                  <div className="pt-2 border-t-2 border-[#0A0A0A]/20 dark:border-[var(--theme-border-subtle)]">
                     <button
                       type="button"
                       onClick={() => toggleExpand(todo.id)}
@@ -354,8 +366,8 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                               className={cn(
                                 'text-xs font-medium',
                                 st.isDone
-                                  ? 'line-through text-gray-400 dark:text-gray-500'
-                                  : 'text-gray-800 dark:text-[var(--theme-text-primary)]'
+                                   ? 'line-through text-gray-400 dark:text-gray-500'
+                                   : 'text-gray-800 dark:text-[var(--theme-text-primary)]'
                               )}
                             >
                               {st.title}
@@ -368,7 +380,7 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
                 )}
 
                 {/* Bottom Card Action */}
-                <div className="flex justify-end pt-1">
+                <div className="flex justify-end pt-1 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
                   <button
                     type="button"
                     onClick={() => handleDelete(todo.id)}
@@ -383,6 +395,19 @@ export const TodoListSection: React.FC<TodoListSectionProps> = ({
           })}
         </div>
       )}
+
+      {/* Confirmation Modal */}
+      <NbConfirmModal
+        isOpen={!!pendingDeleteId}
+        onClose={() => setPendingDeleteId(null)}
+        onConfirm={handleConfirmDelete}
+        title="HAPUS TUGAS"
+        message="Apakah kamu yakin ingin menghapus tugas ini? Tindakan ini tidak dapat dibatalkan."
+        confirmText="Ya, Hapus"
+        cancelText="Batal"
+        variant="danger"
+        isLoading={isDeleting}
+      />
     </div>
   );
 };

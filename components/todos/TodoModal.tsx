@@ -110,7 +110,7 @@ export const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose }) => {
 
         {/* Priority Selector */}
         <div>
-          <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
+          <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)] block mb-1.5">
             Prioritas
           </label>
           <div className="grid grid-cols-3 gap-2">
@@ -124,10 +124,10 @@ export const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose }) => {
                 type="button"
                 onClick={() => setPriority(p.id as TodoPriority)}
                 className={cn(
-                  'py-2 text-xs font-black rounded-xl border-2 border-[#0A0A0A] transition-all cursor-pointer',
+                  'py-2 text-xs font-black rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] transition-all cursor-pointer',
                   priority === p.id
-                    ? `${p.color} shadow-[2px_2px_0px_#0A0A0A] scale-[1.02]`
-                    : 'bg-white text-gray-700 opacity-60'
+                    ? `${p.color} shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] scale-[1.02]`
+                    : 'bg-white dark:bg-[var(--theme-surface-elevated)] text-gray-700 dark:text-[var(--theme-text-muted)] opacity-60 hover:opacity-100'
                 )}
               >
                 {p.label}
@@ -178,7 +178,7 @@ export const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose }) => {
 
         {/* Subtasks (Interactive Checklist) */}
         <div className="space-y-2">
-          <label className="text-sm font-bold text-[#0A0A0A] block">
+          <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)] block">
             Sub-Tugas (Langkah Checklist)
           </label>
           <div className="flex gap-2">
@@ -193,12 +193,12 @@ export const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose }) => {
                 }
               }}
               placeholder="Ketik langkah tugas..."
-              className="flex-1 bg-white text-xs font-semibold px-3 py-2 rounded-xl border-2 border-[#0A0A0A] outline-none focus:shadow-[2px_2px_0px_#3B6FFF]"
+              className="flex-1 bg-white dark:bg-[var(--theme-surface-elevated)] text-gray-900 dark:text-[var(--theme-text-primary)] placeholder-gray-400 dark:placeholder-[var(--theme-text-muted)] text-xs font-semibold px-3 py-2 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] outline-none focus:shadow-[2px_2px_0px_#3B6FFF]"
             />
             <button
               type="button"
               onClick={handleAddSubtask}
-              className="px-3 py-2 bg-[#FFE135] text-xs font-black rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] flex items-center gap-1 cursor-pointer"
+              className="px-3 py-2 bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] text-xs font-black rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-hero)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex items-center gap-1 cursor-pointer"
             >
               <IconPlus className="w-3.5 h-3.5 stroke-[3]" />
               <span>Tambah</span>
@@ -206,13 +206,13 @@ export const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose }) => {
           </div>
 
           {subtasks.length > 0 && (
-            <div className="p-2 bg-[#FFFDF7] rounded-xl border-2 border-[#0A0A0A] space-y-1.5 max-h-32 overflow-y-auto">
+            <div className="p-2 bg-[#FFFDF7] dark:bg-[var(--theme-surface-elevated)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] space-y-1.5 max-h-32 overflow-y-auto">
               {subtasks.map((st, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-gray-300"
+                  className="flex items-center justify-between bg-white dark:bg-[var(--theme-surface)] px-2.5 py-1.5 rounded-lg border-2 border-[#0A0A0A]/20 dark:border-[var(--theme-border-subtle)]"
                 >
-                  <span className="text-xs font-bold text-gray-800 truncate">
+                  <span className="text-xs font-bold text-gray-800 dark:text-[var(--theme-text-primary)] truncate">
                     • {st}
                   </span>
                   <button
@@ -238,10 +238,10 @@ export const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose }) => {
         />
 
         {/* Toggle Pin to Home Widget */}
-        <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-xl border-2 border-[#0A0A0A]">
+        <div className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-[var(--theme-surface-elevated)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
           <div className="flex items-center gap-2">
-            <IconPin className="w-4 h-4 text-[#0A0A0A]" />
-            <span className="text-xs font-bold text-[#0A0A0A]">
+            <IconPin className="w-4 h-4 text-[#0A0A0A] dark:text-[var(--theme-text-primary)]" />
+            <span className="text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
               Prioritaskan di Widget Layar Utama HP
             </span>
           </div>
@@ -249,17 +249,17 @@ export const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose }) => {
             type="checkbox"
             checked={pinToHomeWidget}
             onChange={(e) => setPinToHomeWidget(e.target.checked)}
-            className="w-5 h-5 accent-[#0A0A0A] cursor-pointer"
+            className="w-5 h-5 accent-[#0A0A0A] dark:accent-[var(--theme-accent-primary)] cursor-pointer"
           />
         </div>
 
         {errorMsg && (
-          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 p-2 rounded-lg border border-[#FF3B30]">
+          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2 rounded-lg border border-[#FF3B30]">
             {errorMsg}
           </p>
         )}
 
-        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]">
+        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
           <NbButton type="button" variant="neutral" onClick={onClose}>
             Batal
           </NbButton>

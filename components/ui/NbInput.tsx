@@ -35,14 +35,14 @@ export const NbInput = React.forwardRef<HTMLInputElement, NbInputProps>(
         {label && (
           <label
             htmlFor={id}
-            className="text-sm font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] tracking-tight"
+            className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)]"
           >
             {label}
           </label>
         )}
         <div className="relative flex items-center">
           {leftIcon && (
-            <span className="absolute left-3 text-gray-500 pointer-events-none flex items-center justify-center">
+            <span className="absolute left-3 text-gray-500 dark:text-[var(--theme-text-muted)] pointer-events-none flex items-center justify-center">
               {leftIcon}
             </span>
           )}
@@ -51,19 +51,19 @@ export const NbInput = React.forwardRef<HTMLInputElement, NbInputProps>(
             id={id}
             disabled={disabled}
             className={cn(
-              'w-full bg-white dark:bg-[var(--theme-surface,#252525)] text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] font-medium text-sm rounded-xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)]',
+              'w-full bg-white dark:bg-[var(--theme-surface-elevated)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] placeholder:text-gray-400 dark:placeholder:text-[var(--theme-text-muted)] font-medium text-sm rounded-xl border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border)]',
               'px-3.5 py-2.5 transition-all outline-none',
               'focus:shadow-[3px_3px_0px_#3B6FFF] focus:border-[#0A0A0A] dark:focus:border-[#3B6FFF]',
               leftIcon && 'pl-10',
               rightIcon && 'pr-10',
-              disabled && 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed',
+              disabled && 'bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-500 cursor-not-allowed',
               error && 'border-[#FF3B30] focus:shadow-[3px_3px_0px_#FF3B30]',
               className
             )}
             {...props}
           />
           {rightIcon && (
-            <span className="absolute right-3 text-gray-500 flex items-center justify-center">
+            <span className="absolute right-3 text-gray-500 dark:text-[var(--theme-text-muted)] flex items-center justify-center">
               {rightIcon}
             </span>
           )}
@@ -71,7 +71,7 @@ export const NbInput = React.forwardRef<HTMLInputElement, NbInputProps>(
         {error ? (
           <p className="text-xs font-semibold text-[#FF3B30]">{error}</p>
         ) : hint ? (
-          <p className="text-xs text-gray-600">{hint}</p>
+          <p className="text-xs text-gray-600 dark:text-[var(--theme-text-muted)]">{hint}</p>
         ) : null}
       </div>
     );
@@ -79,4 +79,3 @@ export const NbInput = React.forwardRef<HTMLInputElement, NbInputProps>(
 );
 
 NbInput.displayName = 'NbInput';
-

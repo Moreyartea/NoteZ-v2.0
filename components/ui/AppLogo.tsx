@@ -19,18 +19,15 @@ export const AppLogo: React.FC<AppLogoProps> = ({
 }) => {
   const sizeMap = {
     sm: {
-      box: 'w-7 h-7',
-      img: 'w-5 h-5',
+      img: 'w-7 h-7',
       text: 'text-base',
     },
     md: {
-      box: 'w-9 h-9',
-      img: 'w-6 h-6',
+      img: 'w-9 h-9',
       text: 'text-lg',
     },
     lg: {
-      box: 'w-12 h-12',
-      img: 'w-8 h-8',
+      img: 'w-12 h-12',
       text: 'text-xl',
     },
   };
@@ -44,19 +41,14 @@ export const AppLogo: React.FC<AppLogoProps> = ({
         className
       )}
     >
-      {/* Neo-Brutalism Logo Icon Container */}
-      <div
-        className={cn(
-          'rounded-xl bg-[#FFE135] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] flex items-center justify-center p-0.5 overflow-hidden flex-shrink-0 group-hover:-translate-y-0.5 transition-transform',
-          current.box
-        )}
-      >
+      {/* Pure Logo without artificial container background/border */}
+      <div className="flex items-center justify-center flex-shrink-0 group-hover:-translate-y-0.5 transition-transform">
         <img
           src="/logo_app.svg"
           alt="NoteZ Logo"
-          className={cn('object-contain', current.img)}
-          width={36}
-          height={36}
+          className={cn('object-contain drop-shadow-sm', current.img)}
+          width={48}
+          height={48}
         />
       </div>
 
@@ -83,4 +75,3 @@ export const AppLogo: React.FC<AppLogoProps> = ({
 
   return content;
 };
-

@@ -159,7 +159,7 @@ export const MediaModal: React.FC<MediaModalProps> = ({
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Title */}
         <NbInput
-          label="Judul Judul Film / Anime / Series"
+          label="Judul Film / Anime / Series"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -227,9 +227,9 @@ export const MediaModal: React.FC<MediaModalProps> = ({
         </div>
 
         {/* Score Rating & Real-time Tier Preview */}
-        <div className="p-3 bg-yellow-50 rounded-xl border-2 border-[#0A0A0A] space-y-2">
+        <div className="p-3 bg-yellow-50 dark:bg-yellow-950/40 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-bold text-[#0A0A0A]">
+            <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
               Rating Skor (Skala 1.0 - 10.0)
             </label>
             {currentTier && (
@@ -256,10 +256,10 @@ export const MediaModal: React.FC<MediaModalProps> = ({
               value={scoreStr}
               onChange={(e) => setScoreStr(e.target.value)}
               placeholder="Contoh: 9.2"
-              className="w-full bg-white text-[#0A0A0A] font-mono font-bold text-sm rounded-lg border-2 border-[#0A0A0A] px-3 py-1.5 outline-none focus:shadow-[2px_2px_0px_#3B6FFF]"
+              className="w-full bg-white dark:bg-[var(--theme-surface-elevated)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] font-mono font-bold text-sm rounded-lg border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] px-3 py-1.5 outline-none focus:shadow-[2px_2px_0px_#3B6FFF]"
             />
           </div>
-          <p className="text-[10px] text-gray-600">
+          <p className="text-[10px] text-gray-600 dark:text-[var(--theme-text-muted)]">
             ≥9.0 (S) • ≥8.0 (A) • ≥7.0 (B) • ≥5.0 (C) • &lt;5.0 (D)
           </p>
         </div>
@@ -280,7 +280,7 @@ export const MediaModal: React.FC<MediaModalProps> = ({
         {/* Review Text & Spoiler Checkbox */}
         <div className="space-y-2">
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-bold text-[#0A0A0A]">
+            <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
               Review / Catatan Pribadi (Opsional)
             </label>
             <textarea
@@ -288,11 +288,11 @@ export const MediaModal: React.FC<MediaModalProps> = ({
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
               placeholder="Tulis kesan, adegan favorit, atau kritik..."
-              className="w-full bg-white text-[#0A0A0A] font-medium text-xs rounded-xl border-[2.5px] border-[#0A0A0A] p-2.5 outline-none focus:shadow-[2px_2px_0px_#3B6FFF] resize-none"
+              className="w-full bg-white dark:bg-[var(--theme-surface-elevated)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] placeholder:text-gray-400 dark:placeholder:text-[var(--theme-text-muted)] font-medium text-xs rounded-xl border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border)] p-2.5 outline-none focus:shadow-[2px_2px_0px_#3B6FFF] resize-none"
             />
           </div>
 
-          <label className="flex items-center gap-2 text-xs font-bold text-[#0A0A0A] cursor-pointer">
+          <label className="flex items-center gap-2 text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] cursor-pointer">
             <input
               type="checkbox"
               checked={hasSpoiler}
@@ -313,12 +313,12 @@ export const MediaModal: React.FC<MediaModalProps> = ({
         />
 
         {errorMsg && (
-          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 p-2 rounded-lg border border-[#FF3B30]">
+          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">
             {errorMsg}
           </p>
         )}
 
-        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]">
+        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
           <NbButton type="button" variant="neutral" onClick={onClose}>
             Batal
           </NbButton>
@@ -330,4 +330,3 @@ export const MediaModal: React.FC<MediaModalProps> = ({
     </NbModal>
   );
 };
-

@@ -162,7 +162,7 @@ export const NoteModal: React.FC<NoteModalProps> = ({
 
         {/* Content */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-bold text-[#0A0A0A]">
+          <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
             Isi Catatan
           </label>
           <textarea
@@ -170,13 +170,13 @@ export const NoteModal: React.FC<NoteModalProps> = ({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Tulis bebas ide atau catatanmu di sini..."
-            className="w-full bg-white text-[#0A0A0A] font-medium text-sm rounded-xl border-[3px] border-[#0A0A0A] p-3 outline-none focus:shadow-[3px_3px_0px_#3B6FFF] resize-none"
+            className="w-full bg-white dark:bg-[var(--theme-surface-elevated)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] placeholder:text-gray-400 dark:placeholder:text-[var(--theme-text-muted)] font-medium text-sm rounded-xl border-[2.5px] border-[#0A0A0A] dark:border-[var(--theme-border)] p-3 outline-none focus:shadow-[3px_3px_0px_#3B6FFF] resize-none"
           />
         </div>
 
         {/* Dynamic Checklist Section */}
         <div className="space-y-2">
-          <label className="text-sm font-bold text-[#0A0A0A] block">
+          <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)] block">
             Daftar Checklist (Opsional)
           </label>
           <div className="flex gap-2">
@@ -191,12 +191,12 @@ export const NoteModal: React.FC<NoteModalProps> = ({
                 }
               }}
               placeholder="Tambahkan butir checklist..."
-              className="flex-1 bg-white text-xs font-semibold px-3 py-2 rounded-xl border-2 border-[#0A0A0A] outline-none focus:shadow-[2px_2px_0px_#3B6FFF]"
+              className="flex-1 bg-white dark:bg-[var(--theme-surface-elevated)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] placeholder:text-gray-400 dark:placeholder:text-[var(--theme-text-muted)] text-xs font-semibold px-3 py-2 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] outline-none focus:shadow-[2px_2px_0px_#3B6FFF]"
             />
             <button
               type="button"
               onClick={handleAddChecklist}
-              className="px-3 py-2 bg-[#FFE135] text-xs font-black rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] flex items-center gap-1 cursor-pointer"
+              className="px-3 py-2 bg-[#FFE135] text-[#0A0A0A] text-xs font-black rounded-xl border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] flex items-center gap-1 cursor-pointer"
             >
               <IconPlus className="w-3.5 h-3.5 stroke-[3]" />
               <span>Tambah</span>
@@ -204,20 +204,20 @@ export const NoteModal: React.FC<NoteModalProps> = ({
           </div>
 
           {checklists.length > 0 && (
-            <div className="p-2 bg-[#FFFDF7] rounded-xl border-2 border-[#0A0A0A] space-y-1.5 max-h-32 overflow-y-auto">
+            <div className="p-2 bg-[#FFFDF7] dark:bg-[var(--theme-surface-elevated)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] space-y-1.5 max-h-32 overflow-y-auto">
               {checklists.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-gray-300"
+                  className="flex items-center justify-between bg-white dark:bg-[var(--theme-surface)] px-2.5 py-1.5 rounded-lg border-2 border-[#0A0A0A]/20 dark:border-[var(--theme-border-subtle)]"
                 >
-                  <span className="text-xs font-bold text-gray-800 truncate inline-flex items-center gap-1">
-                    <IconSquare className="w-3.5 h-3.5 text-gray-400 stroke-2" />
+                  <span className="text-xs font-bold text-gray-800 dark:text-[var(--theme-text-primary)] truncate inline-flex items-center gap-1">
+                    <IconSquare className="w-3.5 h-3.5 text-gray-400 dark:text-[var(--theme-text-muted)] stroke-2" />
                     <span>{item.text}</span>
                   </span>
                   <button
                     type="button"
                     onClick={() => handleRemoveChecklist(item.id)}
-                    className="text-gray-400 hover:text-red-500 cursor-pointer"
+                    className="text-gray-400 dark:text-[var(--theme-text-muted)] hover:text-red-500 cursor-pointer"
                   >
                     <IconTrash className="w-3.5 h-3.5" />
                   </button>
@@ -237,7 +237,7 @@ export const NoteModal: React.FC<NoteModalProps> = ({
           />
 
           <div>
-            <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
+            <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)] block mb-1.5">
               Warna Kartu
             </label>
             <div className="flex gap-1.5">
@@ -270,11 +270,11 @@ export const NoteModal: React.FC<NoteModalProps> = ({
         />
 
         {/* Toggles */}
-        <div className="space-y-2 pt-1 border-t border-gray-200">
-          <label className="flex items-center justify-between p-2.5 rounded-xl bg-yellow-50 border-2 border-[#0A0A0A] cursor-pointer">
+        <div className="space-y-2 pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
+          <label className="flex items-center justify-between p-2.5 rounded-xl bg-yellow-50 dark:bg-yellow-950/30 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] cursor-pointer">
             <div className="flex items-center gap-2">
-              <IconPin className="w-4 h-4 text-[#0A0A0A]" />
-              <span className="text-xs font-bold text-[#0A0A0A]">
+              <IconPin className="w-4 h-4 text-[#0A0A0A] dark:text-[var(--theme-text-primary)]" />
+              <span className="text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                 Sematkan di Paling Atas (Pinned)
               </span>
             </div>
@@ -286,10 +286,10 @@ export const NoteModal: React.FC<NoteModalProps> = ({
             />
           </label>
 
-          <label className="flex items-center justify-between p-2.5 rounded-xl bg-blue-50 border-2 border-[#0A0A0A] cursor-pointer">
+          <label className="flex items-center justify-between p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/30 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] cursor-pointer">
             <div className="flex items-center gap-2">
-              <IconDeviceMobile className="w-4 h-4 text-[#0A0A0A]" />
-              <span className="text-xs font-bold text-[#0A0A0A]">
+              <IconDeviceMobile className="w-4 h-4 text-[#0A0A0A] dark:text-[var(--theme-text-primary)]" />
+              <span className="text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                 Tampilkan di Widget Sticky Note Layar HP
               </span>
             </div>
@@ -303,12 +303,12 @@ export const NoteModal: React.FC<NoteModalProps> = ({
         </div>
 
         {errorMsg && (
-          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 p-2 rounded-lg border border-[#FF3B30]">
+          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">
             {errorMsg}
           </p>
         )}
 
-        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]">
+        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
           <NbButton type="button" variant="neutral" onClick={onClose}>
             Batal
           </NbButton>
@@ -320,4 +320,3 @@ export const NoteModal: React.FC<NoteModalProps> = ({
     </NbModal>
   );
 };
-

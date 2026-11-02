@@ -12,7 +12,7 @@ import { NbButton } from '@/components/ui/NbButton';
 import { NbInput } from '@/components/ui/NbInput';
 import { NbSelect } from '@/components/ui/NbSelect';
 import { addTransaction } from '@/app/lib/services/financeService';
-import { cn } from '@/app/lib/utils';
+import { cn, formatCurrencyInput, parseCurrencyInput } from '@/app/lib/utils';
 
 export interface TransactionModalProps {
   isOpen: boolean;
@@ -100,13 +100,13 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
   };
 
   const handleAddAmount = (val: number) => {
-    const current = Number(amountStr.replace(/[^0-9]/g, '')) || 0;
-    setAmountStr(String(current + val));
+    const current = parseCurrencyInput(amountStr);
+    setAmountStr(formatCurrencyInput(current + val));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const amount = Number(amountStr.replace(/[^0-9]/g, ''));
+    const amount = parseCurrencyInput(amountStr);
     if (!amount || amount <= 0) {
       setErrorMessage('Nominal wajib diisi dan harus lebih dari 0');
       return;
@@ -132,7 +132,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
     setErrorMessage('');
 
     try {
-      const adminFee = Number(adminFeeStr.replace(/[^0-9]/g, '')) || 0;
+      const adminFee = parseCurrencyInput(adminFeeStr);
       const defaultTitle =
         title.trim() ||
         (type === 'transfer'
@@ -168,15 +168,15 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Type Selector (Segmented Tabs) */}
-        <div className="grid grid-cols-3 gap-1.5 p-1 bg-[#FFFDF7] rounded-xl border-2 border-[#0A0A0A]">
+        <div className="grid grid-cols-3 gap-1.5 p-1 bg-[#FFFDF7] dark:bg-[var(--theme-surface-elevated)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
           <button
             type="button"
             onClick={() => handleTypeChange('expense')}
             className={cn(
               'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               type === 'expense'
-                ? 'bg-[#FF3B30] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]'
-                : 'text-gray-600 hover:text-[#0A0A0A]'
+                ? 'bg-[#FF3B30] text-white border-2 border-[#0A0A0A] dark:border-white/30 shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]'
+                : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
             )}
           >
             <IconArrowDownRight className="w-3.5 h-3.5 stroke-[3]" />
@@ -188,8 +188,8 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
             className={cn(
               'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               type === 'income'
-                ? 'bg-[#00E676] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]'
-                : 'text-gray-600 hover:text-[#0A0A0A]'
+                ? 'bg-[#00E676] text-[#0A0A0A] border-2 border-[#0A0A0A] dark:border-white/30 shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]'
+                : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
             )}
           >
             <IconArrowUpRight className="w-3.5 h-3.5 stroke-[3]" />
@@ -201,8 +201,8 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
             className={cn(
               'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               type === 'transfer'
-                ? 'bg-[#3B6FFF] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]'
-                : 'text-gray-600 hover:text-[#0A0A0A]'
+                ? 'bg-[#3B6FFF] text-white border-2 border-[#0A0A0A] dark:border-white/30 shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]'
+                : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
             )}
           >
             <IconArrowsExchange className="w-3.5 h-3.5 stroke-[3]" />
@@ -214,9 +214,10 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
         <div>
           <NbInput
             label="Nominal Transaksi (Rp)"
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={amountStr}
-            onChange={(e) => setAmountStr(e.target.value)}
+            onChange={(e) => setAmountStr(formatCurrencyInput(e.target.value))}
             placeholder="0"
             className="text-lg font-black font-mono"
             required
@@ -229,7 +230,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
                 key={v}
                 type="button"
                 onClick={() => handleAddAmount(v)}
-                className="flex-1 py-1 text-[11px] font-black bg-white rounded-md border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
+                className="flex-1 py-1 text-[11px] font-black bg-white dark:bg-[var(--theme-surface-elevated)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] rounded-md border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
               >
                 +{v >= 1000 ? `${v / 1000}rb` : v}
               </button>
@@ -266,9 +267,10 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
             />
             <NbInput
               label="Biaya Admin (Opsional)"
-              type="number"
+              type="text"
+              inputMode="numeric"
               value={adminFeeStr}
-              onChange={(e) => setAdminFeeStr(e.target.value)}
+              onChange={(e) => setAdminFeeStr(formatCurrencyInput(e.target.value))}
               placeholder="0"
             />
           </>
@@ -277,10 +279,10 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
         {/* Category Chips (for Income / Expense) */}
         {type !== 'transfer' && (
           <div>
-            <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
+            <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)] block mb-1.5">
               Kategori
             </label>
-            <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto p-1 bg-[#FFFDF7] rounded-xl border-2 border-[#0A0A0A]">
+            <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto p-1.5 bg-[#FFFDF7] dark:bg-[var(--theme-surface-elevated)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
               {(type === 'expense' ? expenseCategories : incomeCategories).map(
                 (cat) => (
                   <button
@@ -288,12 +290,12 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
                     type="button"
                     onClick={() => setCategory(cat)}
                     className={cn(
-                      'px-2.5 py-1 text-xs font-bold rounded-lg border-2 border-[#0A0A0A] transition-all cursor-pointer',
+                      'px-2.5 py-1 text-xs font-bold rounded-lg border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] transition-all cursor-pointer',
                       category === cat
                         ? type === 'expense'
-                          ? 'bg-[#FF3B30] text-white shadow-[2px_2px_0px_#0A0A0A]'
-                          : 'bg-[#00E676] text-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]'
-                        : 'bg-white text-gray-700 hover:bg-gray-100'
+                          ? 'bg-[#FF3B30] text-white shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]'
+                          : 'bg-[#00E676] text-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]'
+                        : 'bg-white dark:bg-[var(--theme-surface)] text-gray-700 dark:text-[var(--theme-text-primary)] hover:bg-gray-100 dark:hover:bg-white/10'
                     )}
                   >
                     {cat}
@@ -332,12 +334,12 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
         />
 
         {errorMessage && (
-          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 p-2.5 rounded-xl border-2 border-[#FF3B30]">
+          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">
             {errorMessage}
           </p>
         )}
 
-        <div className="flex gap-2 justify-end pt-3 border-t-2 border-[#0A0A0A]">
+        <div className="flex gap-2 justify-end pt-3 border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
           <NbButton type="button" variant="neutral" onClick={onClose}>
             Batal
           </NbButton>
@@ -353,4 +355,3 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
     </NbModal>
   );
 };
-

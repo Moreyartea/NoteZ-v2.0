@@ -11,7 +11,7 @@ import {
   depositToWishlist,
   withdrawFromWishlist,
 } from '@/app/lib/services/wishlistService';
-import { formatRupiah, cn } from '@/app/lib/utils';
+import { formatRupiah, formatCurrencyInput, parseCurrencyInput, cn } from '@/app/lib/utils';
 
 export interface DepositModalProps {
   isOpen: boolean;
@@ -48,18 +48,18 @@ export const DepositModal: React.FC<DepositModalProps> = ({
   if (!wishlist) return null;
 
   const handleQuickAdd = (val: number) => {
-    const current = Number(amountStr.replace(/[^0-9]/g, '')) || 0;
-    setAmountStr(String(current + val));
+    const current = parseCurrencyInput(amountStr);
+    setAmountStr(formatCurrencyInput(current + val));
   };
 
   const handleFillRemaining = () => {
     const remaining = Math.max(0, wishlist.targetPrice - wishlist.savedAmount);
-    setAmountStr(String(remaining));
+    setAmountStr(formatCurrencyInput(remaining));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const amount = Number(amountStr.replace(/[^0-9]/g, ''));
+    const amount = parseCurrencyInput(amountStr);
     if (!amount || amount <= 0) {
       setErrorMsg('Nominal harus lebih dari 0');
       return;
@@ -93,24 +93,24 @@ export const DepositModal: React.FC<DepositModalProps> = ({
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Wishlist summary info */}
-        <div className="p-3 rounded-xl bg-pink-50 border-2 border-[#0A0A0A]">
-          <p className="text-xs font-bold text-gray-700">Barang Impian:</p>
-          <p className="text-sm font-extrabold text-[#0A0A0A]">{wishlist.name}</p>
-          <p className="text-xs font-mono font-bold text-gray-700 mt-1">
+        <div className="p-3 rounded-xl bg-pink-50 dark:bg-pink-950/40 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
+          <p className="text-xs font-bold text-gray-700 dark:text-[var(--theme-text-muted)]">Barang Impian:</p>
+          <p className="text-sm font-extrabold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">{wishlist.name}</p>
+          <p className="text-xs font-mono font-bold text-gray-700 dark:text-[var(--theme-text-muted)] mt-1">
             Terkumpul: {formatRupiah(wishlist.savedAmount)} / {formatRupiah(wishlist.targetPrice)}
           </p>
         </div>
 
         {/* Action Toggle (Deposit vs Withdraw) */}
-        <div className="grid grid-cols-2 gap-1.5 p-1 bg-[#FFFDF7] rounded-xl border-2 border-[#0A0A0A]">
+        <div className="grid grid-cols-2 gap-1.5 p-1 bg-[#FFFDF7] dark:bg-[var(--theme-surface-elevated)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
           <button
             type="button"
             onClick={() => setActionType('deposit')}
             className={cn(
               'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               actionType === 'deposit'
-                ? 'bg-[#FF4DA6] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                : 'text-gray-600 hover:text-[#0A0A0A]'
+                ? 'bg-[#FF4DA6] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_#000000]'
+                : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
             )}
           >
             <IconPlus className="w-3.5 h-3.5 stroke-[3]" />
@@ -122,8 +122,8 @@ export const DepositModal: React.FC<DepositModalProps> = ({
             className={cn(
               'py-2 px-1 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer',
               actionType === 'withdraw'
-                ? 'bg-[#FF6B2B] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                : 'text-gray-600 hover:text-[#0A0A0A]'
+                ? 'bg-[#FF6B2B] text-white border-2 border-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_#000000]'
+                : 'text-gray-600 dark:text-[var(--theme-text-muted)] hover:text-[#0A0A0A] dark:hover:text-[var(--theme-text-primary)]'
             )}
           >
             <IconMinus className="w-3.5 h-3.5 stroke-[3]" />
@@ -135,9 +135,10 @@ export const DepositModal: React.FC<DepositModalProps> = ({
         <div>
           <NbInput
             label={actionType === 'deposit' ? 'Nominal Menabung (Rp)' : 'Nominal Penarikan (Rp)'}
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={amountStr}
-            onChange={(e) => setAmountStr(e.target.value)}
+            onChange={(e) => setAmountStr(formatCurrencyInput(e.target.value))}
             placeholder="0"
             className="text-base font-black font-mono"
             required
@@ -151,7 +152,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({
                 key={v}
                 type="button"
                 onClick={() => handleQuickAdd(v)}
-                className="flex-1 py-1 text-[10px] font-black bg-white rounded-md border-2 border-[#0A0A0A] shadow-[1px_1px_0px_#0A0A0A] active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
+                className="flex-1 py-1 text-[10px] font-black bg-white dark:bg-[var(--theme-surface-elevated)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] rounded-md border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[1px_1px_0px_#0A0A0A] dark:shadow-[1px_1px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
               >
                 +{v / 1000}rb
               </button>
@@ -162,7 +163,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({
             <button
               type="button"
               onClick={handleFillRemaining}
-              className="w-full mt-1.5 py-1 text-xs font-black bg-yellow-100 rounded-md border border-[#0A0A0A] hover:bg-yellow-200 transition-all cursor-pointer"
+              className="w-full mt-1.5 py-1 text-xs font-black bg-yellow-100 dark:bg-yellow-950/50 text-[#0A0A0A] dark:text-yellow-200 rounded-md border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-all cursor-pointer"
             >
               Lunaskan Sisa Target ({formatRupiah(wishlist.targetPrice - wishlist.savedAmount)})
             </button>
@@ -170,8 +171,8 @@ export const DepositModal: React.FC<DepositModalProps> = ({
         </div>
 
         {/* Direct Wallet Link Checkbox */}
-        <div className="space-y-2 pt-1 border-t border-gray-200">
-          <label className="flex items-center gap-2 text-xs font-bold text-[#0A0A0A] cursor-pointer">
+        <div className="space-y-2 pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
+          <label className="flex items-center gap-2 text-xs font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)] cursor-pointer">
             <input
               type="checkbox"
               checked={deductWallet}
@@ -199,12 +200,12 @@ export const DepositModal: React.FC<DepositModalProps> = ({
         </div>
 
         {errorMsg && (
-          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 p-2 rounded-lg border border-[#FF3B30]">
+          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2.5 rounded-xl border-2 border-[#FF3B30]">
             {errorMsg}
           </p>
         )}
 
-        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]">
+        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
           <NbButton type="button" variant="neutral" onClick={onClose}>
             Batal
           </NbButton>
@@ -220,4 +221,3 @@ export const DepositModal: React.FC<DepositModalProps> = ({
     </NbModal>
   );
 };
-

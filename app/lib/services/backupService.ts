@@ -62,7 +62,7 @@ export async function exportAllDataToJson(): Promise<string> {
 
   const backupData: NoteZBackupPayload = {
     app: 'NoteZ',
-    version: '2.0',
+    version: '2.1',
     exportedAt: now.toISOString(),
     data: {
       wallets,
@@ -108,7 +108,7 @@ export async function importDataFromJson(jsonContent: string): Promise<void> {
   }
 
   if (parsed.app !== 'NoteZ' || !parsed.data) {
-    throw new Error('File ini bukan file backup NoteZ v2.0 yang valid.');
+    throw new Error('File ini bukan file backup NoteZ yang valid.');
   }
 
   await db.transaction(

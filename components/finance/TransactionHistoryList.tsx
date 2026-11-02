@@ -8,9 +8,9 @@ import {
   IconArrowsExchange,
   IconFilter,
 } from '@tabler/icons-react';
-import type { Transaction, Wallet, TransactionType } from '@/app/lib/types';
+import type { Transaction, Wallet } from '@/app/lib/types';
 import { NbCard } from '@/components/ui/NbCard';
-import { NbBadge } from '@/components/ui/NbBadge';
+import { NbConfirmModal } from '@/components/ui/NbConfirmModal';
 import { deleteTransaction } from '@/app/lib/services/financeService';
 import { formatRupiah, cn } from '@/app/lib/utils';
 
@@ -25,7 +25,8 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
 }) => {
   const [filterType, setFilterType] = useState<string>('all');
   const [filterWallet, setFilterWallet] = useState<string>('all');
-  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   const walletMap = new Map(wallets.map((w) => [w.id, w.name]));
 
@@ -37,39 +38,36 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
     return true;
   });
 
-  const handleDelete = async (id: string) => {
-    const confirmDelete = window.confirm(
-      'Hapus transaksi ini? Saldo dompet terkait akan otomatis dikembalikan (revert).'
-    );
-    if (!confirmDelete) return;
-
-    setDeletingId(id);
+  const confirmDeleteAction = async () => {
+    if (!pendingDeleteId) return;
+    setIsDeleting(true);
     try {
-      await deleteTransaction(id);
+      await deleteTransaction(pendingDeleteId);
+      setPendingDeleteId(null);
     } catch (err) {
       console.error('Failed to delete transaction:', err);
     } finally {
-      setDeletingId(null);
+      setIsDeleting(false);
     }
   };
 
   const getTxTypeBadge = (tx: Transaction) => {
     if (tx.type === 'expense') {
       return (
-        <span className="p-2 rounded-xl bg-[#FF3B30] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+        <span className="p-2 rounded-xl bg-[#FF3B30] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]">
           <IconArrowUpRight className="w-4 h-4 stroke-[3]" />
         </span>
       );
     }
     if (tx.type === 'income') {
       return (
-        <span className="p-2 rounded-xl bg-[#00E676] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+        <span className="p-2 rounded-xl bg-[#00E676] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]">
           <IconArrowDownLeft className="w-4 h-4 stroke-[3]" />
         </span>
       );
     }
     return (
-      <span className="p-2 rounded-xl bg-[#3B6FFF] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A]">
+      <span className="p-2 rounded-xl bg-[#3B6FFF] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]">
         <IconArrowsExchange className="w-4 h-4 stroke-[3]" />
       </span>
     );
@@ -86,17 +84,17 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
       {/* Filter Chips Bar */}
       <div className="flex flex-col gap-2 p-3 bg-white dark:bg-[var(--theme-surface)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]">
         <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1 px-1 -mx-1">
-          <IconFilter className="w-4 h-4 text-gray-500 flex-shrink-0" />
+          <IconFilter className="w-4 h-4 text-gray-500 dark:text-[var(--theme-text-muted)] flex-shrink-0" />
           {['all', 'expense', 'income', 'transfer'].map((t) => (
             <button
               key={t}
               type="button"
               onClick={() => setFilterType(t)}
               className={cn(
-                'px-2.5 py-1 text-xs font-bold rounded-lg border-2 border-[#0A0A0A] transition-all cursor-pointer whitespace-nowrap',
+                'px-2.5 py-1 text-xs font-bold rounded-lg border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] transition-all cursor-pointer whitespace-nowrap',
                 filterType === t
-                  ? 'bg-[#FFE135] text-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A]'
-                  : 'bg-[#F5F2EB] text-gray-700 hover:bg-white'
+                  ? 'bg-[#FFE135] text-[#0A0A0A] shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_#000000]'
+                  : 'bg-[#F5F2EB] dark:bg-[var(--theme-surface-elevated)] text-gray-700 dark:text-[var(--theme-text-muted)] hover:bg-white dark:hover:bg-white/10'
               )}
             >
               {t === 'all'
@@ -111,18 +109,18 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
         </div>
 
         {wallets.length > 1 && (
-          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pt-1 border-t border-gray-200">
-            <span className="text-[10px] font-bold text-gray-500 uppercase flex-shrink-0">
+          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pt-2 border-t-2 border-[#0A0A0A]/10 dark:border-[var(--theme-border-subtle)]">
+            <span className="text-[10px] font-black uppercase text-gray-500 dark:text-[var(--theme-text-muted)] flex-shrink-0">
               Dompet:
             </span>
             <button
               type="button"
               onClick={() => setFilterWallet('all')}
               className={cn(
-                'px-2 py-0.5 text-[11px] font-bold rounded border transition-all cursor-pointer whitespace-nowrap',
+                'px-2.5 py-1 text-[11px] font-bold rounded-lg border-2 transition-all cursor-pointer whitespace-nowrap',
                 filterWallet === 'all'
-                  ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
-                  : 'bg-gray-100 text-gray-700 border-gray-300'
+                  ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] dark:bg-white dark:text-[#0A0A0A] dark:border-white'
+                  : 'bg-gray-100 dark:bg-[var(--theme-surface-elevated)] text-gray-700 dark:text-[var(--theme-text-primary)] border-[#0A0A0A]/20 dark:border-[var(--theme-border-subtle)]'
               )}
             >
               Semua Dompet
@@ -133,10 +131,10 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
                 type="button"
                 onClick={() => setFilterWallet(w.id)}
                 className={cn(
-                  'px-2 py-0.5 text-[11px] font-bold rounded border transition-all cursor-pointer whitespace-nowrap',
+                  'px-2.5 py-1 text-[11px] font-bold rounded-lg border-2 transition-all cursor-pointer whitespace-nowrap',
                   filterWallet === w.id
-                    ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
-                    : 'bg-gray-100 text-gray-700 border-gray-300'
+                    ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] dark:bg-white dark:text-[#0A0A0A] dark:border-white'
+                    : 'bg-gray-100 dark:bg-[var(--theme-surface-elevated)] text-gray-700 dark:text-[var(--theme-text-primary)] border-[#0A0A0A]/20 dark:border-[var(--theme-border-subtle)]'
                 )}
               >
                 {w.name}
@@ -148,9 +146,9 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
 
       {/* Transaction Items */}
       {filtered.length === 0 ? (
-        <NbCard className="p-6 text-center text-gray-500">
-          <p className="text-sm font-bold text-[#0A0A0A]">Belum ada riwayat transaksi</p>
-          <p className="text-xs text-gray-500 mt-1">
+        <NbCard className="p-6 text-center border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]">
+          <p className="text-sm font-bold text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">Belum ada riwayat transaksi</p>
+          <p className="text-xs text-gray-500 dark:text-[var(--theme-text-muted)] mt-1">
             Tekan tombol "+ Catat Transaksi" untuk menambahkan catatan baru.
           </p>
         </NbCard>
@@ -165,7 +163,7 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
             return (
               <NbCard
                 key={tx.id}
-                className="p-3 flex items-center justify-between gap-3 hoverEffect"
+                className="p-3 flex items-center justify-between gap-3 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)]"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   {getTxTypeBadge(tx)}
@@ -174,15 +172,15 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
                       {tx.title}
                     </p>
                     <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-                      <span className="text-[10px] font-bold text-gray-700 dark:text-[var(--theme-text-muted)] bg-gray-100 dark:bg-[var(--theme-bg)] px-1.5 py-0.5 rounded border border-gray-300 dark:border-[var(--theme-border)]">
+                      <span className="text-[10px] font-bold text-gray-700 dark:text-[var(--theme-text-muted)] bg-gray-100 dark:bg-[var(--theme-surface-elevated)] px-1.5 py-0.5 rounded border border-[#0A0A0A]/20 dark:border-[var(--theme-border-subtle)]">
                         {tx.category}
                       </span>
-                      <span className="text-[10px] text-gray-600 font-semibold truncate">
+                      <span className="text-[10px] text-gray-600 dark:text-[var(--theme-text-muted)] font-semibold truncate">
                         {tx.type === 'transfer' && destName
                           ? `${sourceName} → ${destName}`
                           : sourceName}
                       </span>
-                      <span className="text-[10px] text-gray-400 font-mono">
+                      <span className="text-[10px] text-gray-400 dark:text-gray-500 font-mono">
                         {new Date(tx.date).toLocaleDateString('id-ID', {
                           day: 'numeric',
                           month: 'short',
@@ -198,17 +196,17 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
                       className={cn(
                         'font-mono text-sm font-black tracking-tight',
                         isExpense
-                          ? 'text-[#FF3B30]'
+                          ? 'text-[#FF3B30] dark:text-red-400'
                           : isIncome
-                          ? 'text-[#00C853]'
-                          : 'text-[#3B6FFF]'
+                          ? 'text-[#00C853] dark:text-emerald-400'
+                          : 'text-[#3B6FFF] dark:text-blue-400'
                       )}
                     >
                       {isExpense ? '-' : isIncome ? '+' : ''}
                       {formatRupiah(tx.amount)}
                     </p>
                     {tx.adminFee && tx.adminFee > 0 && (
-                      <p className="text-[10px] font-mono text-gray-500">
+                      <p className="text-[10px] font-mono text-gray-500 dark:text-[var(--theme-text-muted)]">
                         Biaya: +{formatRupiah(tx.adminFee)}
                       </p>
                     )}
@@ -216,12 +214,11 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
 
                   <button
                     type="button"
-                    onClick={() => handleDelete(tx.id)}
-                    disabled={deletingId === tx.id}
+                    onClick={() => setPendingDeleteId(tx.id)}
                     title="Hapus transaksi"
-                    className="w-7 h-7 flex items-center justify-center rounded-lg bg-gray-100 text-gray-500 border border-gray-300 hover:bg-red-50 hover:text-red-600 active:scale-95 transition-all cursor-pointer"
+                    className="w-8 h-8 flex items-center justify-center rounded-lg bg-white dark:bg-[var(--theme-surface-elevated)] text-gray-500 dark:text-[var(--theme-text-muted)] hover:text-red-600 dark:hover:text-red-400 border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[1.5px_1.5px_0px_#0A0A0A] dark:shadow-[1.5px_1.5px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
                   >
-                    <IconTrash className="w-3.5 h-3.5" />
+                    <IconTrash className="w-4 h-4" />
                   </button>
                 </div>
               </NbCard>
@@ -229,7 +226,17 @@ export const TransactionHistoryList: React.FC<TransactionHistoryListProps> = ({
           })}
         </div>
       )}
+
+      {/* Custom Themed Confirmation Modal */}
+      <NbConfirmModal
+        isOpen={Boolean(pendingDeleteId)}
+        onClose={() => setPendingDeleteId(null)}
+        onConfirm={confirmDeleteAction}
+        title="Hapus Transaksi"
+        message="Hapus transaksi ini? Saldo dompet terkait akan otomatis dikembalikan (revert)."
+        confirmText="Ya, Hapus"
+        variant="danger"
+      />
     </div>
   );
 };
-

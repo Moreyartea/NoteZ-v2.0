@@ -50,7 +50,7 @@ export const NbModal: React.FC<NbModalProps> = ({
     >
       <div
         className={cn(
-          'relative w-full max-w-md bg-white dark:bg-[var(--theme-surface,#1E1E1E)] text-[#0A0A0A] dark:text-[var(--theme-text-primary,#F4F4F0)] rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border,#2E2E2E)] shadow-[6px_6px_0px_#0A0A0A] dark:shadow-[6px_6px_0px_#000000] p-5 animate-in zoom-in-95 duration-150',
+          'relative w-full max-w-md bg-[#FFFDF7] dark:bg-[var(--theme-surface)] text-[#0A0A0A] dark:text-[var(--theme-text-primary)] rounded-2xl border-[3px] border-[#0A0A0A] dark:border-[var(--theme-border)] shadow-[6px_6px_0px_#0A0A0A] dark:shadow-[6px_6px_0px_#000000] p-5 animate-in zoom-in-95 duration-150',
           className
         )}
         onClick={(e) => e.stopPropagation()}
@@ -58,9 +58,9 @@ export const NbModal: React.FC<NbModalProps> = ({
         aria-modal="true"
       >
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between pb-3 mb-4 border-b-2 border-[#0A0A0A]">
+          <div className="flex items-center justify-between pb-3 mb-4 border-b-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
             {title ? (
-              <h2 className="text-lg font-extrabold tracking-tight text-[#0A0A0A]">
+              <h2 className="text-lg font-black tracking-tight text-[#0A0A0A] dark:text-[var(--theme-text-primary)]">
                 {title}
               </h2>
             ) : (
@@ -71,7 +71,7 @@ export const NbModal: React.FC<NbModalProps> = ({
                 type="button"
                 onClick={onClose}
                 aria-label="Tutup"
-                className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#FF3B30] text-white border-2 border-[#0A0A0A] shadow-[2px_2px_0px_#0A0A0A] hover:bg-[#E02E24] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer"
+                className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#FF3B30] text-white border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000] hover:bg-[#E02E24] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer"
               >
                 <IconX className="w-5 h-5 stroke-[3]" />
               </button>
@@ -83,4 +83,3 @@ export const NbModal: React.FC<NbModalProps> = ({
     </div>
   );
 };
-

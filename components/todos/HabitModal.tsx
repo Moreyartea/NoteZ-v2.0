@@ -95,21 +95,22 @@ export const HabitModal: React.FC<HabitModalProps> = ({ isOpen, onClose }) => {
 
         {/* Icon Picker */}
         <div>
-          <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
+          <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)] block mb-1.5">
             Pilih Ikon
           </label>
-          <div className="grid grid-cols-2 gap-1.5 max-h-36 overflow-y-auto p-1 bg-[#FFFDF7] rounded-xl border-2 border-[#0A0A0A]">
+          <div className="grid grid-cols-2 gap-1.5 max-h-36 overflow-y-auto p-1.5 bg-[#FFFDF7] dark:bg-[var(--theme-surface-elevated)] rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
             {presetIcons.map((i) => {
               const IconComp = i.icon;
+              const isSelected = icon === i.id;
               return (
                 <button
                   key={i.id}
                   type="button"
                   onClick={() => setIcon(i.id)}
-                  className={`px-2.5 py-1.5 text-xs font-bold rounded-lg border-2 border-[#0A0A0A] text-left transition-all cursor-pointer flex items-center gap-1.5 ${
-                    icon === i.id
-                      ? 'bg-[#FFE135] shadow-[2px_2px_0px_#0A0A0A]'
-                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                  className={`px-2.5 py-1.5 text-xs font-bold rounded-lg border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] text-left transition-all cursor-pointer flex items-center gap-1.5 ${
+                    isSelected
+                      ? 'bg-[#FFE135] dark:bg-[var(--theme-accent-primary)] text-[#0A0A0A] dark:text-[var(--theme-accent-text)] shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]'
+                      : 'bg-white dark:bg-[var(--theme-surface)] text-gray-700 dark:text-[var(--theme-text-muted)] hover:bg-gray-100 dark:hover:bg-[var(--theme-surface-elevated)]'
                   }`}
                 >
                   <IconComp className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -122,7 +123,7 @@ export const HabitModal: React.FC<HabitModalProps> = ({ isOpen, onClose }) => {
 
         {/* Color Picker */}
         <div>
-          <label className="text-sm font-bold text-[#0A0A0A] block mb-1.5">
+          <label className="text-xs font-black uppercase tracking-wider text-[#0A0A0A] dark:text-[var(--theme-text-primary)] block mb-1.5">
             Warna Kartu
           </label>
           <div className="flex gap-2">
@@ -132,8 +133,8 @@ export const HabitModal: React.FC<HabitModalProps> = ({ isOpen, onClose }) => {
                 type="button"
                 onClick={() => setColor(c)}
                 style={{ backgroundColor: c }}
-                className={`w-9 h-9 rounded-xl border-2 border-[#0A0A0A] transition-all cursor-pointer ${
-                  color === c ? 'scale-110 shadow-[2px_2px_0px_#0A0A0A]' : 'opacity-70'
+                className={`w-9 h-9 rounded-xl border-2 border-[#0A0A0A] dark:border-[var(--theme-border)] transition-all cursor-pointer ${
+                  color === c ? 'scale-110 shadow-[2px_2px_0px_#0A0A0A] dark:shadow-[2px_2px_0px_#000000]' : 'opacity-70'
                 }`}
               />
             ))}
@@ -141,10 +142,10 @@ export const HabitModal: React.FC<HabitModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {errorMsg && (
-          <p className="text-xs font-bold text-[#FF3B30]">{errorMsg}</p>
+          <p className="text-xs font-bold text-[#FF3B30] bg-red-50 dark:bg-red-950/40 p-2 rounded-lg border border-[#FF3B30]">{errorMsg}</p>
         )}
 
-        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A]">
+        <div className="flex gap-2 justify-end pt-2 border-t-2 border-[#0A0A0A] dark:border-[var(--theme-border-subtle)]">
           <NbButton type="button" variant="neutral" onClick={onClose}>
             Batal
           </NbButton>

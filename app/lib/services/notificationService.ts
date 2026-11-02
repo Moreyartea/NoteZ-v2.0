@@ -460,7 +460,7 @@ export async function triggerTestNotification(): Promise<boolean> {
 
   const notifId = generateNumericNotificationId();
   const title = 'Uji Notifikasi Berhasil!';
-  const message = 'Notifikasi lokal NoteZ v2.0 aktif dan siap mengingatkan jadwal harianmu.';
+  const message = 'Notifikasi lokal NoteZ v2.1 aktif dan siap mengingatkan jadwal harianmu.';
 
   try {
     await requestNotificationPermission();
